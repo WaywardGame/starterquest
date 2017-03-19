@@ -1,0 +1,26 @@
+{
+    "name": "Starter Quest",
+    "description": "Adds a questing system to help new players learn mechanics, crafting, and survival.",
+    "version": "1.1.0",
+    "author": "Spacetech",
+    "requiredMods": [],
+    "hooks": [
+        "CanCreatureAttack",
+        "GetPlayerSpriteBatchLayer",
+        "IsPlayerSwimming",
+        "OnButtonBarClick",
+        "OnCreatureDeath",
+        "OnDisplayMessage",
+        "OnGameStart",
+        "OnInventoryItemAdd",
+        "OnInventoryItemRemove",
+        "OnInventoryItemUpdate",
+        "OnItemEquip",
+        "OnKeyBindPress",
+        "OnMoveDirectionUpdate",
+        "OnShowInGameScreen",
+        "OnTurnComplete"
+    ],
+    "unloadable": true,
+    "file": "StarterQuest.js"
+}
