@@ -113,7 +113,7 @@ export default class StarterQuest extends Mod {
 		this.quests = [
 			{
 				name: "Welcome",
-				description: `If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 15-30 minutes and is completely optional.<br /><br />Press <em>${ui.getStringForKeyBind(this.keyBind)}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, Click "<em>Start Quest</em>" to start your first quest.`,
+				description: `If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 15-45 minutes and is completely optional.<br /><br />Press <em>${ui.getStringForKeyBind(this.keyBind)}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click "<em>Start Quest</em>" to start your first quest.`,
 				completion: {
 					complete: true
 				}
@@ -153,7 +153,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Doodads",
-				description: `Doodads are considered objects attached to the ground like plants, piles of rocks, mushrooms, campfires, and more. There's a few ways to collect them. The easiest way to do this is to use the "<em>Actions</em>" menu, which you can bring up with <em>${ui.getStringForKeyBind(KeyBind.Actions)}</em>. If you are facing the object (not under you), you will get the "<em>Collect Object With Hands</em>" option in your actions menu.`,
+				description: `Doodads are considered objects attached to the ground like plants, piles of rocks, mushrooms, campfires, and more. There's a few ways to collect them. The easiest way to do this is to use the "<em>Actions</em>" menu, which you can bring up with <em>${ui.getStringForKeyBind(KeyBind.Actions)}</em>. If you are facing the object (not under you), you will get the "<em>Collect Object with Hands</em>" option in your actions menu.`,
 				completion: {
 					messages: {
 						types: [Message.YouCollected],
@@ -166,7 +166,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Crafting",
-				description: `In order to survive, you will need to craft new items from the resources you gather. Press <em>${ui.getStringForKeyBind(KeyBind.Crafting)}</em> to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.`,
+				description: `To survive, you will need to craft new items from the resources you gather. Press <em>${ui.getStringForKeyBind(KeyBind.Crafting)}</em> to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.`,
 				completion: {
 					items: [
 						{
@@ -184,7 +184,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Dismantling",
-				description: `Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the "<em>Dismantle</em>" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively you can dismantle items from clicking on them in your inventory and selecting "<em>Dismantle</em>".`,
+				description: `Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the "<em>Dismantle</em>" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items from clicking on them in your inventory and selecting "<em>Dismantle</em>".`,
 				completion: {
 					messages: {
 						types: [Message.YouDismantled],
@@ -218,7 +218,7 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Fire Starter 1/4",
+				name: "Wooden Poles",
 				description: `You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two "<em>Wooden Poles</em>".`,
 				completion: {
 					items: [
@@ -235,7 +235,7 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: "Fire Starter 2/4",
+				name: "Hand Drill",
 				description: `At this point, you will have unlocked a new crafting recipe called "<em>Hand Drill</em>", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!`,
 				completion: {
 					items: [
@@ -251,7 +251,7 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Fire Starter 3/4",
+				name: "Fire Starter Materials",
 				description: `The final items needed to start a fire are "<em>Wooden Shavings</em>" (or any other tinder item) and "<em>Kindling</em>". Gather the resources needed to craft both. Logs can come from gathering a tree completely (or finding one with no leaves).`,
 				completion: {
 					items: [
@@ -271,7 +271,7 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: "Fire Starter 4/4",
+				name: "Kindling & Tinder",
 				description: "With the resources from the previous quest, you should now have what you need to craft some wooden shavings and kindling.",
 				completion: {
 					items: [
@@ -294,7 +294,7 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: "Campfire 1/3",
+				name: "Campfire Materials",
 				description: `You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a "<em>Stone Campfire</em>". You'll need quite a few rocks for this endeavor.`,
 				completion: {
 					items: [
@@ -306,7 +306,7 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: "Campfire 2/3",
+				name: "Campfire Crafting",
 				description: "With all the rocks from the last quest, you will now be able to craft a campfire.",
 				completion: {
 					items: [
@@ -322,7 +322,7 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Campfire 3/3",
+				name: "Campfire Building",
 				description: `With some items, you will be able to build them, and temporarily affix them to the world. These objects that are attached/placed on tiles, are called "<em>Doodads</em>". Clicking on the campfire in your inventory, you will give you the option to "<em>Build</em>" it. Do so now, facing a valid tile.`,
 				completion: {
 					doodads: {
@@ -370,7 +370,7 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Good Cooking",
+				name: "Cooking with Fire",
 				description: "Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.",
 				completion: {
 					items: [
@@ -393,7 +393,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Drinkable Water",
-				description: `Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First you'll need to make a "<em>Waterskin</em>" to hold this water. Collect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.<br /><br />Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified from the craft menu directly.`,
+				description: `Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First, you'll need to make a "<em>Waterskin</em>" to hold this water. Collect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.<br /><br />Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified from the craft menu directly.`,
 				completion: {
 					items: [
 						{
@@ -478,7 +478,7 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: "Hunt For Leather",
+				name: "Hunt for Leather",
 				description: "Venture forth and find a creature with a pelt. Creatures with pelts include giant rats, rabbits, grey wolves, and bears. Be very careful with the latter two - you may have to improve your combat skills or craft armor if these prove too much for you. Never be afraid to run from a losing battle. Carve its corpse to get the animal pelt.",
 				completion: {
 					items: [
@@ -522,7 +522,7 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Stone Water Still 1/2",
+				name: "Stone Water Still Materials",
 				description: `Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather and collect the following resources to be able to craft a "<em>Stone Water Still</em>".`,
 				completion: {
 					items: [
@@ -550,7 +550,7 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: "Stone Water Still 2/2",
+				name: "Stone Water Still Crafting",
 				description: "After gathering all those resources, you can go ahead and craft the stone water still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.",
 				completion: {
 					items: [
@@ -567,7 +567,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Seawater",
-				description: `To test out your brand new water still, grab some water from the ocean. With another empty container in your inventory, choose the "<em>Gather Water</em>" option while facing the ocean with your container.`,
+				description: `To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the "<em>Gather Water</em>" option while facing the ocean with your container.`,
 				completion: {
 					items: [
 						{
@@ -581,8 +581,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Build That Still!",
-				description: `Just like with the campfire previously, you'll be able to "<em>Build<em>" the stone water still facing a valid tile from the item's menu. Do so now.`,
+				name: "Building the Still",
+				description: `Just like with the campfire previously, you'll be able to "<em>Build</em>" the stone water still facing a valid tile from the item's menu. Do so now.`,
 				completion: {
 					doodads: {
 						types: [DoodadType.StoneWaterStill, DoodadType.LitStoneWaterStill],
@@ -595,11 +595,12 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Desalinating 1/2",
-				description: `While still facing the stone water still, choose the "<em>Pour<em>" option from your container of seawater's item menu. This will pour the liquid into the water still.`,
+				name: "Filling the Still",
+				description: `While still facing the stone water still, choose the "<em>Pour</em>" option from your container of seawater's item menu. This will pour the liquid into the water still.`,
 				completion: {
 					messages: {
-						types: [Message.PouredWaterIntoStill]
+						types: [Message.PouredWaterIntoStill],
+						description: "Pour Water Into Still"
 					}
 				},
 				highlightElementSelector: [
@@ -607,8 +608,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Desalinating 2/2",
-				description: "You'll need to light the stone water still on fire so the water can began to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out before you can collect the water.",
+				name: "Desalination",
+				description: "You'll need to light the stone water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out before you can collect the water.",
 				completion: {
 					doodads: {
 						types: [DoodadType.LitStoneWaterStill],
@@ -634,8 +635,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Survivalist In Training",
-				description: "That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill you'll eventually be able to thrive and prosper.<br /><br />Treasure, you remember something about treasure..."
+				name: "Survivalist in Training",
+				description: "That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.<br /><br />Treasure, you remember something about treasure..."
 			}
 		];
 
@@ -737,6 +738,14 @@ export default class StarterQuest extends Mod {
 				this.updateDialogHeight();
 			}
 		});
+
+		/*
+			// Use this for exporting/spell checking
+			for (const starterQuest of this.quests) {
+				console.log(starterQuest.name);
+				console.log(starterQuest.description);
+			}
+		*/
 
 		this.updateDialog();
 	}
@@ -851,7 +860,7 @@ export default class StarterQuest extends Mod {
 	public updateDialog(): void {
 		const quest = this.quests[this.data.current];
 
-		this.containerName.html(quest.name);
+		this.containerName.html(`${quest.name} (${this.data.current + 1}/${this.quests.length})`);
 		this.containerDescription.html(quest.description);
 
 		// First quest button is unique
