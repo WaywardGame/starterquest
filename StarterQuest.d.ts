@@ -38,7 +38,6 @@ export default class StarterQuest extends Mod {
     onMoveDirectionUpdate(direction: FacingDirection): void;
     onDisplayMessage(message: Message, messageType?: MessageType, ...args: any[]): boolean;
     updateDialog(): void;
-    updateDialogHeight(): void;
     updateProgress(): void;
     updateQuestDoodads(): boolean;
     onCompleteQuestClick(): void;

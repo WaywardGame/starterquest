@@ -443,7 +443,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                         items: [
                             {
                                 type: Enums_1.ItemTypeGroup.Rock,
-                                amount: 3
+                                amount: 2
                             },
                             {
                                 type: Enums_1.ItemTypeGroup.Sharpened,
@@ -616,17 +616,13 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                 x: 20,
                 y: 180,
                 width: 380,
-                height: 280,
-                minWidth: 280,
-                minHeight: 280,
+                height: "auto",
+                resizable: false,
                 onOpen: () => {
                     this.data.dialogOpen = true;
                 },
                 onClose: () => {
                     this.data.dialogOpen = false;
-                },
-                onResizeStop: () => {
-                    this.updateDialogHeight();
                 }
             });
             this.updateDialog();
@@ -635,14 +631,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
             switch (buttonName) {
                 case this.getName():
                     ui.toggleDialog(this.dialog);
-                    this.updateDialogHeight();
             }
         }
         onKeyBindPress(keyBind) {
             switch (keyBind) {
                 case this.keyBind:
                     ui.toggleDialog(this.dialog);
-                    this.updateDialogHeight();
                     return false;
             }
             return undefined;
@@ -739,14 +733,6 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                 this.containerCloseButton.hide();
             }
             this.updateProgress();
-        }
-        updateDialogHeight() {
-            if (!this.dialog) {
-                return;
-            }
-            const height = this.container.find(".inner").outerHeight() + 43;
-            this.container.dialog("option", "height", height);
-            this.container.dialog("option", "maxHeight", height);
         }
         updateProgress() {
             if (!this.dialog) {
@@ -870,7 +856,6 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
             else {
                 this.containerCompleteButton.hide();
             }
-            this.updateDialogHeight();
         }
         updateQuestDoodads() {
             const quest = this.quests[this.data.current];

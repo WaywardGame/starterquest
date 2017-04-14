@@ -528,7 +528,7 @@ export default class StarterQuest extends Mod {
 					items: [
 						{
 							type: ItemTypeGroup.Rock,
-							amount: 3
+							amount: 2
 						},
 						{
 							type: ItemTypeGroup.Sharpened,
@@ -725,17 +725,13 @@ export default class StarterQuest extends Mod {
 			x: 20,
 			y: 180,
 			width: 380,
-			height: 280,
-			minWidth: 280,
-			minHeight: 280,
+			height: "auto",
+			resizable: false,
 			onOpen: () => {
 				this.data.dialogOpen = true;
 			},
 			onClose: () => {
 				this.data.dialogOpen = false;
-			},
-			onResizeStop: () => {
-				this.updateDialogHeight();
 			}
 		});
 
@@ -754,7 +750,6 @@ export default class StarterQuest extends Mod {
 		switch (buttonName) {
 			case this.getName():
 				ui.toggleDialog(this.dialog);
-				this.updateDialogHeight();
 		}
 	}
 
@@ -762,7 +757,6 @@ export default class StarterQuest extends Mod {
 		switch (keyBind) {
 			case this.keyBind:
 				ui.toggleDialog(this.dialog);
-				this.updateDialogHeight();
 				return false;
 		}
 		return undefined;
@@ -887,17 +881,6 @@ export default class StarterQuest extends Mod {
 		}
 
 		this.updateProgress();
-	}
-
-	// Recalculate the inner height
-	public updateDialogHeight(): void {
-		if (!this.dialog) {
-			return;
-		}
-
-		const height = this.container.find(".inner").outerHeight() + 43;
-		this.container.dialog("option", "height", height);
-		this.container.dialog("option", "maxHeight", height);
 	}
 
 	public updateProgress(): void {
@@ -1054,8 +1037,6 @@ export default class StarterQuest extends Mod {
 		} else {
 			this.containerCompleteButton.hide();
 		}
-
-		this.updateDialogHeight();
 	}
 
 	public updateQuestDoodads(): boolean {
