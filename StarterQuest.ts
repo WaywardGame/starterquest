@@ -2,6 +2,7 @@ import Doodads from "doodad/Doodads";
 import { DamageType, DoodadType, EquipType, equipTypeToMessage, FacingDirection, ItemType, ItemTypeGroup, KeyBind, RecipeLevel, SentenceCaseStyle, SkillType } from "Enums";
 import { IContainer, IItem } from "item/IItem";
 import { itemDescriptions as Items, RecipeComponent } from "item/Items";
+import { Dictionary } from "language/ILanguage";
 import { Message, messages, MessageType } from "language/Messages";
 import { ModType } from "mod/IModManager";
 import Mod from "mod/Mod";
@@ -109,6 +110,11 @@ export default class StarterQuest extends Mod {
 		}
 
 		this.keyBind = this.addKeyBind(this.getName(), 74);
+
+		const english = languageManager.getLanguage("English");
+		english.setDictionary(Dictionary.KeyBind, {
+			[this.keyBind]: "Starter Quest"
+		});
 
 		this.quests = [
 			{

@@ -1,4 +1,4 @@
-define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language/Messages", "mod/Mod"], function (require, exports, Doodads_1, Enums_1, Items_1, Messages_1, Mod_1) {
+define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language/ILanguage", "language/Messages", "mod/Mod"], function (require, exports, Doodads_1, Enums_1, Items_1, ILanguage_1, Messages_1, Mod_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class StarterQuest extends Mod_1.default {
@@ -25,6 +25,10 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                 };
             }
             this.keyBind = this.addKeyBind(this.getName(), 74);
+            const english = languageManager.getLanguage("English");
+            english.setDictionary(ILanguage_1.Dictionary.KeyBind, {
+                [this.keyBind]: "Starter Quest"
+            });
             this.quests = [
                 {
                     name: "Welcome",

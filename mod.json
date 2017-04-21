@@ -1,7 +1,7 @@
 {
     "name": "Starter Quest",
     "description": "Adds a questing system to help new players learn mechanics, crafting, and survival.",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "author": "Spacetech",
     "requiredMods": [],
     "hooks": [
