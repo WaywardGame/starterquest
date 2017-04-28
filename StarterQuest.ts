@@ -126,7 +126,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Gear Up",
-				description: `Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing <em>${ui.getStringForKeyBind(KeyBind.Equipment)}</em> or by clicking the equipment icon at the top of your screen. Left clicking an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various tasks.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with "<em>Equip: Held</em>" in its description from your inventory into either the left or right hand in your equipment window.`,
+				description: `Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing <em>${ui.getStringForKeyBind(KeyBind.Equipment)}</em> or by clicking the equipment icon at the top of your screen. Right clicking an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various tasks.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with "<em>Equip: Held</em>" in its description from your inventory into either the left or right hand in your equipment window.`,
 				completion: {
 					equips: [
 						{
@@ -357,7 +357,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Stoking Fire",
-				description: `Your fire could probably use more fuel as well. To add fuel to a fire, click an item and choose the "<em>Stoke Fire</em>" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have world tool-tips disabled, you can also check the status by right clicking on it or by using the "<em>Inspect</em>" action from the actions menu while facing it.`,
+				description: `Your fire could probably use more fuel as well. To add fuel to a fire, click an item and choose the "<em>Stoke Fire</em>" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have world tool-tips disabled, you can also check the status by shift + right clicking it.`,
 				completion: {
 					messages: {
 						types: [Message.AddedFuelToFire],
