@@ -4,6 +4,7 @@ import { Message, MessageType } from "language/Messages";
 import Mod from "mod/Mod";
 export default class StarterQuest extends Mod {
     private quests;
+    private button;
     private dialog;
     private container;
     private inner;
@@ -28,7 +29,7 @@ export default class StarterQuest extends Mod {
     onUnload(): void;
     onGameStart(isLoadingSave: boolean, playedCount: number): void;
     onShowInGameScreen(): void;
-    onButtonBarClick(buttonName: string): void;
+    onButtonBarClick(button: JQuery): void;
     onKeyBindPress(keyBind: number): boolean;
     onInventoryItemAdd(item: IItem, container: IContainer): void;
     onInventoryItemRemove(item: IItem, container: IContainer): void;

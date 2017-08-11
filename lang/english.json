@@ -1,0 +1,11 @@
+{
+	"extends": "English",
+	"dictionaries": {
+		"keyBind": {
+			"starterQuest": "Starter Quest"
+		},
+		"starterQuest": {
+			
+		}
+	}
+}

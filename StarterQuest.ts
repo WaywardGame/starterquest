@@ -62,9 +62,14 @@ interface IQuestMessage extends IQuestRequirement {
 	description?: string;
 }
 
+enum StarterQuestDictionary {
+
+}
+
 export default class StarterQuest extends Mod {
 	private quests: IQuest[] = [];
 
+	private button: JQuery;
 	private dialog: JQuery;
 	private container: JQuery;
 	private inner: JQuery;
@@ -112,9 +117,7 @@ export default class StarterQuest extends Mod {
 		this.keyBind = this.addKeyBind(this.getName(), 74);
 
 		const english = languageManager.getLanguage("English");
-		english.setDictionary(Dictionary.KeyBind, {
-			[this.keyBind]: "Starter Quest"
-		});
+		this.addDictionary("starterQuest", StarterQuestDictionary);
 
 		this.quests = [
 			{
@@ -156,19 +159,6 @@ export default class StarterQuest extends Mod {
 						}
 					]
 				}
-			},
-			{
-				name: "Doodads",
-				description: `Doodads are considered objects attached to the ground like plants, piles of rocks, mushrooms, campfires, and more. There's a few ways to collect them. The easiest way to do this is to use the "<em>Actions</em>" menu, which you can bring up with <em>${ui.getStringForKeyBind(KeyBind.Actions)}</em>. If you are facing the object (not under you), you will get the "<em>Collect Object with Hands</em>" option in your actions menu.`,
-				completion: {
-					messages: {
-						types: [Message.YouCollected],
-						description: "Collect An Object"
-					}
-				},
-				highlightElementSelector: [
-					`#buttons img[data-button="Actions"]`
-				]
 			},
 			{
 				name: "Crafting",
@@ -257,45 +247,23 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Fire Starter Materials",
-				description: `The final items needed to start a fire are "<em>Wooden Shavings</em>" (or any other tinder item) and "<em>Kindling</em>". Gather the resources needed to craft both. Logs can come from gathering a tree completely (or finding one with no leaves).`,
-				completion: {
-					items: [
-						{
-							type: ItemType.Twigs,
-							amount: 2
-						},
-						{
-							type: ItemType.TreeBark,
-							amount: 1
-						},
-						{
-							type: ItemType.Log,
-							amount: 1
-						}
-					]
-				}
-			},
-			{
 				name: "Kindling & Tinder",
-				description: "With the resources from the previous quest, you should now have what you need to craft some wooden shavings and kindling.",
+				description: `The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves and more.<br /><br />Craft, dismantle, or find kindling and tinder!`,
 				completion: {
 					items: [
 						{
-							type: ItemType.WoodenShavings,
-							amount: 1,
-							craft: true
+							type: ItemTypeGroup.Tinder,
+							amount: 1
 						},
 						{
-							type: ItemType.Kindling,
-							amount: 1,
-							craft: true
+							type: ItemTypeGroup.Kindling,
+							amount: 1
 						}
 					]
 				},
 				highlightElementSelector: [
-					`#crafting li[data-item-type="${ItemType.WoodenShavings}"]`,
-					`#crafting li[data-item-type="${ItemType.Kindling}"]`
+					`#crafting li[data-item-type="${ItemType.WoodenPole}"]`,
+					`#crafting li[data-item-type="${ItemType.Twigs}"]`
 				],
 				allowMultipleHighlights: true
 			},
@@ -367,12 +335,9 @@ export default class StarterQuest extends Mod {
 				highlightElementSelector: [
 					`#inventory li[data-item-type="${ItemType.Log}"]:eq(0)`,
 					`#inventory li[data-item-type="${ItemType.Branch}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.Leaves}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.PalmLeaf}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.Twigs}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.TreeBark}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.Kindling}"]:eq(0)`,
-					`#inventory li[data-item-type="${ItemType.WoodenShavings}"]:eq(0)`
+					`#inventory li[data-item-type="${ItemType.WoodenPole}"]:eq(0)`,
+					`#inventory li[data-item-type="${ItemTypeGroup.Kindling}"]:eq(0)`,
+					`#inventory li[data-item-type="${ItemTypeGroup.Tinder}"]:eq(0)`
 				]
 			},
 			{
@@ -652,7 +617,7 @@ export default class StarterQuest extends Mod {
 		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", "You have _0_ _1_.");
 		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", `You have completed the "_0_" objective.`);
 
-		this.createButton(this.getName(), this.getPath() + "/images/starterquest.png", "Starter Quest", this.keyBind);
+		this.button = this.createButton("Starter Quest", this.getPath() + "/images/starterquest.png", this.keyBind);
 	}
 
 	public onSave(): any {
@@ -662,7 +627,7 @@ export default class StarterQuest extends Mod {
 	public onUnload(): void {
 		this.dialog = undefined;
 		this.container = undefined;
-		this.removeButton(this.getName());
+		this.removeButton(this.button);
 	}
 
 	///////////////////////////////////////////////////
@@ -752,10 +717,9 @@ export default class StarterQuest extends Mod {
 		this.updateDialog();
 	}
 
-	public onButtonBarClick(buttonName: string) {
-		switch (buttonName) {
-			case this.getName():
-				ui.toggleDialog(this.dialog);
+	public onButtonBarClick(button: JQuery) {
+		if (button.is(this.button)) {
+			ui.toggleDialog(this.dialog);
 		}
 	}
 
@@ -1062,8 +1026,8 @@ export default class StarterQuest extends Mod {
 
 		if (!this.data.completion.doodads.complete) {
 			const tile = game.getTileInFrontOfPlayer(localPlayer);
-			if (tile.doodadId !== undefined) {
-				const doodad = game.doodads[tile.doodadId];
+			if (tile.doodad !== undefined) {
+				const doodad = tile.doodad;
 				if (quest.completion.doodads.types.indexOf(doodad.type) !== -1) {
 					this.data.completion.doodads.complete = true;
 					return true;
@@ -1094,7 +1058,7 @@ export default class StarterQuest extends Mod {
 		// Highlight elements if they are available
 		const highlightElements = this.quests[questNumber].highlightElementSelector;
 		if (highlightElements) {
-			ui.highlight(highlightElements, this.quests[questNumber].allowMultipleHighlights ? true : false);
+			ui.highlight(highlightElements, this.quests[questNumber].allowMultipleHighlights ? false : true);
 		}
 
 		this.updateDialog();
