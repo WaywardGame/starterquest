@@ -985,8 +985,7 @@ export default class StarterQuest extends Mod {
 					ui.displayMessagePack(localPlayer, {
 						message: this.messageQuestProgressCompleted,
 						type: MessageType.Skill,
-						args: [messageName],
-						argSkipCasing: true
+						args: [messageName]
 					});
 				}
 			}
@@ -1044,8 +1043,7 @@ export default class StarterQuest extends Mod {
 		ui.displayMessagePack(localPlayer, {
 			message: this.messageQuestCompleted,
 			type: MessageType.Skill,
-			args: [quest.name],
-			argSkipCasing: true
+			args: [quest.name]
 		});
 
 		this.setQuest(this.data.current + 1);

@@ -804,8 +804,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                         ui.displayMessagePack(localPlayer, {
                             message: this.messageQuestProgressCompleted,
                             type: Messages_1.MessageType.Skill,
-                            args: [messageName],
-                            argSkipCasing: true
+                            args: [messageName]
                         });
                     }
                 }
@@ -852,8 +851,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
             ui.displayMessagePack(localPlayer, {
                 message: this.messageQuestCompleted,
                 type: Messages_1.MessageType.Skill,
-                args: [quest.name],
-                argSkipCasing: true
+                args: [quest.name]
             });
             this.setQuest(this.data.current + 1);
         }
