@@ -1,11 +1,13 @@
 import Doodads from "doodad/Doodads";
-import { DamageType, DoodadType, EquipType, equipTypeToMessage, FacingDirection, ItemType, ItemTypeGroup, KeyBind, RecipeLevel, SentenceCaseStyle, SkillType } from "Enums";
+import { DamageType, DoodadType, EquipType, equipTypeToMessage, FacingDirection, ItemType, ItemTypeGroup, RecipeLevel, SentenceCaseStyle, SkillType, Bindable } from "Enums";
 import { IContainer, IItem } from "item/IItem";
 import { itemDescriptions as Items, RecipeComponent } from "item/Items";
 import { Dictionary } from "language/ILanguage";
 import { Message, messages, MessageType } from "language/Messages";
 import { ModType } from "mod/IModManager";
 import Mod from "mod/Mod";
+import { IPlayer } from "player/IPlayer";
+import { BindCatcherApi, bindingManager } from "newui/BindingManager";
 
 interface IGlobalSaveData {
 	maxQuest: number;
@@ -23,7 +25,7 @@ interface IQuest {
 	completion?: IQuestCompletion;
 	highlightElementSelector?: string[];
 	allowMultipleHighlights?: boolean;
-	onStart?: () => void;
+	onStart?(): void;
 }
 
 interface IQuestCompletion {
@@ -40,7 +42,7 @@ interface IQuestRequirement {
 }
 
 interface IQuestItem extends IQuestRequirement {
-	type: ItemType | ItemTypeGroup;
+	types: [ItemType | ItemTypeGroup];
 	amount: number;
 	craft?: boolean;
 }
@@ -53,6 +55,7 @@ interface IQuestEquip extends IQuestRequirement {
 
 interface IQuestDoodad extends IQuestRequirement {
 	types: DoodadType[];
+	completionMessage: string;
 	doodadPrefix: string;
 	doodadActionPrefix: string;
 }
@@ -92,6 +95,8 @@ export default class StarterQuest extends Mod {
 	private messageQuestProgressCompleted: number;
 
 	public onInitialize(saveDataGlobal: any): any {
+		this.keyBind = this.addBindable("Toggle", { key: "KeyJ" });
+
 		this.globalData = saveDataGlobal;
 
 		if (!this.globalData) {
@@ -114,22 +119,20 @@ export default class StarterQuest extends Mod {
 			};
 		}
 
-		this.keyBind = this.addKeyBind(this.getName(), 74);
-
 		const english = languageManager.getLanguage("English");
 		this.addDictionary("starterQuest", StarterQuestDictionary);
 
 		this.quests = [
 			{
 				name: "Welcome",
-				description: `If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 15-45 minutes and is completely optional.<br /><br />Press <em>${ui.getStringForKeyBind(this.keyBind)}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click "<em>Start Quest</em>" to start your first quest.`,
+				description: `If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 15-45 minutes and is completely optional.<br /><br />Press <em>${bindingManager.getBindTranslation(this.keyBind)}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click "<em>Start Quest</em>" to start your first quest.`,
 				completion: {
 					complete: true
 				}
 			},
 			{
 				name: "Gear Up",
-				description: `Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing <em>${ui.getStringForKeyBind(KeyBind.Equipment)}</em> or by clicking the equipment icon at the top of your screen. Right clicking an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various tasks.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with "<em>Equip: Held</em>" in its description from your inventory into either the left or right hand in your equipment window.`,
+				description: `Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing <em>${bindingManager.getBindTranslation(Bindable.DialogEquipment)}</em> or by clicking the equipment icon at the top of your screen. Right clicking an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various tasks.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with "<em>Equip: Held</em>" in its description from your inventory into either the left or right hand in your equipment window.`,
 				completion: {
 					equips: [
 						{
@@ -140,21 +143,36 @@ export default class StarterQuest extends Mod {
 				highlightElementSelector: [
 					`#inventory li.group-${ItemTypeGroup.Weapon}:eq(0)`,
 					`#inventory li.group-${ItemTypeGroup.Tool}:eq(0)`,
-					`#equipment ul:lt(2)`
+					"#equipment ul:lt(2)"
+				],
+				allowMultipleHighlights: true
+			},
+			{
+				name: "Left/Right Hand Use",
+				description: `By default, you will use both hands to automatically gather and attack. You can enable and disable each hand. This is useful when you only want to use a certain tool for gathering or weapon for attacking. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the <em>${bindingManager.getBindTranslation(Bindable.GameHandToggleLeft)}</em> and <em>${bindingManager.getBindTranslation(Bindable.GameHandToggleRight)}</em> keybinds.`,
+				completion: {
+					messages: {
+						types: [Message.YouHaveEnabledDisabled],
+						description: "Toggle Hands"
+					}
+				},
+				highlightElementSelector: [
+					'#equipment .checkbox-option[data-checkbox-id="LeftHand"]',
+					'#equipment .checkbox-option[data-checkbox-id="RightHand"]'
 				],
 				allowMultipleHighlights: true
 			},
 			{
 				name: "Resource Gathering",
-				description: "Now that you have something equipped, you can try gathering some resources.<br /><br />There are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side.",
+				description: "Now that you have something equipped and selected, you can try gathering some resources.<br /><br />There are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side.",
 				completion: {
 					items: [
 						{
-							type: ItemType.Branch,
+							types: [ItemType.Branch],
 							amount: 2
 						},
 						{
-							type: ItemType.LargeRock,
+							types: [ItemType.LargeRock],
 							amount: 2
 						}
 					]
@@ -162,25 +180,25 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Crafting",
-				description: `To survive, you will need to craft new items from the resources you gather. Press <em>${ui.getStringForKeyBind(KeyBind.Crafting)}</em> to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.`,
+				description: `To survive, you will need to craft new items from the resources you gather. Press <em>${bindingManager.getBindTranslation(Bindable.DialogCrafting)}</em> to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.`,
 				completion: {
 					items: [
 						{
-							type: ItemType.SharpRock,
+							types: [ItemType.SharpRock],
 							amount: 1,
 							craft: true
 						}
 					]
 				},
 				highlightElementSelector: [
-					`#buttons img[data-button="Crafting"]`,
+					'#buttons img[data-button="Crafting"]',
 					`#crafting li[data-item-type="${ItemType.SharpRock}"]`
 				],
 				allowMultipleHighlights: true
 			},
 			{
 				name: "Dismantling",
-				description: `Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the "<em>Dismantle</em>" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items from clicking on them in your inventory and selecting "<em>Dismantle</em>".`,
+				description: 'Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the "<em>Dismantle</em>" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items from right clicking on them in your inventory and selecting "<em>Dismantle</em>".',
 				completion: {
 					messages: {
 						types: [Message.YouDismantled],
@@ -200,11 +218,11 @@ export default class StarterQuest extends Mod {
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Sharpened,
+							types: [ItemTypeGroup.Sharpened],
 							amount: 1
 						},
 						{
-							type: ItemTypeGroup.RawMeat,
+							types: [ItemTypeGroup.RawMeat],
 							amount: 1
 						}
 					]
@@ -215,11 +233,11 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Wooden Poles",
-				description: `You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two "<em>Wooden Poles</em>".`,
+				description: 'You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two "<em>Wooden Poles</em>".',
 				completion: {
 					items: [
 						{
-							type: ItemType.WoodenPole,
+							types: [ItemType.WoodenPole],
 							amount: 2
 						}
 					]
@@ -232,11 +250,11 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Hand Drill",
-				description: `At this point, you will have unlocked a new crafting recipe called "<em>Hand Drill</em>", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!`,
+				description: 'At this point, you will have unlocked a new crafting recipe called "<em>Hand Drill</em>", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!',
 				completion: {
 					items: [
 						{
-							type: ItemType.HandDrill,
+							types: [ItemType.HandDrill],
 							amount: 1,
 							craft: true
 						}
@@ -248,15 +266,15 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Kindling & Tinder",
-				description: `The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves and more.<br /><br />Craft, dismantle, or find kindling and tinder!`,
+				description: "The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves and more.<br /><br />Craft, dismantle, or find kindling and tinder!",
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Tinder,
+							types: [ItemTypeGroup.Tinder],
 							amount: 1
 						},
 						{
-							type: ItemTypeGroup.Kindling,
+							types: [ItemTypeGroup.Kindling],
 							amount: 1
 						}
 					]
@@ -269,11 +287,11 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Campfire Materials",
-				description: `You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a "<em>Stone Campfire</em>". You'll need quite a few rocks for this endeavor.`,
+				description: `You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make either a "<em>Stone Campfire</em>" or "<em>Sandstone Campfire</em>". You'll need quite a few rocks or sandstone for this endeavor.`,
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Rock,
+							types: [ItemTypeGroup.Rock, ItemType.Sandstone],
 							amount: 5
 						}
 					]
@@ -281,32 +299,35 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Campfire Crafting",
-				description: "With all the rocks from the last quest, you will now be able to craft a campfire.",
+				description: "With all the rocks or sandstone from the last quest, you will now be able to craft a campfire.",
 				completion: {
 					items: [
 						{
-							type: ItemType.StoneCampfire,
+							types: [ItemType.StoneCampfire, ItemType.SandstoneCampfire],
 							amount: 1,
 							craft: true
 						}
 					]
 				},
 				highlightElementSelector: [
-					`#crafting li[data-item-type="${ItemType.StoneCampfire}"]`
+					`#crafting li[data-item-type="${ItemType.StoneCampfire}"]`,
+					`#crafting li[data-item-type="${ItemType.SandstoneCampfire}"]`
 				]
 			},
 			{
 				name: "Campfire Building",
-				description: `With some items, you will be able to build them, and temporarily affix them to the world. These objects that are attached/placed on tiles, are called "<em>Doodads</em>". Clicking on the campfire in your inventory, you will give you the option to "<em>Build</em>" it. Do so now, facing a valid tile.`,
+				description: 'With some items, you will be able to build them, and temporarily affix them to the world. These objects that are attached/placed on tiles, are called "<em>Doodads</em>". Right clicking on the campfire in your inventory, you will give you the option to "<em>Build</em>" it. Do so now, facing a valid tile.',
 				completion: {
 					doodads: {
-						types: [DoodadType.StoneCampfire, DoodadType.LitStoneCampfire],
-						doodadPrefix: "Place",
-						doodadActionPrefix: "placed"
+						types: [DoodadType.StoneCampfire, DoodadType.SandstoneCampfire],
+						doodadPrefix: "Build",
+						doodadActionPrefix: "built",
+						completionMessage: "a campfire"
 					}
 				},
 				highlightElementSelector: [
-					`#inventory li[data-item-type="${ItemType.StoneCampfire}"]:eq(0)`
+					`#inventory li[data-item-type="${ItemType.StoneCampfire}"]:eq(0)`,
+					`#inventory li[data-item-type="${ItemType.SandstoneCampfire}"]:eq(0)`
 				]
 			},
 			{
@@ -314,9 +335,10 @@ export default class StarterQuest extends Mod {
 				description: `With your hand drill, select the "<em>Start Fire</em>" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire at low Camping skill. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.<br /><br />Be careful not to step in your fire!`,
 				completion: {
 					doodads: {
-						types: [DoodadType.LitStoneCampfire],
+						types: [DoodadType.LitStoneCampfire, DoodadType.LitSandstoneCampfire],
 						doodadPrefix: "Start",
-						doodadActionPrefix: "started"
+						doodadActionPrefix: "started",
+						completionMessage: "a campfire"
 					}
 				},
 				highlightElementSelector: [
@@ -325,7 +347,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Stoking Fire",
-				description: `Your fire could probably use more fuel as well. To add fuel to a fire, click an item and choose the "<em>Stoke Fire</em>" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have world tool-tips disabled, you can also check the status by shift + right clicking it.`,
+				description: 'Your fire could probably use more fuel as well. To add fuel to a fire, right click an item and choose the "<em>Stoke Fire</em>" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have world tool-tips disabled, you can also check the status by shift + right clicking it.',
 				completion: {
 					messages: {
 						types: [Message.AddedFuelToFire],
@@ -342,15 +364,15 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Cooking with Fire",
-				description: "Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.",
+				description: "Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.<br /><br />A skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!",
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Skewer,
+							types: [ItemTypeGroup.Skewer],
 							amount: 1
 						},
 						{
-							type: ItemTypeGroup.CookedMeat,
+							types: [ItemTypeGroup.CookedMeat],
 							amount: 1,
 							craft: true
 						}
@@ -368,7 +390,7 @@ export default class StarterQuest extends Mod {
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Needle,
+							types: [ItemTypeGroup.Needle],
 							amount: 1
 						}
 					]
@@ -379,11 +401,11 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Cordage",
-				description: `A very common resource for making many items in Wayward is "<em>String</em>". By combining two items that are considered "<em>Cordage</em>", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more. See if you can find four of them.`,
+				description: 'A very common resource for making many items in Wayward is "<em>String</em>". By combining two items that are considered "<em>Cordage</em>", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more. See if you can find four of them.',
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Cordage,
+							types: [ItemTypeGroup.Cordage],
 							amount: 4
 						}
 					]
@@ -399,7 +421,7 @@ export default class StarterQuest extends Mod {
 				completion: {
 					items: [
 						{
-							type: ItemType.String,
+							types: [ItemType.String],
 							amount: 2,
 							craft: true
 						}
@@ -410,40 +432,24 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Smooth Rocks",
-				description: "Smooth rocks can either be found naturally from mining rock, or from using a combination of a sharpened rock and a large rock to smooth it out via the crafting window. With the two smooth rocks, you'll be able to craft a grinding device.",
-				completion: {
-					items: [
-						{
-							type: ItemType.SmoothRock,
-							amount: 2,
-							craft: true
-						}
-					]
-				},
-				highlightElementSelector: [
-					`#crafting li[data-item-type="${ItemType.SmoothRock}"]`
-				]
-			},
-			{
 				name: "Grinding Materials",
-				description: "You're going to need some material for that waterskin. The perfect material is tanned leather. You'll need to make something to grind your tannin with. Two smooth rocks should do the trick. After you craft the mortar and pestle, you can grind down tree bark into tannin. This special powder can tan the leather for the waterskin.",
+				description: "You're going to need some material for that waterskin. The perfect material is tanned leather. You'll need to make something to grind your tannin with. Mortar and pestles can be crafted with smooth rocks, logs, or even sandstone. After you craft the mortar and pestle, you can grind down tree bark into tannin. This special powder can tan the leather for the waterskin.",
 				completion: {
 					items: [
 						{
-							type: ItemType.MortarAndPestle,
+							types: [ItemType.StoneMortarAndPestle, ItemType.WoodenMortarAndPestle, ItemType.SandstoneMortarAndPestle],
 							amount: 1,
 							craft: true
 						},
 						{
-							type: ItemType.Tannin,
+							types: [ItemType.Tannin],
 							amount: 1,
 							craft: true
 						}
 					]
 				},
 				highlightElementSelector: [
-					`#crafting li[data-item-type="${ItemType.MortarAndPestle}"]`,
+					`#crafting li[data-item-type="${ItemTypeGroup.MortarAndPestle}"]`,
 					`#crafting li[data-item-type="${ItemType.Tannin}"]`
 				],
 				allowMultipleHighlights: true
@@ -454,7 +460,7 @@ export default class StarterQuest extends Mod {
 				completion: {
 					items: [
 						{
-							type: ItemType.AnimalPelt,
+							types: [ItemType.AnimalPelt],
 							amount: 1
 						}
 					]
@@ -462,11 +468,11 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Tanned Leather",
-				description: `With the animal pelt from the creature, you can now tan it with the tannin. Simply dismantle the pelt to remove the fur and gain the cleaned leather hide. After the dismantle, craft "<em>Tanned Leather</em>" from the crafting window.`,
+				description: 'With the animal pelt from the creature, you can now tan it with the tannin. Simply dismantle the pelt to remove the fur and gain the cleaned leather hide. After the dismantle, craft "<em>Tanned Leather</em>" from the crafting window.',
 				completion: {
 					items: [
 						{
-							type: ItemType.TannedLeather,
+							types: [ItemType.TannedLeather],
 							amount: 1,
 							craft: true
 						}
@@ -482,7 +488,7 @@ export default class StarterQuest extends Mod {
 				completion: {
 					items: [
 						{
-							type: ItemType.Waterskin,
+							types: [ItemType.Waterskin],
 							amount: 1,
 							craft: true
 						}
@@ -493,56 +499,57 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: "Stone Water Still Materials",
-				description: `Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather and collect the following resources to be able to craft a "<em>Stone Water Still</em>".`,
+				name: "Water Still Materials",
+				description: 'Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather and collect the following resources to be able to craft a "<em>Stone Water Still</em>" or "<em>Sandstone Water Still</em>".',
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.Rock,
+							types: [ItemTypeGroup.Rock, ItemType.Sandstone],
 							amount: 2
 						},
 						{
-							type: ItemTypeGroup.Sharpened,
+							types: [ItemTypeGroup.Sharpened],
 							amount: 1
 						},
 						{
-							type: ItemType.String,
+							types: [ItemType.String],
 							amount: 1
 						},
 						{
-							type: ItemTypeGroup.Pole,
+							types: [ItemTypeGroup.Pole],
 							amount: 1
 						},
 						{
-							type: ItemType.Waterskin,
+							types: [ItemType.Waterskin],
 							amount: 1
 						}
 					]
 				}
 			},
 			{
-				name: "Stone Water Still Crafting",
-				description: "After gathering all those resources, you can go ahead and craft the stone water still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.",
+				name: "Water Still Crafting",
+				description: "After gathering all those resources, you can go ahead and craft the water still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.",
 				completion: {
 					items: [
 						{
-							type: ItemType.StoneWaterStill,
+							types: [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill],
 							amount: 1,
 							craft: true
 						}
 					]
 				},
 				highlightElementSelector: [
-					`#crafting li[data-item-type="${ItemType.StoneWaterStill}"]`
+					`#crafting li[data-item-type="${ItemType.StoneWaterStill}"]`,
+					`#crafting li[data-item-type="${ItemType.SandstoneWaterStill}"]`
 				]
 			},
 			{
 				name: "Seawater",
-				description: `To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the "<em>Gather Water</em>" option while facing the ocean with your container.`,
+				description: 'To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the "<em>Gather Water</em>" option while facing the ocean with your container.',
 				completion: {
 					items: [
 						{
-							type: ItemTypeGroup.ContainerOfSeawater,
+							types: [ItemTypeGroup.ContainerOfSeawater],
 							amount: 1
 						}
 					]
@@ -553,21 +560,23 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Building the Still",
-				description: `Just like with the campfire previously, you'll be able to "<em>Build</em>" the stone water still facing a valid tile from the item's menu. Do so now.`,
+				description: `Just like with the campfire previously, you'll be able to "<em>Build</em>" the water still facing a valid tile from the item's menu. Do so now.`,
 				completion: {
 					doodads: {
-						types: [DoodadType.StoneWaterStill, DoodadType.LitStoneWaterStill],
-						doodadPrefix: "Place",
-						doodadActionPrefix: "placed"
+						types: [DoodadType.StoneWaterStill, DoodadType.SandstoneWaterStill],
+						doodadPrefix: "Build",
+						doodadActionPrefix: "built",
+						completionMessage: "a water still"
 					}
 				},
 				highlightElementSelector: [
-					`#inventory li[data-item-type="${ItemType.StoneWaterStill}"]:eq(0)`
+					`#inventory li[data-item-type="${ItemType.StoneWaterStill}"]:eq(0)`,
+					`#inventory li[data-item-type="${ItemType.SandstoneWaterStill}"]:eq(0)`
 				]
 			},
 			{
 				name: "Filling the Still",
-				description: `While still facing the stone water still, choose the "<em>Pour</em>" option from your container of seawater's item menu. This will pour the liquid into the water still.`,
+				description: `While still facing the water still, choose the "<em>Pour</em>" option from your container of seawater's item menu. This will pour the liquid into the water still.`,
 				completion: {
 					messages: {
 						types: [Message.PouredWaterIntoStill],
@@ -580,12 +589,13 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Desalination",
-				description: "You'll need to light the stone water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out before you can collect the water.",
+				description: "You'll need to light the water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out before you can collect the water.",
 				completion: {
 					doodads: {
-						types: [DoodadType.LitStoneWaterStill],
+						types: [DoodadType.LitStoneWaterStill, DoodadType.LitSandstoneWaterStill],
 						doodadPrefix: "Start",
-						doodadActionPrefix: "started"
+						doodadActionPrefix: "started",
+						completionMessage: "a water still"
 					}
 				},
 				highlightElementSelector: [
@@ -594,7 +604,7 @@ export default class StarterQuest extends Mod {
 			},
 			{
 				name: "Drinkable Water",
-				description: `Choose the "<em>Gather Water</em>" option from your now empty container while facing the unlit stone water still. You will gather the fresh, desalinated water. Ready to drink as desired. You will only need to complete a process such as this for drinking sea or ocean water.`,
+				description: 'Choose the "<em>Gather Water</em>" option from your now empty container while facing the unlit water still. You will gather the fresh, desalinated water. Ready to drink as desired. You will only need to complete a process such as this for drinking sea or ocean water.',
 				completion: {
 					messages: {
 						types: [Message.FilledFrom],
@@ -611,13 +621,13 @@ export default class StarterQuest extends Mod {
 			}
 		];
 
-		this.messageQuestCompleted = this.addMessage("QuestCompleted", `You have completed the "_0_" quest.`);
+		this.messageQuestCompleted = this.addMessage("QuestCompleted", 'You have completed the "_0_" quest.');
 		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", "You have _0_ _1_/_2_ _3_.");
 		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", "You have equipped _0_.");
 		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", "You have _0_ _1_.");
-		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", `You have completed the "_0_" objective.`);
+		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", 'You have completed the "_0_" objective.');
 
-		this.button = this.createButton("Starter Quest", this.getPath() + "/images/starterquest.png", this.keyBind);
+		this.button = this.createButton("Starter Quest", `${this.getPath()}/images/starterquest.png`, this.keyBind);
 	}
 
 	public onSave(): any {
@@ -642,30 +652,30 @@ export default class StarterQuest extends Mod {
 
 	public onShowInGameScreen(): void {
 		this.container = $("<div></div>");
-		this.inner = $(`<div class="inner"></div>`);
+		this.inner = $('<div class="inner"></div>');
 		this.container.append(this.inner);
 
-		this.containerName = $(`<div style="font-size: 16px; line-height: 16px;"></div>`);
+		this.containerName = $('<div style="font-size: 16px; line-height: 16px;"></div>');
 		this.inner.append(this.containerName);
 
-		this.containerDescription = $(`<p style="margin-top: 5px;"></p>`);
+		this.containerDescription = $('<p style="margin-top: 5px;"></p>');
 		this.inner.append(this.containerDescription);
 		this.inner.append("<br />");
 
-		this.inner.append(`<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">Objectives</div>`);
+		this.inner.append('<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">Objectives</div>');
 
-		this.containerProgress = $(`<ul style="margin-top: 5px; list-style: none;" data-id="objectives"></ul>`);
+		this.containerProgress = $('<ul style="margin-top: 5px; list-style: none;" data-id="objectives"></ul>');
 		this.inner.append(this.containerProgress);
 
 		// Complete quest
-		this.containerCompleteButton = $(`<button style="display: block; width: auto; margin-top: 15px;">Start Quest</button>`);
+		this.containerCompleteButton = $('<button style="display: block; width: auto; margin-top: 15px;">Start Quest</button>');
 		this.containerCompleteButton.click(() => {
 			this.onCompleteQuestClick();
 		});
 		this.inner.append(this.containerCompleteButton);
 
 		// Back button
-		this.containerBackButton = $(`<button style="margin-top: 15px; margin-right: 5px;">Back</button>`);
+		this.containerBackButton = $('<button style="margin-top: 15px; margin-right: 5px;">Back</button>');
 		this.containerBackButton.click(() => {
 			if (this.data.current > 0) {
 				this.setQuest(this.data.current - 1);
@@ -674,7 +684,7 @@ export default class StarterQuest extends Mod {
 		this.inner.append(this.containerBackButton);
 
 		// Skip button
-		this.containerSkipButton = $(`<button style="margin-top: 15px;">Skip</button>`);
+		this.containerSkipButton = $('<button style="margin-top: 15px;">Skip</button>');
 		this.containerSkipButton.click(() => {
 			if (this.data.current < this.quests.length - 1) {
 				this.setQuest(this.data.current + 1);
@@ -683,7 +693,7 @@ export default class StarterQuest extends Mod {
 		this.inner.append(this.containerSkipButton);
 
 		// Close button (for last quest)
-		this.containerCloseButton = $(`<button style="margin-top: 15px;">Close</button>`);
+		this.containerCloseButton = $('<button style="margin-top: 15px;">Close</button>');
 		this.containerCloseButton.click(() => {
 			$(this.container).dialog("close");
 		});
@@ -723,28 +733,28 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
-	public onKeyBindPress(keyBind: number): boolean {
-		switch (keyBind) {
-			case this.keyBind:
-				ui.toggleDialog(this.dialog);
-				return false;
+	public onBindLoop(bindPressed: true | undefined, api: BindCatcherApi): true | undefined {
+		if (api.wasPressed(this.keyBind) && !bindPressed) {
+			ui.toggleDialog(this.dialog);
+			bindPressed = true;
 		}
-		return undefined;
+
+		return bindPressed;
 	}
 
-	public onInventoryItemAdd(item: IItem, container: IContainer): void {
+	public onInventoryItemAdd(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
-	public onInventoryItemRemove(item: IItem, container: IContainer): void {
+	public onInventoryItemRemove(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
-	public onInventoryItemUpdate(item: IItem, container: IContainer): void {
+	public onInventoryItemUpdate(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
-	public onItemEquip(item: IItem, equip: EquipType): void {
+	public onItemEquip(player: IPlayer, item: IItem, equip: EquipType): void {
 		const quest = this.quests[this.data.current];
 
 		if (!quest.completion) {
@@ -775,13 +785,13 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
-	public onTurnComplete(): void {
+	public onTurnEnd(player: IPlayer): void {
 		if (this.updateQuestDoodads()) {
 			this.updateProgress();
 		}
 	}
 
-	public onMoveDirectionUpdate(direction: FacingDirection): void {
+	public onMoveDirectionUpdate(player: IPlayer, direction: FacingDirection): void {
 		if (this.updateQuestDoodads()) {
 			this.updateProgress();
 		}
@@ -869,57 +879,66 @@ export default class StarterQuest extends Mod {
 		const hasObjectives = questItems || questEquips || questDoodads || questMessages;
 
 		if (hasObjectives) {
-			this.container.find(`[data-id="objectives"]`).show();
+			this.container.find('[data-id="objectives"]').show();
 
 			if (questItems) {
 				for (let i = 0; i < questItems.length; i++) {
 					const questItem = questItems[i];
 
-					const isItemGroup = itemManager.isItemTypeGroup(questItem.type);
-					let questItemName = itemManager.getItemTypeGroupName(questItem.type, false);
-
-					const collected = Math.min(isItemGroup ? itemManager.countItemsInContainerByGroup(localPlayer.inventory, questItem.type as ItemTypeGroup) : itemManager.countItemsInContainer(localPlayer.inventory, questItem.type as ItemType), questItem.amount);
-
-					if (!this.data.completion.items) {
-						this.data.completion.items = [];
-					}
-
-					let message = false;
 					let style = "";
+					let itemLine = "";
+					for (const questItemTypes of questItem.types) {
 
-					if (this.data.completion.items[i]) {
-						if (this.data.completion.items[i].amount !== collected) {
-							this.data.completion.items[i].amount = collected;
+						const isItemGroup = itemManager.isItemTypeGroup(questItemTypes);
+						let questItemName = itemManager.getItemTypeGroupName(questItemTypes, false);
+						const questMessageItemName = itemManager.getItemTypeGroupName(questItemTypes, false, SentenceCaseStyle.None);
+
+						const collected = Math.min(isItemGroup ? itemManager.countItemsInContainerByGroup(localPlayer.inventory, questItemTypes as ItemTypeGroup) : itemManager.countItemsInContainer(localPlayer.inventory, questItemTypes as ItemType), questItem.amount);
+
+						if (!this.data.completion.items) {
+							this.data.completion.items = [];
+						}
+
+						let message = false;
+
+						if (this.data.completion.items[i]) {
+							if (this.data.completion.items[i].amount !== collected) {
+								this.data.completion.items[i].amount = collected;
+								message = true;
+							}
+						} else {
+							this.data.completion.items[i] = {
+								types: questItem.types,
+								amount: collected
+							};
 							message = true;
 						}
-					} else {
-						this.data.completion.items[i] = {
-							type: questItem.type,
-							amount: collected
-						};
-						message = true;
+
+						if (this.data.completion.items[i].amount === questItem.amount) {
+							this.data.completion.items[i].complete = true;
+							style = "text-decoration: line-through;";
+						}
+
+						let questType = "";
+						const itemName = questItemName;
+						if (questItem.craft) {
+							questItemName = `Craft ${questItemName}`;
+							questType = "crafted ";
+						} else {
+							questItemName = `Collect ${questItemName}`;
+							questType = "collected ";
+						}
+
+						itemLine += `${this.data.completion.items[i].amount}/${questItem.amount} ${questItemName} Or `;
+
+						if (message && this.data.completion.items[i].amount > 0) {
+							ui.displayMessage(localPlayer, this.messageQuestProgressItemCollected, MessageType.Skill, questType, this.data.completion.items[i].amount, questItem.amount, questMessageItemName);
+						}
+
 					}
 
-					if (this.data.completion.items[i].amount === questItem.amount) {
-						this.data.completion.items[i].complete = true;
-						style = "text-decoration: line-through;";
-					}
+					this.containerProgress.append(`<li style="${style}">${itemLine.slice(0, -4)}</li>`);
 
-					let questType = "";
-					const itemName = questItemName;
-					if (questItem.craft) {
-						questItemName = "Craft " + questItemName;
-						questType = "Crafted ";
-					} else {
-						questItemName = "Collect " + questItemName;
-						questType = "Collected ";
-					}
-
-					this.containerProgress.append(`<li style="${style}">${this.data.completion.items[i].amount}/${questItem.amount} ${questItemName}</li>`);
-
-					if (message && this.data.completion.items[i].amount > 0) {
-						ui.displayMessage(localPlayer, this.messageQuestProgressItemCollected, MessageType.Skill, questType, this.data.completion.items[i].amount, questItem.amount, itemName);
-					}
 				}
 			}
 
@@ -927,6 +946,7 @@ export default class StarterQuest extends Mod {
 				for (let i = 0; i < questEquips.length; i++) {
 					const questEquip = questEquips[i];
 					const questItemName = questEquip.type ? Items[questEquip.type].name : "An Item";
+					const questMessageItemName = questEquip.type ? Items[questEquip.type].name : "an item";
 
 					if (!this.data.completion.equips) {
 						this.data.completion.equips = [];
@@ -945,7 +965,7 @@ export default class StarterQuest extends Mod {
 
 					if (this.data.completion.equips[i].complete && !this.data.completion.equips[i].notified) {
 						this.data.completion.equips[i].notified = true;
-						ui.displayMessage(localPlayer, this.messageQuestProgressEquipped, MessageType.Skill, questItemName);
+						ui.displayMessage(localPlayer, this.messageQuestProgressEquipped, MessageType.Skill, questMessageItemName);
 					}
 				}
 			}
@@ -955,16 +975,27 @@ export default class StarterQuest extends Mod {
 
 				const doodadPrefix = questDoodads.doodadPrefix;
 				const doodadActionPrefix = questDoodads.doodadActionPrefix;
-				const doodadDesc = Doodads[questDoodads.types[0]];
+				const doodadCompletionMessage = questDoodads.completionMessage;
 
-				const style = this.data.completion.doodads.complete ? "text-decoration: line-through;" : "";
+				let style = "";
+				let doodadLine = "";
+				for (const questDoodadTypes of questDoodads.types) {
 
-				this.containerProgress.append(`<li style="${style}">${doodadPrefix} ${game.getNameFromDescription(doodadDesc, SentenceCaseStyle.Title)}</li>`);
+					const doodadDesc = Doodads[questDoodadTypes];
 
-				if (this.data.completion.doodads.complete && !this.data.completion.doodads.notified) {
-					this.data.completion.doodads.notified = true;
-					ui.displayMessage(localPlayer, this.messageQuestProgressFinished, MessageType.Skill, doodadActionPrefix, game.getNameFromDescription(doodadDesc, SentenceCaseStyle.Sentence));
+					style = this.data.completion.doodads.complete ? "text-decoration: line-through;" : "";
+
+					doodadLine += `${doodadPrefix} ${game.getNameFromDescription(doodadDesc, SentenceCaseStyle.Title)} Or `;
+
+					if (this.data.completion.doodads.complete && !this.data.completion.doodads.notified) {
+						this.data.completion.doodads.notified = true;
+						ui.displayMessage(localPlayer, this.messageQuestProgressFinished, MessageType.Skill, doodadActionPrefix, doodadCompletionMessage);
+					}
+
 				}
+
+				this.containerProgress.append(`<li style="${style}">${doodadLine.slice(0, -4)}</li>`);
+
 			}
 
 			if (questMessages) {
@@ -990,7 +1021,7 @@ export default class StarterQuest extends Mod {
 				}
 			}
 		} else {
-			this.container.find(`[data-id="objectives"]`).hide();
+			this.container.find('[data-id="objectives"]').hide();
 		}
 
 		// console.log("quest data", this.data, this.isQuestCompletable());
@@ -1019,7 +1050,8 @@ export default class StarterQuest extends Mod {
 			this.data.completion.doodads = {
 				types: quest.completion.doodads.types,
 				doodadPrefix: quest.completion.doodads.doodadPrefix,
-				doodadActionPrefix: quest.completion.doodads.doodadActionPrefix
+				doodadActionPrefix: quest.completion.doodads.doodadActionPrefix,
+				completionMessage: quest.completion.doodads.completionMessage
 			};
 		}
 
@@ -1083,7 +1115,7 @@ export default class StarterQuest extends Mod {
 			for (let i = 0; i < items.length; i++) {
 				const item = items[i];
 				if (item.isEquipped()) {
-					this.onItemEquip(item, item.getEquipSlot());
+					this.onItemEquip(localPlayer, item, item.getEquipSlot());
 				}
 			}
 		}
