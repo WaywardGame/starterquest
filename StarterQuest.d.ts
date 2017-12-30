@@ -2,8 +2,8 @@ import { EquipType, FacingDirection } from "Enums";
 import { IContainer, IItem } from "item/IItem";
 import { Message, MessageType } from "language/Messages";
 import Mod from "mod/Mod";
-import { IPlayer } from "player/IPlayer";
 import { BindCatcherApi } from "newui/BindingManager";
+import { IPlayer } from "player/IPlayer";
 export default class StarterQuest extends Mod {
     private quests;
     private button;
@@ -20,6 +20,7 @@ export default class StarterQuest extends Mod {
     private keyBind;
     private data;
     private globalData;
+    private dictionary;
     private messageQuestCompleted;
     private messageQuestProgressItemCollected;
     private messageQuestProgressEquipped;

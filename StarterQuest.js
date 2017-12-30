@@ -3,6 +3,107 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
     Object.defineProperty(exports, "__esModule", { value: true });
     var StarterQuestDictionary;
     (function (StarterQuestDictionary) {
+        StarterQuestDictionary[StarterQuestDictionary["NameWelcome"] = 0] = "NameWelcome";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionWelcome"] = 1] = "DescriptionWelcome";
+        StarterQuestDictionary[StarterQuestDictionary["NameGearUp"] = 2] = "NameGearUp";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionGearUp"] = 3] = "DescriptionGearUp";
+        StarterQuestDictionary[StarterQuestDictionary["NameLeftRightHand"] = 4] = "NameLeftRightHand";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionLeftRightHand"] = 5] = "DescriptionLeftRightHand";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionLeftRightHand"] = 6] = "CompletionDescriptionLeftRightHand";
+        StarterQuestDictionary[StarterQuestDictionary["NameResourceGathering"] = 7] = "NameResourceGathering";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionResourceGathering"] = 8] = "DescriptionResourceGathering";
+        StarterQuestDictionary[StarterQuestDictionary["NameCrafting"] = 9] = "NameCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCrafting"] = 10] = "DescriptionCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["NameDismantling"] = 11] = "NameDismantling";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionDismantling"] = 12] = "DescriptionDismantling";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionDismantling"] = 13] = "CompletionDescriptionDismantling";
+        StarterQuestDictionary[StarterQuestDictionary["NameHunting"] = 14] = "NameHunting";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionHunting"] = 15] = "DescriptionHunting";
+        StarterQuestDictionary[StarterQuestDictionary["NameWoodenPoles"] = 16] = "NameWoodenPoles";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionWoodenPoles"] = 17] = "DescriptionWoodenPoles";
+        StarterQuestDictionary[StarterQuestDictionary["NameHandDrill"] = 18] = "NameHandDrill";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionHandDrill"] = 19] = "DescriptionHandDrill";
+        StarterQuestDictionary[StarterQuestDictionary["NameKindlingTinder"] = 20] = "NameKindlingTinder";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionKindlingTinder"] = 21] = "DescriptionKindlingTinder";
+        StarterQuestDictionary[StarterQuestDictionary["NameCampfireMaterials"] = 22] = "NameCampfireMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCampfireMaterials"] = 23] = "DescriptionCampfireMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["NameCampfireCrafting"] = 24] = "NameCampfireCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCampfireCrafting"] = 25] = "DescriptionCampfireCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["NameCampfireBuilding"] = 26] = "NameCampfireBuilding";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCampfireBuilding"] = 27] = "DescriptionCampfireBuilding";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadPrefixCampfireBuilding"] = 28] = "CompletionDoodadPrefixCampfireBuilding";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadActionPrefixCampfireBuilding"] = 29] = "CompletionDoodadActionPrefixCampfireBuilding";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionMessageCampfireBuilding"] = 30] = "CompletionDescriptionMessageCampfireBuilding";
+        StarterQuestDictionary[StarterQuestDictionary["NameFire"] = 31] = "NameFire";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionFire"] = 32] = "DescriptionFire";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadPrefixFire"] = 33] = "CompletionDoodadPrefixFire";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadActionPrefixFire"] = 34] = "CompletionDoodadActionPrefixFire";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionMessageFire"] = 35] = "CompletionDescriptionMessageFire";
+        StarterQuestDictionary[StarterQuestDictionary["NameStokingFire"] = 36] = "NameStokingFire";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionStokingFire"] = 37] = "DescriptionStokingFire";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionStokingFire"] = 38] = "CompletionDescriptionStokingFire";
+        StarterQuestDictionary[StarterQuestDictionary["NameCookingFire"] = 39] = "NameCookingFire";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCookingFire"] = 40] = "DescriptionCookingFire";
+        StarterQuestDictionary[StarterQuestDictionary["NameDrinkableWater"] = 41] = "NameDrinkableWater";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionDrinkableWater"] = 42] = "DescriptionDrinkableWater";
+        StarterQuestDictionary[StarterQuestDictionary["NameCordage"] = 43] = "NameCordage";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionCordage"] = 44] = "DescriptionCordage";
+        StarterQuestDictionary[StarterQuestDictionary["NameString"] = 45] = "NameString";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionString"] = 46] = "DescriptionString";
+        StarterQuestDictionary[StarterQuestDictionary["NameGrindingMaterials"] = 47] = "NameGrindingMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionGrindingMaterials"] = 48] = "DescriptionGrindingMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["NameHuntLeather"] = 49] = "NameHuntLeather";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionHuntLeather"] = 50] = "DescriptionHuntLeather";
+        StarterQuestDictionary[StarterQuestDictionary["NameTannedLeather"] = 51] = "NameTannedLeather";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionTannedLeather"] = 52] = "DescriptionTannedLeather";
+        StarterQuestDictionary[StarterQuestDictionary["NameWaterskin"] = 53] = "NameWaterskin";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionWaterskin"] = 54] = "DescriptionWaterskin";
+        StarterQuestDictionary[StarterQuestDictionary["NameWaterStillMaterials"] = 55] = "NameWaterStillMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionWaterStillMaterials"] = 56] = "DescriptionWaterStillMaterials";
+        StarterQuestDictionary[StarterQuestDictionary["NameWaterStillCrafting"] = 57] = "NameWaterStillCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionWaterStillCrafting"] = 58] = "DescriptionWaterStillCrafting";
+        StarterQuestDictionary[StarterQuestDictionary["NameSeawater"] = 59] = "NameSeawater";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionSeawater"] = 60] = "DescriptionSeawater";
+        StarterQuestDictionary[StarterQuestDictionary["NameBuildingStill"] = 61] = "NameBuildingStill";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionBuildingStill"] = 62] = "DescriptionBuildingStill";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadPrefixBuildingStill"] = 63] = "CompletionDoodadPrefixBuildingStill";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadActionPrefixBuildingStill"] = 64] = "CompletionDoodadActionPrefixBuildingStill";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionMessageBuildingStill"] = 65] = "CompletionDescriptionMessageBuildingStill";
+        StarterQuestDictionary[StarterQuestDictionary["NameFillingStill"] = 66] = "NameFillingStill";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionFillingStill"] = 67] = "DescriptionFillingStill";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionFillingStill"] = 68] = "CompletionDescriptionFillingStill";
+        StarterQuestDictionary[StarterQuestDictionary["NameDesalination"] = 69] = "NameDesalination";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionDesalination"] = 70] = "DescriptionDesalination";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadPrefixDesalination"] = 71] = "CompletionDoodadPrefixDesalination";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDoodadActionPrefixDesalination"] = 72] = "CompletionDoodadActionPrefixDesalination";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionMessageDesalination"] = 73] = "CompletionDescriptionMessageDesalination";
+        StarterQuestDictionary[StarterQuestDictionary["NameGatherWater"] = 74] = "NameGatherWater";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionGatherWater"] = 75] = "DescriptionGatherWater";
+        StarterQuestDictionary[StarterQuestDictionary["CompletionDescriptionGatherWater"] = 76] = "CompletionDescriptionGatherWater";
+        StarterQuestDictionary[StarterQuestDictionary["NameSurvivalistTraining"] = 77] = "NameSurvivalistTraining";
+        StarterQuestDictionary[StarterQuestDictionary["DescriptionSurvivalistTraining"] = 78] = "DescriptionSurvivalistTraining";
+        StarterQuestDictionary[StarterQuestDictionary["QuestCompleted"] = 79] = "QuestCompleted";
+        StarterQuestDictionary[StarterQuestDictionary["QuestProgressItemCollected"] = 80] = "QuestProgressItemCollected";
+        StarterQuestDictionary[StarterQuestDictionary["QuestProgressItemEquipped"] = 81] = "QuestProgressItemEquipped";
+        StarterQuestDictionary[StarterQuestDictionary["QuestProgressFinished"] = 82] = "QuestProgressFinished";
+        StarterQuestDictionary[StarterQuestDictionary["QuestProgressCompleted"] = 83] = "QuestProgressCompleted";
+        StarterQuestDictionary[StarterQuestDictionary["StarterQuestTitle"] = 84] = "StarterQuestTitle";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonObjectives"] = 85] = "ButtonObjectives";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonStartQuest"] = 86] = "ButtonStartQuest";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonBack"] = 87] = "ButtonBack";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonSkip"] = 88] = "ButtonSkip";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonClose"] = 89] = "ButtonClose";
+        StarterQuestDictionary[StarterQuestDictionary["ButtonCompleteQuest"] = 90] = "ButtonCompleteQuest";
+        StarterQuestDictionary[StarterQuestDictionary["QuestTitle"] = 91] = "QuestTitle";
+        StarterQuestDictionary[StarterQuestDictionary["QuestCraft"] = 92] = "QuestCraft";
+        StarterQuestDictionary[StarterQuestDictionary["QuestCrafted"] = 93] = "QuestCrafted";
+        StarterQuestDictionary[StarterQuestDictionary["QuestCollect"] = 94] = "QuestCollect";
+        StarterQuestDictionary[StarterQuestDictionary["QuestCollected"] = 95] = "QuestCollected";
+        StarterQuestDictionary[StarterQuestDictionary["QuestItem"] = 96] = "QuestItem";
+        StarterQuestDictionary[StarterQuestDictionary["QuestAnItem"] = 97] = "QuestAnItem";
+        StarterQuestDictionary[StarterQuestDictionary["QuestAnItemLowercase"] = 98] = "QuestAnItemLowercase";
+        StarterQuestDictionary[StarterQuestDictionary["QuestEquip"] = 99] = "QuestEquip";
+        StarterQuestDictionary[StarterQuestDictionary["QuestDoodad"] = 100] = "QuestDoodad";
     })(StarterQuestDictionary || (StarterQuestDictionary = {}));
     class StarterQuest extends Mod_1.default {
         constructor() {
@@ -11,6 +112,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
         }
         onInitialize(saveDataGlobal) {
             this.keyBind = this.addBindable("Toggle", { key: "KeyJ" });
+            this.dictionary = this.addDictionary("StarterQuest", StarterQuestDictionary);
             this.globalData = saveDataGlobal;
             if (!this.globalData) {
                 this.globalData = {
@@ -28,19 +130,17 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     completion: {}
                 };
             }
-            const english = languageManager.getLanguage("English");
-            this.addDictionary("starterQuest", StarterQuestDictionary);
             this.quests = [
                 {
-                    name: "Welcome",
-                    description: `If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 15-45 minutes and is completely optional.<br /><br />Press <em>${BindingManager_1.bindingManager.getBindTranslation(this.keyBind)}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click "<em>Start Quest</em>" to start your first quest.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWelcome),
+                    description: Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWelcome), BindingManager_1.bindingManager.getBindTranslation(this.keyBind)),
                     completion: {
                         complete: true
                     }
                 },
                 {
-                    name: "Gear Up",
-                    description: `Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing <em>${BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.DialogEquipment)}</em> or by clicking the equipment icon at the top of your screen. Right clicking an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various tasks.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with "<em>Equip: Held</em>" in its description from your inventory into either the left or right hand in your equipment window.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGearUp),
+                    description: Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGearUp), BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.DialogEquipment)),
                     completion: {
                         equips: [
                             {
@@ -56,12 +156,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Left/Right Hand Use",
-                    description: `By default, you will use both hands to automatically gather and attack. You can enable and disable each hand. This is useful when you only want to use a certain tool for gathering or weapon for attacking. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the <em>${BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.GameHandToggleLeft)}</em> and <em>${BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.GameHandToggleRight)}</em> keybinds.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameLeftRightHand),
+                    description: Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionLeftRightHand), BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.GameHandToggleLeft), BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.GameHandToggleRight)),
                     completion: {
                         messages: {
                             types: [Messages_1.Message.YouHaveEnabledDisabled],
-                            description: "Toggle Hands"
+                            description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionLeftRightHand)
                         }
                     },
                     highlightElementSelector: [
@@ -71,8 +171,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Resource Gathering",
-                    description: "Now that you have something equipped and selected, you can try gathering some resources.<br /><br />There are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameResourceGathering),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionResourceGathering),
                     completion: {
                         items: [
                             {
@@ -87,8 +187,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     }
                 },
                 {
-                    name: "Crafting",
-                    description: `To survive, you will need to craft new items from the resources you gather. Press <em>${BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.DialogCrafting)}</em> to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCrafting),
+                    description: Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCrafting), BindingManager_1.bindingManager.getBindTranslation(Enums_1.Bindable.DialogCrafting)),
                     completion: {
                         items: [
                             {
@@ -105,12 +205,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Dismantling",
-                    description: 'Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the "<em>Dismantle</em>" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items from right clicking on them in your inventory and selecting "<em>Dismantle</em>".',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDismantling),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDismantling),
                     completion: {
                         messages: {
                             types: [Messages_1.Message.YouDismantled],
-                            description: "Dismantle An Item"
+                            description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionDismantling)
                         }
                     },
                     highlightElementSelector: [
@@ -121,8 +221,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Hunting",
-                    description: `With crafting knowledge under your belt, it's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a "<em>Sharpened</em>" item while facing it by using "<em>Carve</em>" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHunting),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHunting),
                     completion: {
                         items: [
                             {
@@ -140,8 +240,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Wooden Poles",
-                    description: 'You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two "<em>Wooden Poles</em>".',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWoodenPoles),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWoodenPoles),
                     completion: {
                         items: [
                             {
@@ -157,8 +257,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Hand Drill",
-                    description: 'At this point, you will have unlocked a new crafting recipe called "<em>Hand Drill</em>", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHandDrill),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHandDrill),
                     completion: {
                         items: [
                             {
@@ -173,8 +273,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Kindling & Tinder",
-                    description: "The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves and more.<br /><br />Craft, dismantle, or find kindling and tinder!",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameKindlingTinder),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionKindlingTinder),
                     completion: {
                         items: [
                             {
@@ -194,8 +294,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Campfire Materials",
-                    description: `You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make either a "<em>Stone Campfire</em>" or "<em>Sandstone Campfire</em>". You'll need quite a few rocks or sandstone for this endeavor.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireMaterials),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireMaterials),
                     completion: {
                         items: [
                             {
@@ -206,8 +306,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     }
                 },
                 {
-                    name: "Campfire Crafting",
-                    description: "With all the rocks or sandstone from the last quest, you will now be able to craft a campfire.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireCrafting),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireCrafting),
                     completion: {
                         items: [
                             {
@@ -223,14 +323,14 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Campfire Building",
-                    description: 'With some items, you will be able to build them, and temporarily affix them to the world. These objects that are attached/placed on tiles, are called "<em>Doodads</em>". Right clicking on the campfire in your inventory, you will give you the option to "<em>Build</em>" it. Do so now, facing a valid tile.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireBuilding),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireBuilding),
                     completion: {
                         doodads: {
                             types: [Enums_1.DoodadType.StoneCampfire, Enums_1.DoodadType.SandstoneCampfire],
-                            doodadPrefix: "Build",
-                            doodadActionPrefix: "built",
-                            completionMessage: "a campfire"
+                            doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixCampfireBuilding),
+                            doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixCampfireBuilding),
+                            completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageCampfireBuilding)
                         }
                     },
                     highlightElementSelector: [
@@ -239,14 +339,14 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Fire!",
-                    description: `With your hand drill, select the "<em>Start Fire</em>" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire at low Camping skill. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.<br /><br />Be careful not to step in your fire!`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameFire),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionFire),
                     completion: {
                         doodads: {
                             types: [Enums_1.DoodadType.LitStoneCampfire, Enums_1.DoodadType.LitSandstoneCampfire],
-                            doodadPrefix: "Start",
-                            doodadActionPrefix: "started",
-                            completionMessage: "a campfire"
+                            doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixFire),
+                            doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixFire),
+                            completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageFire)
                         }
                     },
                     highlightElementSelector: [
@@ -254,12 +354,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Stoking Fire",
-                    description: 'Your fire could probably use more fuel as well. To add fuel to a fire, right click an item and choose the "<em>Stoke Fire</em>" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have world tool-tips disabled, you can also check the status by shift + right clicking it.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameStokingFire),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionStokingFire),
                     completion: {
                         messages: {
                             types: [Messages_1.Message.AddedFuelToFire],
-                            description: "Stoke Fire"
+                            description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionStokingFire)
                         }
                     },
                     highlightElementSelector: [
@@ -271,8 +371,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Cooking with Fire",
-                    description: "Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.<br /><br />A skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCookingFire),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCookingFire),
                     completion: {
                         items: [
                             {
@@ -293,8 +393,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Drinkable Water",
-                    description: `Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First, you'll need to make a "<em>Waterskin</em>" to hold this water. Collect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.<br /><br />Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified from the craft menu directly.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDrinkableWater),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDrinkableWater),
                     completion: {
                         items: [
                             {
@@ -308,8 +408,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Cordage",
-                    description: 'A very common resource for making many items in Wayward is "<em>String</em>". By combining two items that are considered "<em>Cordage</em>", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more. See if you can find four of them.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCordage),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCordage),
                     completion: {
                         items: [
                             {
@@ -324,8 +424,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "String",
-                    description: "With string and the needle, you'll be able to sew the waterskin together. Combine the four cordage items together to create the string.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameString),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionString),
                     completion: {
                         items: [
                             {
@@ -340,8 +440,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Grinding Materials",
-                    description: "You're going to need some material for that waterskin. The perfect material is tanned leather. You'll need to make something to grind your tannin with. Mortar and pestles can be crafted with smooth rocks, logs, or even sandstone. After you craft the mortar and pestle, you can grind down tree bark into tannin. This special powder can tan the leather for the waterskin.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGrindingMaterials),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGrindingMaterials),
                     completion: {
                         items: [
                             {
@@ -363,8 +463,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     allowMultipleHighlights: true
                 },
                 {
-                    name: "Hunt for Leather",
-                    description: "Venture forth and find a creature with a pelt. Creatures with pelts include giant rats, rabbits, grey wolves, and bears. Be very careful with the latter two - you may have to improve your combat skills or craft armor if these prove too much for you. Never be afraid to run from a losing battle. Carve its corpse to get the animal pelt.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHuntLeather),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHuntLeather),
                     completion: {
                         items: [
                             {
@@ -375,8 +475,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     }
                 },
                 {
-                    name: "Tanned Leather",
-                    description: 'With the animal pelt from the creature, you can now tan it with the tannin. Simply dismantle the pelt to remove the fur and gain the cleaned leather hide. After the dismantle, craft "<em>Tanned Leather</em>" from the crafting window.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameTannedLeather),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionTannedLeather),
                     completion: {
                         items: [
                             {
@@ -391,8 +491,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Waterskin",
-                    description: "You finally have everything you need to sew and fabricate the waterskin. Craft it with the tanned leather, strings, and a needle.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterskin),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterskin),
                     completion: {
                         items: [
                             {
@@ -407,8 +507,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Water Still Materials",
-                    description: 'Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather and collect the following resources to be able to craft a "<em>Stone Water Still</em>" or "<em>Sandstone Water Still</em>".',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterStillMaterials),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterStillMaterials),
                     completion: {
                         items: [
                             {
@@ -435,8 +535,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     }
                 },
                 {
-                    name: "Water Still Crafting",
-                    description: "After gathering all those resources, you can go ahead and craft the water still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterStillCrafting),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterStillCrafting),
                     completion: {
                         items: [
                             {
@@ -452,8 +552,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Seawater",
-                    description: 'To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the "<em>Gather Water</em>" option while facing the ocean with your container.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameSeawater),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionSeawater),
                     completion: {
                         items: [
                             {
@@ -467,14 +567,14 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Building the Still",
-                    description: `Just like with the campfire previously, you'll be able to "<em>Build</em>" the water still facing a valid tile from the item's menu. Do so now.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameBuildingStill),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionBuildingStill),
                     completion: {
                         doodads: {
                             types: [Enums_1.DoodadType.StoneWaterStill, Enums_1.DoodadType.SandstoneWaterStill],
-                            doodadPrefix: "Build",
-                            doodadActionPrefix: "built",
-                            completionMessage: "a water still"
+                            doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixBuildingStill),
+                            doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixBuildingStill),
+                            completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageBuildingStill)
                         }
                     },
                     highlightElementSelector: [
@@ -483,12 +583,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Filling the Still",
-                    description: `While still facing the water still, choose the "<em>Pour</em>" option from your container of seawater's item menu. This will pour the liquid into the water still.`,
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameFillingStill),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionFillingStill),
                     completion: {
                         messages: {
                             types: [Messages_1.Message.PouredWaterIntoStill],
-                            description: "Pour Water Into Still"
+                            description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionFillingStill)
                         }
                     },
                     highlightElementSelector: [
@@ -496,14 +596,14 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Desalination",
-                    description: "You'll need to light the water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out before you can collect the water.",
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDesalination),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDesalination),
                     completion: {
                         doodads: {
                             types: [Enums_1.DoodadType.LitStoneWaterStill, Enums_1.DoodadType.LitSandstoneWaterStill],
-                            doodadPrefix: "Start",
-                            doodadActionPrefix: "started",
-                            completionMessage: "a water still"
+                            doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixDesalination),
+                            doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixDesalination),
+                            completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageDesalination)
                         }
                     },
                     highlightElementSelector: [
@@ -511,12 +611,12 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Drinkable Water",
-                    description: 'Choose the "<em>Gather Water</em>" option from your now empty container while facing the unlit water still. You will gather the fresh, desalinated water. Ready to drink as desired. You will only need to complete a process such as this for drinking sea or ocean water.',
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGatherWater),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGatherWater),
                     completion: {
                         messages: {
                             types: [Messages_1.Message.FilledFrom],
-                            description: "Gather Water"
+                            description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionGatherWater)
                         }
                     },
                     highlightElementSelector: [
@@ -524,16 +624,16 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     ]
                 },
                 {
-                    name: "Survivalist in Training",
-                    description: "That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.<br /><br />Treasure, you remember something about treasure..."
+                    name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameSurvivalistTraining),
+                    description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionSurvivalistTraining)
                 }
             ];
-            this.messageQuestCompleted = this.addMessage("QuestCompleted", 'You have completed the "_0_" quest.');
-            this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", "You have _0_ _1_/_2_ _3_.");
-            this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", "You have equipped _0_.");
-            this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", "You have _0_ _1_.");
-            this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", 'You have completed the "_0_" objective.');
-            this.button = this.createButton("Starter Quest", `${this.getPath()}/images/starterquest.png`, this.keyBind);
+            this.messageQuestCompleted = this.addMessage("QuestCompleted", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCompleted));
+            this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressItemCollected));
+            this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressItemEquipped));
+            this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressFinished));
+            this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressCompleted));
+            this.button = this.createButton(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.StarterQuestTitle), `${this.getPath()}/images/starterquest.png`, this.keyBind);
         }
         onSave() {
             return this.data;
@@ -556,36 +656,36 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
             this.containerDescription = $('<p style="margin-top: 5px;"></p>');
             this.inner.append(this.containerDescription);
             this.inner.append("<br />");
-            this.inner.append('<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">Objectives</div>');
+            this.inner.append(`<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonObjectives)}</div>`);
             this.containerProgress = $('<ul style="margin-top: 5px; list-style: none;" data-id="objectives"></ul>');
             this.inner.append(this.containerProgress);
-            this.containerCompleteButton = $('<button style="display: block; width: auto; margin-top: 15px;">Start Quest</button>');
+            this.containerCompleteButton = $(`<button style="display: block; width: auto; margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonStartQuest)}</button>`);
             this.containerCompleteButton.click(() => {
                 this.onCompleteQuestClick();
             });
             this.inner.append(this.containerCompleteButton);
-            this.containerBackButton = $('<button style="margin-top: 15px; margin-right: 5px;">Back</button>');
+            this.containerBackButton = $(`<button style="margin-top: 15px; margin-right: 5px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonBack)}</button>`);
             this.containerBackButton.click(() => {
                 if (this.data.current > 0) {
                     this.setQuest(this.data.current - 1);
                 }
             });
             this.inner.append(this.containerBackButton);
-            this.containerSkipButton = $('<button style="margin-top: 15px;">Skip</button>');
+            this.containerSkipButton = $(`<button style="margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonSkip)}</button>`);
             this.containerSkipButton.click(() => {
                 if (this.data.current < this.quests.length - 1) {
                     this.setQuest(this.data.current + 1);
                 }
             });
             this.inner.append(this.containerSkipButton);
-            this.containerCloseButton = $('<button style="margin-top: 15px;">Close</button>');
+            this.containerCloseButton = $(`<button style="margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonClose)}</button>`);
             this.containerCloseButton.click(() => {
                 $(this.container).dialog("close");
             });
             this.inner.append(this.containerCloseButton);
             this.dialog = this.createDialog(this.container, {
                 id: this.getName(),
-                title: "Starter Quest",
+                title: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.StarterQuestTitle),
                 open: this.data.dialogOpen !== false,
                 x: 20,
                 y: 180,
@@ -682,9 +782,9 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
         }
         updateDialog() {
             const quest = this.quests[this.data.current];
-            this.containerName.html(`${quest.name} (${this.data.current + 1}/${this.quests.length})`);
+            this.containerName.html(Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestTitle), quest.name, this.data.current + 1, this.quests.length));
             this.containerDescription.html(quest.description);
-            const questText = this.data.current === 0 ? "Start Quest" : "Complete Quest";
+            const questText = this.data.current === 0 ? languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonStartQuest) : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonCompleteQuest);
             this.containerCompleteButton.text(questText);
             if (this.data.current > 0) {
                 this.containerBackButton.show();
@@ -753,14 +853,14 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                             let questType = "";
                             const itemName = questItemName;
                             if (questItem.craft) {
-                                questItemName = `Craft ${questItemName}`;
-                                questType = "crafted ";
+                                questItemName = Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCraft), questItemName);
+                                questType = languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCrafted);
                             }
                             else {
-                                questItemName = `Collect ${questItemName}`;
-                                questType = "collected ";
+                                questItemName = Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCollect), questItemName);
+                                questType = languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCollected);
                             }
-                            itemLine += `${this.data.completion.items[i].amount}/${questItem.amount} ${questItemName} Or `;
+                            itemLine += Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestItem), this.data.completion.items[i].amount, questItem.amount, questItemName);
                             if (message && this.data.completion.items[i].amount > 0) {
                                 ui.displayMessage(localPlayer, this.messageQuestProgressItemCollected, Messages_1.MessageType.Skill, questType, this.data.completion.items[i].amount, questItem.amount, questMessageItemName);
                             }
@@ -771,8 +871,8 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                 if (questEquips) {
                     for (let i = 0; i < questEquips.length; i++) {
                         const questEquip = questEquips[i];
-                        const questItemName = questEquip.type ? Items_1.itemDescriptions[questEquip.type].name : "An Item";
-                        const questMessageItemName = questEquip.type ? Items_1.itemDescriptions[questEquip.type].name : "an item";
+                        const questItemName = questEquip.type ? Items_1.itemDescriptions[questEquip.type].name : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestAnItem);
+                        const questMessageItemName = questEquip.type ? Items_1.itemDescriptions[questEquip.type].name : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestAnItemLowercase);
                         if (!this.data.completion.equips) {
                             this.data.completion.equips = [];
                         }
@@ -783,7 +883,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                             };
                         }
                         const style = this.data.completion.equips[i].complete ? "text-decoration: line-through;" : "";
-                        this.containerProgress.append(`<li style="${style}">Equip ${questItemName} In ${Messages_1.messages[Enums_1.equipTypeToMessage[questEquip.equip]]}</li>`);
+                        this.containerProgress.append(`<li style="${style}">${Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestEquip), questItemName, Messages_1.messages[Enums_1.equipTypeToMessage[questEquip.equip]])}</li>`);
                         if (this.data.completion.equips[i].complete && !this.data.completion.equips[i].notified) {
                             this.data.completion.equips[i].notified = true;
                             ui.displayMessage(localPlayer, this.messageQuestProgressEquipped, Messages_1.MessageType.Skill, questMessageItemName);
@@ -800,7 +900,7 @@ define(["require", "exports", "doodad/Doodads", "Enums", "item/Items", "language
                     for (const questDoodadTypes of questDoodads.types) {
                         const doodadDesc = Doodads_1.default[questDoodadTypes];
                         style = this.data.completion.doodads.complete ? "text-decoration: line-through;" : "";
-                        doodadLine += `${doodadPrefix} ${game.getNameFromDescription(doodadDesc, Enums_1.SentenceCaseStyle.Title)} Or `;
+                        doodadLine += Messages_1.makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestDoodad), doodadPrefix, game.getNameFromDescription(doodadDesc, Enums_1.SentenceCaseStyle.Title));
                         if (this.data.completion.doodads.complete && !this.data.completion.doodads.notified) {
                             this.data.completion.doodads.notified = true;
                             ui.displayMessage(localPlayer, this.messageQuestProgressFinished, Messages_1.MessageType.Skill, doodadActionPrefix, doodadCompletionMessage);
