@@ -33,7 +33,7 @@
 			"nameCampfireCrafting": "Campfire Crafting",
 			"descriptionCampfireCrafting": "With all the rocks or sandstone from the last quest, you will now be able to craft a campfire.",
 			"nameCampfireBuilding": "Campfire Building",
-			"descriptionCampfireBuilding": "With some items, you will be able to build them, and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"<em>Doodads</em>\". Right clicking on the campfire in your inventory, you will give you the option to \"<em>Build</em>\" it. Do so now, facing a valid tile.",
+			"descriptionCampfireBuilding": "With some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"<em>Doodads</em>\". Right clicking on the campfire in your inventory will give you the option to \"<em>Build</em>\" it. Do so now, facing a valid tile.",
 			"completionDoodadPrefixCampfireBuilding": "Build",
 			"completionDoodadActionPrefixCampfireBuilding": "built",
 			"completionDescriptionMessageCampfireBuilding": "a campfire",
