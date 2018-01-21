@@ -6,6 +6,7 @@
 	"compatibleMinorVersions": [
 		5
 	],
+	"multiplayerClientside": true,
 	"hooks": [
 		"CanCreatureAttack",
 		"GetPlayerSpriteBatchLayer",

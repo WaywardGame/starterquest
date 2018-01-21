@@ -1163,7 +1163,7 @@ export default class StarterQuest extends Mod {
 		}
 
 		if (!this.data.completion.doodads.complete) {
-			const tile = game.getTileInFrontOfPlayer(localPlayer);
+			const tile = localPlayer.getFacingTile();
 			if (tile.doodad !== undefined) {
 				const doodad = tile.doodad;
 				if (quest.completion.doodads.types.indexOf(doodad.type) !== -1) {
