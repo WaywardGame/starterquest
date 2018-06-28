@@ -1,13 +1,15 @@
 import Doodads from "doodad/Doodads";
-import { Bindable, DamageType, DoodadType, EquipType, equipTypeToMessage, FacingDirection, ItemType, ItemTypeGroup, RecipeLevel, SentenceCaseStyle, SkillType } from "Enums";
+import { Bindable, Direction, DoodadType, EquipType, ItemType, ItemTypeGroup, SentenceCaseStyle } from "Enums";
 import { IContainer, IItem } from "item/IItem";
-import { itemDescriptions as Items, RecipeComponent } from "item/Items";
-import { Dictionary } from "language/ILanguage";
-import { makeString, Message, messages, MessageType } from "language/Messages";
-import { ModType } from "mod/IModManager";
+import { itemDescriptions as Items } from "item/Items";
+import { Message, MessageType } from "language/IMessages";
+import messages, { equipTypeToMessage } from "language/Messages";
+import Translation from "language/Translation";
+import { HookMethod } from "mod/IHookHost";
 import Mod from "mod/Mod";
-import { BindCatcherApi, bindingManager } from "newui/BindingManager";
+import { BindCatcherApi } from "newui/BindingManager";
 import { IPlayer } from "player/IPlayer";
+import { IMessage } from "player/IMessageManager";
 
 interface IGlobalSaveData {
 	maxQuest: number;
@@ -34,6 +36,7 @@ interface IQuestCompletion {
 	equips?: IQuestEquip[];
 	doodads?: IQuestDoodad;
 	messages?: IQuestMessage;
+	quickslots?: IQuestQuickslot;
 }
 
 interface IQuestRequirement {
@@ -42,7 +45,7 @@ interface IQuestRequirement {
 }
 
 interface IQuestItem extends IQuestRequirement {
-	types: [ItemType | ItemTypeGroup];
+	types: Array<ItemType | ItemTypeGroup>;
 	amount: number;
 	craft?: boolean;
 }
@@ -65,14 +68,18 @@ interface IQuestMessage extends IQuestRequirement {
 	description?: string;
 }
 
+interface IQuestQuickslot extends IQuestRequirement {
+	messages: string;
+}
+
 enum StarterQuestDictionary {
 	NameWelcome,
 	DescriptionWelcome,
 	NameGearUp,
 	DescriptionGearUp,
-	NameLeftRightHand,
-	DescriptionLeftRightHand,
-	CompletionDescriptionLeftRightHand,
+	NameQuickslots,
+	DescriptionQuickslots,
+	CompletionDescriptionQuickslots,
 	NameResourceGathering,
 	DescriptionResourceGathering,
 	NameCrafting,
@@ -80,6 +87,12 @@ enum StarterQuestDictionary {
 	NameDismantling,
 	DescriptionDismantling,
 	CompletionDescriptionDismantling,
+	NameCreatureTaming,
+	DescriptionCreatureTaming,
+	CompletionDescriptionCreatureTaming,
+	NameLeftRightHand,
+	DescriptionLeftRightHand,
+	CompletionDescriptionLeftRightHand,
 	NameHunting,
 	DescriptionHunting,
 	NameWoodenPoles,
@@ -107,6 +120,8 @@ enum StarterQuestDictionary {
 	CompletionDescriptionStokingFire,
 	NameCookingFire,
 	DescriptionCookingFire,
+	NameExtraStorage,
+	DescriptionExtraStorage,
 	NameDrinkableWater,
 	DescriptionDrinkableWater,
 	NameCordage,
@@ -148,6 +163,7 @@ enum StarterQuestDictionary {
 	QuestCompleted,
 	QuestProgressItemCollected,
 	QuestProgressItemEquipped,
+	QuestProgressItemQuickslotted,
 	QuestProgressFinished,
 	QuestProgressCompleted,
 	StarterQuestTitle,
@@ -169,10 +185,11 @@ enum StarterQuestDictionary {
 	QuestDoodad
 }
 
+let translation: (entry: StarterQuestDictionary) => Translation;
+
 export default class StarterQuest extends Mod {
 	private quests: IQuest[] = [];
 
-	private button: JQuery;
 	private dialog: JQuery;
 	private container: JQuery;
 	private inner: JQuery;
@@ -184,7 +201,7 @@ export default class StarterQuest extends Mod {
 	private containerSkipButton: JQuery;
 	private containerCloseButton: JQuery;
 
-	private keyBind: number;
+	private bindable: number;
 	private data: IQuestSaveData;
 	private globalData: IGlobalSaveData;
 
@@ -193,12 +210,17 @@ export default class StarterQuest extends Mod {
 	private messageQuestCompleted: number;
 	private messageQuestProgressItemCollected: number;
 	private messageQuestProgressEquipped: number;
+	private messageQuestProgressQuickslotted: number;
 	private messageQuestProgressFinished: number;
 	private messageQuestProgressCompleted: number;
 
+	private sourceQuest: number;
+
 	public onInitialize(saveDataGlobal: any): any {
-		this.keyBind = this.addBindable("Toggle", { key: "KeyJ" });
+		this.bindable = this.addBindable("Toggle", { key: "KeyJ" });
 		this.dictionary = this.addDictionary("StarterQuest", StarterQuestDictionary);
+		translation = Translation.bind(undefined, this.dictionary);
+		this.sourceQuest = this.addMessageSource("Quest");
 
 		this.globalData = saveDataGlobal;
 
@@ -207,6 +229,16 @@ export default class StarterQuest extends Mod {
 				maxQuest: 0
 			};
 		}
+
+		this.addMenuBarButton(
+			"Starter Quest",
+			{
+				bindable: this.bindable,
+				tooltip: tooltip => tooltip.addText(text => text
+					.setText(new Translation(this.dictionary, StarterQuestDictionary.StarterQuestTitle))),
+				onActivate: () => ui.toggleDialog(this.dialog)
+			}
+		);
 
 		return this.globalData;
 	}
@@ -224,15 +256,15 @@ export default class StarterQuest extends Mod {
 
 		this.quests = [
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWelcome),
-				description: makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWelcome), bindingManager.getBindTranslation(this.keyBind)),
+				name: translation(StarterQuestDictionary.NameWelcome).getString(),
+				description: translation(StarterQuestDictionary.DescriptionWelcome).getString(),
 				completion: {
 					complete: true
 				}
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGearUp),
-				description: makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGearUp), bindingManager.getBindTranslation(Bindable.DialogEquipment)),
+				name: translation(StarterQuestDictionary.NameGearUp).getString(),
+				description: translation(StarterQuestDictionary.DescriptionGearUp).getString(),
 				completion: {
 					equips: [
 						{
@@ -248,23 +280,20 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameLeftRightHand),
-				description: makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionLeftRightHand), bindingManager.getBindTranslation(Bindable.GameHandToggleLeft), bindingManager.getBindTranslation(Bindable.GameHandToggleRight)),
+				name: translation(StarterQuestDictionary.NameQuickslots).getString(),
+				description: translation(StarterQuestDictionary.DescriptionQuickslots).getString(),
 				completion: {
-					messages: {
-						types: [Message.YouHaveEnabledDisabled],
-						description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionLeftRightHand)
+					quickslots: {
+						messages: translation(StarterQuestDictionary.CompletionDescriptionQuickslots).getString()
 					}
 				},
 				highlightElementSelector: [
-					'#equipment .checkbox-option[data-checkbox-id="LeftHand"]',
-					'#equipment .checkbox-option[data-checkbox-id="RightHand"]'
-				],
-				allowMultipleHighlights: true
+					'#quick-slots ul[data-quick-slot="1"]'
+				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameResourceGathering),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionResourceGathering),
+				name: translation(StarterQuestDictionary.NameResourceGathering).getString(),
+				description: translation(StarterQuestDictionary.DescriptionResourceGathering).getString(),
 				completion: {
 					items: [
 						{
@@ -279,8 +308,8 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCrafting),
-				description: makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCrafting), bindingManager.getBindTranslation(Bindable.DialogCrafting)),
+				name: translation(StarterQuestDictionary.NameCrafting).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCrafting).getString(),
 				completion: {
 					items: [
 						{
@@ -297,12 +326,12 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDismantling),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDismantling),
+				name: translation(StarterQuestDictionary.NameDismantling).getString(),
+				description: translation(StarterQuestDictionary.DescriptionDismantling).getString(),
 				completion: {
 					messages: {
 						types: [Message.YouDismantled],
-						description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionDismantling)
+						description: translation(StarterQuestDictionary.CompletionDescriptionDismantling).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -313,8 +342,33 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHunting),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHunting),
+				name: translation(StarterQuestDictionary.NameCreatureTaming).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCreatureTaming).getString(),
+				completion: {
+					messages: {
+						types: [Message.YouHaveTamed, Message.TakenFromGroundBecomeTamed, Message.YouOfferedToCreature],
+						description: translation(StarterQuestDictionary.CompletionDescriptionCreatureTaming).getString()
+					}
+				}
+			},
+			{
+				name: translation(StarterQuestDictionary.NameLeftRightHand).getString(),
+				description: translation(StarterQuestDictionary.DescriptionLeftRightHand).getString(),
+				completion: {
+					messages: {
+						types: [Message.YouHaveEnabledDisabled],
+						description: translation(StarterQuestDictionary.CompletionDescriptionLeftRightHand).getString()
+					}
+				},
+				highlightElementSelector: [
+					'#equipment .checkbox-option[data-checkbox-id="LeftHand"]',
+					'#equipment .checkbox-option[data-checkbox-id="RightHand"]'
+				],
+				allowMultipleHighlights: true
+			},
+			{
+				name: translation(StarterQuestDictionary.NameHunting).getString(),
+				description: translation(StarterQuestDictionary.DescriptionHunting).getString(),
 				completion: {
 					items: [
 						{
@@ -332,8 +386,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWoodenPoles),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWoodenPoles),
+				name: translation(StarterQuestDictionary.NameWoodenPoles).getString(),
+				description: translation(StarterQuestDictionary.DescriptionWoodenPoles).getString(),
 				completion: {
 					items: [
 						{
@@ -349,8 +403,8 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHandDrill),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHandDrill),
+				name: translation(StarterQuestDictionary.NameHandDrill).getString(),
+				description: translation(StarterQuestDictionary.DescriptionHandDrill).getString(),
 				completion: {
 					items: [
 						{
@@ -365,8 +419,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameKindlingTinder),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionKindlingTinder),
+				name: translation(StarterQuestDictionary.NameKindlingTinder).getString(),
+				description: translation(StarterQuestDictionary.DescriptionKindlingTinder).getString(),
 				completion: {
 					items: [
 						{
@@ -386,8 +440,8 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireMaterials),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireMaterials),
+				name: translation(StarterQuestDictionary.NameCampfireMaterials).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCampfireMaterials).getString(),
 				completion: {
 					items: [
 						{
@@ -398,8 +452,8 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireCrafting),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireCrafting),
+				name: translation(StarterQuestDictionary.NameCampfireCrafting).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCampfireCrafting).getString(),
 				completion: {
 					items: [
 						{
@@ -415,14 +469,14 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCampfireBuilding),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCampfireBuilding),
+				name: translation(StarterQuestDictionary.NameCampfireBuilding).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCampfireBuilding).getString(),
 				completion: {
 					doodads: {
 						types: [DoodadType.StoneCampfire, DoodadType.SandstoneCampfire],
-						doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixCampfireBuilding),
-						doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixCampfireBuilding),
-						completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageCampfireBuilding)
+						doodadPrefix: translation(StarterQuestDictionary.CompletionDoodadPrefixCampfireBuilding).getString(),
+						doodadActionPrefix: translation(StarterQuestDictionary.CompletionDoodadActionPrefixCampfireBuilding).getString(),
+						completionMessage: translation(StarterQuestDictionary.CompletionDescriptionMessageCampfireBuilding).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -431,14 +485,14 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameFire),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionFire),
+				name: translation(StarterQuestDictionary.NameFire).getString(),
+				description: translation(StarterQuestDictionary.DescriptionFire).getString(),
 				completion: {
 					doodads: {
 						types: [DoodadType.LitStoneCampfire, DoodadType.LitSandstoneCampfire],
-						doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixFire),
-						doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixFire),
-						completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageFire)
+						doodadPrefix: translation(StarterQuestDictionary.CompletionDoodadPrefixFire).getString(),
+						doodadActionPrefix: translation(StarterQuestDictionary.CompletionDoodadActionPrefixFire).getString(),
+						completionMessage: translation(StarterQuestDictionary.CompletionDescriptionMessageFire).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -446,12 +500,12 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameStokingFire),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionStokingFire),
+				name: translation(StarterQuestDictionary.NameStokingFire).getString(),
+				description: translation(StarterQuestDictionary.DescriptionStokingFire).getString(),
 				completion: {
 					messages: {
 						types: [Message.AddedFuelToFire],
-						description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionStokingFire)
+						description: translation(StarterQuestDictionary.CompletionDescriptionStokingFire).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -463,8 +517,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCookingFire),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCookingFire),
+				name: translation(StarterQuestDictionary.NameCookingFire).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCookingFire).getString(),
 				completion: {
 					items: [
 						{
@@ -485,8 +539,27 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDrinkableWater),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDrinkableWater),
+				name: translation(StarterQuestDictionary.NameExtraStorage).getString(),
+				description: translation(StarterQuestDictionary.DescriptionExtraStorage).getString(),
+				completion: {
+					items: [
+						{
+							types: [ItemType.WoodenChest],
+							amount: 1,
+							craft: true
+						}
+					]
+				},
+				highlightElementSelector: [
+					`#crafting li[data-item-type="${ItemType.WoodenChest}"]`,
+					`#crafting li[data-item-type="${ItemType.WoodenDowels}"]`,
+					`#crafting li[data-item-type="${ItemType.WoodenPole}"]`,
+					`#crafting li[data-item-type="${ItemType.Branch}"]`
+				]
+			},
+			{
+				name: translation(StarterQuestDictionary.NameDrinkableWater).getString(),
+				description: translation(StarterQuestDictionary.DescriptionDrinkableWater).getString(),
 				completion: {
 					items: [
 						{
@@ -500,8 +573,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameCordage),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionCordage),
+				name: translation(StarterQuestDictionary.NameCordage).getString(),
+				description: translation(StarterQuestDictionary.DescriptionCordage).getString(),
 				completion: {
 					items: [
 						{
@@ -516,8 +589,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameString),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionString),
+				name: translation(StarterQuestDictionary.NameString).getString(),
+				description: translation(StarterQuestDictionary.DescriptionString).getString(),
 				completion: {
 					items: [
 						{
@@ -532,8 +605,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGrindingMaterials),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGrindingMaterials),
+				name: translation(StarterQuestDictionary.NameGrindingMaterials).getString(),
+				description: translation(StarterQuestDictionary.DescriptionGrindingMaterials).getString(),
 				completion: {
 					items: [
 						{
@@ -555,8 +628,8 @@ export default class StarterQuest extends Mod {
 				allowMultipleHighlights: true
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameHuntLeather),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionHuntLeather),
+				name: translation(StarterQuestDictionary.NameHuntLeather).getString(),
+				description: translation(StarterQuestDictionary.DescriptionHuntLeather).getString(),
 				completion: {
 					items: [
 						{
@@ -567,8 +640,8 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameTannedLeather),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionTannedLeather),
+				name: translation(StarterQuestDictionary.NameTannedLeather).getString(),
+				description: translation(StarterQuestDictionary.DescriptionTannedLeather).getString(),
 				completion: {
 					items: [
 						{
@@ -583,8 +656,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterskin),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterskin),
+				name: translation(StarterQuestDictionary.NameWaterskin).getString(),
+				description: translation(StarterQuestDictionary.DescriptionWaterskin).getString(),
 				completion: {
 					items: [
 						{
@@ -599,8 +672,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterStillMaterials),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterStillMaterials),
+				name: translation(StarterQuestDictionary.NameWaterStillMaterials).getString(),
+				description: translation(StarterQuestDictionary.DescriptionWaterStillMaterials).getString(),
 				completion: {
 					items: [
 						{
@@ -627,8 +700,8 @@ export default class StarterQuest extends Mod {
 				}
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameWaterStillCrafting),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionWaterStillCrafting),
+				name: translation(StarterQuestDictionary.NameWaterStillCrafting).getString(),
+				description: translation(StarterQuestDictionary.DescriptionWaterStillCrafting).getString(),
 				completion: {
 					items: [
 						{
@@ -644,8 +717,8 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameSeawater),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionSeawater),
+				name: translation(StarterQuestDictionary.NameSeawater).getString(),
+				description: translation(StarterQuestDictionary.DescriptionSeawater).getString(),
 				completion: {
 					items: [
 						{
@@ -659,14 +732,14 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameBuildingStill),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionBuildingStill),
+				name: translation(StarterQuestDictionary.NameBuildingStill).getString(),
+				description: translation(StarterQuestDictionary.DescriptionBuildingStill).getString(),
 				completion: {
 					doodads: {
 						types: [DoodadType.StoneWaterStill, DoodadType.SandstoneWaterStill],
-						doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixBuildingStill),
-						doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixBuildingStill),
-						completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageBuildingStill)
+						doodadPrefix: translation(StarterQuestDictionary.CompletionDoodadPrefixBuildingStill).getString(),
+						doodadActionPrefix: translation(StarterQuestDictionary.CompletionDoodadActionPrefixBuildingStill).getString(),
+						completionMessage: translation(StarterQuestDictionary.CompletionDescriptionMessageBuildingStill).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -675,12 +748,12 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameFillingStill),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionFillingStill),
+				name: translation(StarterQuestDictionary.NameFillingStill).getString(),
+				description: translation(StarterQuestDictionary.DescriptionFillingStill).getString(),
 				completion: {
 					messages: {
 						types: [Message.PouredWaterIntoStill],
-						description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionFillingStill)
+						description: translation(StarterQuestDictionary.CompletionDescriptionFillingStill).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -688,14 +761,14 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameDesalination),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionDesalination),
+				name: translation(StarterQuestDictionary.NameDesalination).getString(),
+				description: translation(StarterQuestDictionary.DescriptionDesalination).getString(),
 				completion: {
 					doodads: {
 						types: [DoodadType.LitStoneWaterStill, DoodadType.LitSandstoneWaterStill],
-						doodadPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadPrefixDesalination),
-						doodadActionPrefix: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDoodadActionPrefixDesalination),
-						completionMessage: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionMessageDesalination)
+						doodadPrefix: translation(StarterQuestDictionary.CompletionDoodadPrefixDesalination).getString(),
+						doodadActionPrefix: translation(StarterQuestDictionary.CompletionDoodadActionPrefixDesalination).getString(),
+						completionMessage: translation(StarterQuestDictionary.CompletionDescriptionMessageDesalination).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -703,12 +776,12 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameGatherWater),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionGatherWater),
+				name: translation(StarterQuestDictionary.NameGatherWater).getString(),
+				description: translation(StarterQuestDictionary.DescriptionGatherWater).getString(),
 				completion: {
 					messages: {
 						types: [Message.FilledFrom],
-						description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.CompletionDescriptionGatherWater)
+						description: translation(StarterQuestDictionary.CompletionDescriptionGatherWater).getString()
 					}
 				},
 				highlightElementSelector: [
@@ -716,18 +789,17 @@ export default class StarterQuest extends Mod {
 				]
 			},
 			{
-				name: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.NameSurvivalistTraining),
-				description: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.DescriptionSurvivalistTraining)
+				name: translation(StarterQuestDictionary.NameSurvivalistTraining).getString(),
+				description: translation(StarterQuestDictionary.DescriptionSurvivalistTraining).getString()
 			}
 		];
 
-		this.messageQuestCompleted = this.addMessage("QuestCompleted", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCompleted));
-		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressItemCollected));
-		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressItemEquipped));
-		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressFinished));
-		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestProgressCompleted));
-
-		this.button = this.createButton(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.StarterQuestTitle), `${this.getPath()}/images/starterquest.png`, this.keyBind);
+		this.messageQuestCompleted = this.addMessage("QuestCompleted", translation(StarterQuestDictionary.QuestCompleted).getString());
+		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", translation(StarterQuestDictionary.QuestProgressItemCollected).getString());
+		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", translation(StarterQuestDictionary.QuestProgressItemEquipped).getString());
+		this.messageQuestProgressQuickslotted = this.addMessage("QuestProgressItemQuickslotted", translation(StarterQuestDictionary.QuestProgressItemQuickslotted).getString());
+		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", translation(StarterQuestDictionary.QuestProgressFinished).getString());
+		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", translation(StarterQuestDictionary.QuestProgressCompleted).getString());
 	}
 
 	public onSave(): any {
@@ -737,12 +809,12 @@ export default class StarterQuest extends Mod {
 	public onUnload(): void {
 		this.dialog = undefined;
 		this.container = undefined;
-		this.removeButton(this.button);
 	}
 
 	///////////////////////////////////////////////////
 	// Hooks
 
+	@HookMethod
 	public onGameStart(isLoadingSave: boolean, playedCount: number): void {
 		if (playedCount === 0) {
 			// this is the players first game
@@ -750,7 +822,8 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
-	public onShowInGameScreen(): void {
+	@HookMethod
+	public onGameScreenVisible(): void {
 		this.container = $("<div></div>");
 		this.inner = $('<div class="inner"></div>');
 		this.container.append(this.inner);
@@ -762,20 +835,20 @@ export default class StarterQuest extends Mod {
 		this.inner.append(this.containerDescription);
 		this.inner.append("<br />");
 
-		this.inner.append(`<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonObjectives)}</div>`);
+		this.inner.append(`<div style="font-size: 16px; margin-top: 15px;" data-id="objectives">${translation(StarterQuestDictionary.ButtonObjectives).getString()}</div>`);
 
 		this.containerProgress = $('<ul style="margin-top: 5px; list-style: none;" data-id="objectives"></ul>');
 		this.inner.append(this.containerProgress);
 
 		// Complete quest
-		this.containerCompleteButton = $(`<button style="display: block; width: auto; margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonStartQuest)}</button>`);
+		this.containerCompleteButton = $(`<button style="display: block; width: auto; margin-top: 15px;">${translation(StarterQuestDictionary.ButtonStartQuest).getString()}</button>`);
 		this.containerCompleteButton.click(() => {
 			this.onCompleteQuestClick();
 		});
 		this.inner.append(this.containerCompleteButton);
 
 		// Back button
-		this.containerBackButton = $(`<button style="margin-top: 15px; margin-right: 5px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonBack)}</button>`);
+		this.containerBackButton = $(`<button style="margin-top: 15px; margin-right: 5px;">${translation(StarterQuestDictionary.ButtonBack).getString()}</button>`);
 		this.containerBackButton.click(() => {
 			if (this.data.current > 0) {
 				this.setQuest(this.data.current - 1);
@@ -784,7 +857,7 @@ export default class StarterQuest extends Mod {
 		this.inner.append(this.containerBackButton);
 
 		// Skip button
-		this.containerSkipButton = $(`<button style="margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonSkip)}</button>`);
+		this.containerSkipButton = $(`<button style="margin-top: 15px;">${translation(StarterQuestDictionary.ButtonSkip).getString()}</button>`);
 		this.containerSkipButton.click(() => {
 			if (this.data.current < this.quests.length - 1) {
 				this.setQuest(this.data.current + 1);
@@ -793,7 +866,7 @@ export default class StarterQuest extends Mod {
 		this.inner.append(this.containerSkipButton);
 
 		// Close button (for last quest)
-		this.containerCloseButton = $(`<button style="margin-top: 15px;">${languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonClose)}</button>`);
+		this.containerCloseButton = $(`<button style="margin-top: 15px;">${translation(StarterQuestDictionary.ButtonClose).getString()}</button>`);
 		this.containerCloseButton.click(() => {
 			$(this.container).dialog("close");
 		});
@@ -801,7 +874,7 @@ export default class StarterQuest extends Mod {
 
 		this.dialog = this.createDialog(this.container, {
 			id: this.getName(),
-			title: languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.StarterQuestTitle),
+			title: translation(StarterQuestDictionary.StarterQuestTitle).getString(),
 			open: this.data.dialogOpen !== false,
 			x: 20,
 			y: 180,
@@ -827,33 +900,32 @@ export default class StarterQuest extends Mod {
 		this.updateDialog();
 	}
 
-	public onButtonBarClick(button: JQuery) {
-		if (button.is(this.button)) {
+	@HookMethod
+	public onBindLoop(bindPressed: Bindable, api: BindCatcherApi): Bindable {
+		if (api.wasPressed(this.bindable) && !bindPressed) {
 			ui.toggleDialog(this.dialog);
-		}
-	}
-
-	public onBindLoop(bindPressed: true | undefined, api: BindCatcherApi): true | undefined {
-		if (api.wasPressed(this.keyBind) && !bindPressed) {
-			ui.toggleDialog(this.dialog);
-			bindPressed = true;
+			bindPressed = this.bindable;
 		}
 
 		return bindPressed;
 	}
 
+	@HookMethod
 	public onInventoryItemAdd(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
+	@HookMethod
 	public onInventoryItemRemove(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
+	@HookMethod
 	public onInventoryItemUpdate(player: IPlayer, item: IItem, container: IContainer): void {
 		this.updateProgress();
 	}
 
+	@HookMethod
 	public onItemEquip(player: IPlayer, item: IItem, equip: EquipType): void {
 		const quest = this.quests[this.data.current];
 
@@ -885,19 +957,26 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
+	@HookMethod
 	public onTurnEnd(player: IPlayer): void {
 		if (this.updateQuestDoodads()) {
 			this.updateProgress();
 		}
 	}
 
-	public onMoveDirectionUpdate(player: IPlayer, direction: FacingDirection): void {
+	@HookMethod
+	public onMoveDirectionUpdate(player: IPlayer, direction: Direction): void {
 		if (this.updateQuestDoodads()) {
 			this.updateProgress();
 		}
 	}
 
-	public onDisplayMessage(message: Message, messageType?: MessageType, ...args: any[]): boolean {
+	@HookMethod
+	public shouldDisplayMessage(player: IPlayer, _1: IMessage, message: number): boolean | undefined {
+		if (!player.isLocalPlayer()) {
+			return;
+		}
+
 		const quest = this.quests[this.data.current];
 
 		if (!quest.completion) {
@@ -928,17 +1007,22 @@ export default class StarterQuest extends Mod {
 		return undefined;
 	}
 
+	@HookMethod
+	public onItemQuickslot(item: IItem, player: IPlayer, quickSlot: number | undefined): void {
+		this.updateQuickslot();
+	}
+
 	///////////////////////////////////////////////////
 	// Quests
 
 	public updateDialog(): void {
 		const quest = this.quests[this.data.current];
 
-		this.containerName.html(makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestTitle), quest.name, this.data.current + 1, this.quests.length));
+		this.containerName.html(translation(StarterQuestDictionary.QuestTitle).getString(quest.name, this.data.current + 1, this.quests.length));
 		this.containerDescription.html(quest.description);
 
 		// First quest button is unique
-		const questText = this.data.current === 0 ? languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonStartQuest) : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.ButtonCompleteQuest);
+		const questText = this.data.current === 0 ? translation(StarterQuestDictionary.ButtonStartQuest).getString() : translation(StarterQuestDictionary.ButtonCompleteQuest).getString();
 		this.containerCompleteButton.text(questText);
 
 		if (this.data.current > 0) {
@@ -979,7 +1063,8 @@ export default class StarterQuest extends Mod {
 		const questEquips = quest.completion ? quest.completion.equips : null;
 		const questDoodads = quest.completion ? quest.completion.doodads : null;
 		const questMessages = quest.completion ? quest.completion.messages : null;
-		const hasObjectives = questItems || questEquips || questDoodads || questMessages;
+		const questQuickslots = quest.completion ? quest.completion.quickslots : null;
+		const hasObjectives = questItems || questEquips || questDoodads || questMessages || questQuickslots;
 
 		if (hasObjectives) {
 			this.container.find('[data-id="objectives"]').show();
@@ -1009,7 +1094,7 @@ export default class StarterQuest extends Mod {
 								this.data.completion.items[i].amount = collected;
 								message = true;
 							}
-							
+
 						} else {
 							this.data.completion.items[i] = {
 								types: questItem.types,
@@ -1024,25 +1109,30 @@ export default class StarterQuest extends Mod {
 						}
 
 						let questType = "";
-						const itemName = questItemName;
 						if (questItem.craft) {
-							questItemName = makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCraft), questItemName);
-							questType = languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCrafted);
+							questItemName = translation(StarterQuestDictionary.QuestCraft).getString(questItemName);
+							questType = translation(StarterQuestDictionary.QuestCrafted).getString();
 
 						} else {
-							questItemName = makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCollect), questItemName);
-							questType = languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestCollected);
+							questItemName = translation(StarterQuestDictionary.QuestCollect).getString(questItemName);
+							questType = translation(StarterQuestDictionary.QuestCollected).getString();
 						}
 
-						itemLine += makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestItem), this.data.completion.items[i].amount, questItem.amount, questItemName);
+						itemLine += translation(StarterQuestDictionary.QuestItem).getString(this.data.completion.items[i].amount, questItem.amount, questItemName);
 
 						if (message && this.data.completion.items[i].amount > 0) {
-							ui.displayMessage(localPlayer, this.messageQuestProgressItemCollected, MessageType.Skill, questType, this.data.completion.items[i].amount, questItem.amount, questMessageItemName);
+							localPlayer.messages.source(this.sourceQuest)
+								.type(MessageType.Skill)
+								.send(this.messageQuestProgressItemCollected,
+									questType,
+									this.data.completion.items[i].amount,
+									questItem.amount,
+									questMessageItemName);
 						}
 
 					}
 
-					this.containerProgress.append(`<li style="${style}">${itemLine.slice(0, -4)}</li>`);
+					this.containerProgress.append(`<li style="${style}">${itemLine.slice(0, -3)}</li>`);
 
 				}
 			}
@@ -1050,8 +1140,8 @@ export default class StarterQuest extends Mod {
 			if (questEquips) {
 				for (let i = 0; i < questEquips.length; i++) {
 					const questEquip = questEquips[i];
-					const questItemName = questEquip.type ? Items[questEquip.type].name : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestAnItem);
-					const questMessageItemName = questEquip.type ? Items[questEquip.type].name : languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestAnItemLowercase);
+					const questItemName = questEquip.type ? Items[questEquip.type].name : translation(StarterQuestDictionary.QuestAnItem).getString();
+					const questMessageItemName = questEquip.type ? Items[questEquip.type].name : translation(StarterQuestDictionary.QuestAnItemLowercase).getString();
 
 					if (!this.data.completion.equips) {
 						this.data.completion.equips = [];
@@ -1066,11 +1156,13 @@ export default class StarterQuest extends Mod {
 
 					const style = this.data.completion.equips[i].complete ? "text-decoration: line-through;" : "";
 
-					this.containerProgress.append(`<li style="${style}">${makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestEquip), questItemName, messages[equipTypeToMessage[questEquip.equip]])}</li>`);
+					this.containerProgress.append(`<li style="${style}">${translation(StarterQuestDictionary.QuestEquip).getString(questItemName, messages[equipTypeToMessage[questEquip.equip]])}</li>`);
 
 					if (this.data.completion.equips[i].complete && !this.data.completion.equips[i].notified) {
 						this.data.completion.equips[i].notified = true;
-						ui.displayMessage(localPlayer, this.messageQuestProgressEquipped, MessageType.Skill, questMessageItemName);
+						localPlayer.messages.source(this.sourceQuest)
+							.type(MessageType.Skill)
+							.send(this.messageQuestProgressEquipped, questMessageItemName);
 					}
 				}
 			}
@@ -1090,16 +1182,19 @@ export default class StarterQuest extends Mod {
 
 					style = this.data.completion.doodads.complete ? "text-decoration: line-through;" : "";
 
-					doodadLine += makeString(languageManager.getTranslationString(this.dictionary, StarterQuestDictionary.QuestDoodad), doodadPrefix, game.getNameFromDescription(doodadDesc, SentenceCaseStyle.Title));
+					doodadLine += translation(StarterQuestDictionary.QuestDoodad).getString(doodadPrefix, game.getNameFromDescription(doodadDesc, SentenceCaseStyle.Title));
 
 					if (this.data.completion.doodads.complete && !this.data.completion.doodads.notified) {
 						this.data.completion.doodads.notified = true;
-						ui.displayMessage(localPlayer, this.messageQuestProgressFinished, MessageType.Skill, doodadActionPrefix, doodadCompletionMessage);
+						localPlayer.messages.source(this.sourceQuest)
+							.type(MessageType.Skill)
+							.send(this.messageQuestProgressFinished,
+								doodadActionPrefix, doodadCompletionMessage);
 					}
 
 				}
 
-				this.containerProgress.append(`<li style="${style}">${doodadLine.slice(0, -4)}</li>`);
+				this.containerProgress.append(`<li style="${style}">${doodadLine.slice(0, -3)}</li>`);
 
 			}
 
@@ -1118,12 +1213,31 @@ export default class StarterQuest extends Mod {
 
 				if (this.data.completion.messages.complete && !this.data.completion.messages.notified) {
 					this.data.completion.messages.notified = true;
-					ui.displayMessagePack(localPlayer, {
-						message: this.messageQuestProgressCompleted,
-						type: MessageType.Skill,
-						args: [messageName]
-					});
+					localPlayer.messages.source(this.sourceQuest)
+						.type(MessageType.Skill)
+						.send(this.messageQuestProgressCompleted, messageName);
 				}
+			}
+
+			if (questQuickslots) {
+
+				if (!this.data.completion.quickslots) {
+					this.data.completion.quickslots = {
+						messages: quest.completion.quickslots.messages
+					};
+				}
+
+				const style = this.data.completion.quickslots.complete ? "text-decoration: line-through;" : "";
+				const quickslotLine = questQuickslots.messages;
+
+				if (this.data.completion.quickslots.complete && !this.data.completion.quickslots.notified) {
+					this.data.completion.quickslots.notified = true;
+					localPlayer.messages.source(this.sourceQuest)
+						.type(MessageType.Skill)
+						.send(this.messageQuestProgressQuickslotted, MessageType.Skill);
+				}
+
+				this.containerProgress.append(`<li style="${style}">${quickslotLine}</li>`);
 			}
 
 		} else {
@@ -1179,11 +1293,9 @@ export default class StarterQuest extends Mod {
 	public onCompleteQuestClick(): void {
 		const quest = this.quests[this.data.current];
 
-		ui.displayMessagePack(localPlayer, {
-			message: this.messageQuestCompleted,
-			type: MessageType.Skill,
-			args: [quest.name]
-		});
+		localPlayer.messages.source(this.sourceQuest)
+			.type(MessageType.Skill)
+			.send(this.messageQuestCompleted, quest.name);
 
 		this.setQuest(this.data.current + 1);
 	}
@@ -1195,7 +1307,12 @@ export default class StarterQuest extends Mod {
 		// Highlight elements if they are available
 		const highlightElements = this.quests[questNumber].highlightElementSelector;
 		if (highlightElements) {
-			ui.highlight(highlightElements, this.quests[questNumber].allowMultipleHighlights ? false : true);
+			if (this.quests[questNumber].allowMultipleHighlights) {
+				ui.highlight(undefined, ...highlightElements);
+
+			} else {
+				ui.highlightUnique(undefined, ...highlightElements);
+			}
 		}
 
 		this.updateDialog();
@@ -1224,6 +1341,32 @@ export default class StarterQuest extends Mod {
 				if (item.isEquipped()) {
 					this.onItemEquip(localPlayer, item, item.getEquipSlot());
 				}
+			}
+		}
+
+		if (ui.getUsedQuickSlots().length !== 0) {
+			this.updateQuickslot();
+		}
+	}
+
+	public updateQuickslot() {
+		const quest = this.quests[this.data.current];
+		if (!quest.completion) {
+			return;
+		}
+
+		const questQuickslots = quest.completion.quickslots;
+		if (questQuickslots) {
+
+			if (!this.data.completion.quickslots) {
+				this.data.completion.quickslots = {
+					messages: quest.completion.quickslots.messages
+				};
+			}
+
+			if (!this.data.completion.quickslots.complete) {
+				this.data.completion.quickslots.complete = true;
+				this.updateProgress();
 			}
 		}
 	}
@@ -1265,6 +1408,12 @@ export default class StarterQuest extends Mod {
 
 		if (completion.messages) {
 			if (!completion.messages.complete) {
+				return false;
+			}
+		}
+
+		if (completion.quickslots) {
+			if (!completion.quickslots.complete) {
 				return false;
 			}
 		}

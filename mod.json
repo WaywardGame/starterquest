@@ -4,26 +4,9 @@
 	"version": "1.2",
 	"author": "Spacetech & Drathy",
 	"compatibleMinorVersions": [
-		5
+		6
 	],
 	"multiplayerClientside": true,
-	"hooks": [
-		"CanCreatureAttack",
-		"GetPlayerSpriteBatchLayer",
-		"IsPlayerSwimming",
-		"OnBindLoop",
-		"OnButtonBarClick",
-		"OnCreatureDeath",
-		"OnDisplayMessage",
-		"OnGameStart",
-		"OnInventoryItemAdd",
-		"OnInventoryItemRemove",
-		"OnInventoryItemUpdate",
-		"OnItemEquip",
-		"OnMoveDirectionUpdate",
-		"OnShowInGameScreen",
-		"OnTurnEnd"
-	],
 	"file": "StarterQuest.js",
 	"unloadable": true,
 	"languages": [
