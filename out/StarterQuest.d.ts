@@ -2,8 +2,8 @@ import { Bindable, Direction, EquipType } from "Enums";
 import { IContainer, IItem } from "item/IItem";
 import Mod from "mod/Mod";
 import { BindCatcherApi } from "newui/BindingManager";
-import { IPlayer } from "player/IPlayer";
 import { IMessage } from "player/IMessageManager";
+import { IPlayer } from "player/IPlayer";
 export default class StarterQuest extends Mod {
     private quests;
     private dialog;

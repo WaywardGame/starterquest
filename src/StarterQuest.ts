@@ -8,8 +8,8 @@ import Translation from "language/Translation";
 import { HookMethod } from "mod/IHookHost";
 import Mod from "mod/Mod";
 import { BindCatcherApi } from "newui/BindingManager";
-import { IPlayer } from "player/IPlayer";
 import { IMessage } from "player/IMessageManager";
+import { IPlayer } from "player/IPlayer";
 
 interface IGlobalSaveData {
 	maxQuest: number;
@@ -794,12 +794,12 @@ export default class StarterQuest extends Mod {
 			}
 		];
 
-		this.messageQuestCompleted = this.addMessage("QuestCompleted", translation(StarterQuestDictionary.QuestCompleted).getString());
-		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", translation(StarterQuestDictionary.QuestProgressItemCollected).getString());
-		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", translation(StarterQuestDictionary.QuestProgressItemEquipped).getString());
-		this.messageQuestProgressQuickslotted = this.addMessage("QuestProgressItemQuickslotted", translation(StarterQuestDictionary.QuestProgressItemQuickslotted).getString());
-		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", translation(StarterQuestDictionary.QuestProgressFinished).getString());
-		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", translation(StarterQuestDictionary.QuestProgressCompleted).getString());
+		this.messageQuestCompleted = this.addMessage("QuestCompleted", translation(StarterQuestDictionary.QuestCompleted).getBaseTranslation());
+		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", translation(StarterQuestDictionary.QuestProgressItemCollected).getBaseTranslation());
+		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", translation(StarterQuestDictionary.QuestProgressItemEquipped).getBaseTranslation());
+		this.messageQuestProgressQuickslotted = this.addMessage("QuestProgressItemQuickslotted", translation(StarterQuestDictionary.QuestProgressItemQuickslotted).getBaseTranslation());
+		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", translation(StarterQuestDictionary.QuestProgressFinished).getBaseTranslation());
+		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", translation(StarterQuestDictionary.QuestProgressCompleted).getBaseTranslation());
 	}
 
 	public onSave(): any {

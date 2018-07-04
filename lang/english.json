@@ -5,6 +5,9 @@
 		"bindable": {
 			"modStarterQuestToggle": "Toggle Starter Quest"
 		},
+		"source": {
+			"modStarterQuestQuest": "Starter Quest"
+		},
 		"starterQuest": {
 			"nameWelcome": "Welcome",
 			"descriptionWelcome": "If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 30-60 minutes and is completely optional.<br /><br />Press <em>{Bindable.ModStarterQuestToggle}</em> to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click \"<em>Start Quest</em>\" to start your first quest.",

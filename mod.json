@@ -7,7 +7,7 @@
 		6
 	],
 	"multiplayerClientside": true,
-	"file": "StarterQuest.js",
+	"file": "out/StarterQuest.js",
 	"unloadable": true,
 	"languages": [
 		"lang/english"

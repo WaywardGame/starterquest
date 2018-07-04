@@ -10,6 +10,7 @@
         "inlineSourceMap": true,
         "baseUrl": "./mod-reference/definitions",
         "types": [],
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "outDir": "./out"
     }
 }
