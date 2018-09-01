@@ -2,13 +2,16 @@ import Doodads from "doodad/Doodads";
 import { Bindable, Direction, DoodadType, EquipType, ItemType, ItemTypeGroup, SentenceCaseStyle } from "Enums";
 import { IContainer, IItem } from "item/IItem";
 import { itemDescriptions as Items } from "item/Items";
+import { Dictionary } from "language/ILanguage";
 import { Message, MessageType } from "language/IMessages";
 import messages, { equipTypeToMessage } from "language/Messages";
 import Translation from "language/Translation";
 import { HookMethod } from "mod/IHookHost";
 import Mod from "mod/Mod";
+import Register, { Registry } from "mod/ModRegistry";
 import { BindCatcherApi } from "newui/BindingManager";
-import { IMessage } from "player/IMessageManager";
+import { MenuBarButtonType } from "newui/screen/screens/game/static/menubar/MenuBarButtonDescriptions";
+import { IMessage, Source } from "player/IMessageManager";
 import { IPlayer } from "player/IPlayer";
 
 interface IGlobalSaveData {
@@ -185,9 +188,45 @@ enum StarterQuestDictionary {
 	QuestDoodad
 }
 
-let translation: (entry: StarterQuestDictionary) => Translation;
+function translation(entry: StarterQuestDictionary) {
+	return new Translation(StarterQuest.INSTANCE.dictionary, entry);
+}
 
 export default class StarterQuest extends Mod {
+
+	@Mod.instance<StarterQuest>("Starter Quest")
+	public static readonly INSTANCE: StarterQuest;
+
+	@Register.bindable("Toggle", { key: "KeyJ" })
+	public readonly bindable: Bindable;
+
+	@Register.dictionary("StarterQuest", StarterQuestDictionary)
+	public readonly dictionary: Dictionary;
+
+	@Register.message("QuestCompleted")
+	public readonly messageQuestCompleted: Message;
+	@Register.message("QuestProgressItemCollected")
+	public readonly messageQuestProgressItemCollected: Message;
+	@Register.message("QuestProgressItemEquipped")
+	public readonly messageQuestProgressEquipped: Message;
+	@Register.message("QuestProgressItemQuickslotted")
+	public readonly messageQuestProgressQuickslotted: Message;
+	@Register.message("QuestProgressFinished")
+	public readonly messageQuestProgressFinished: Message;
+	@Register.message("QuestProgressCompleted")
+	public readonly messageQuestProgressCompleted: Message;
+
+	@Register.messageSource("Quest")
+	public readonly sourceQuest: Source;
+
+	@Register.menuBarButton("Starter Quest", {
+		bindable: Registry<StarterQuest, Bindable>().get("bindable"),
+		tooltip: tooltip => tooltip.addText(text => text
+			.setText(translation(StarterQuestDictionary.StarterQuestTitle))),
+		onActivate: () => ui.toggleDialog(this.dialog)
+	})
+	public readonly menuBarButton: MenuBarButtonType;
+
 	private quests: IQuest[] = [];
 
 	private dialog: JQuery;
@@ -201,27 +240,10 @@ export default class StarterQuest extends Mod {
 	private containerSkipButton: JQuery;
 	private containerCloseButton: JQuery;
 
-	private bindable: number;
 	private data: IQuestSaveData;
 	private globalData: IGlobalSaveData;
 
-	private dictionary: number;
-
-	private messageQuestCompleted: number;
-	private messageQuestProgressItemCollected: number;
-	private messageQuestProgressEquipped: number;
-	private messageQuestProgressQuickslotted: number;
-	private messageQuestProgressFinished: number;
-	private messageQuestProgressCompleted: number;
-
-	private sourceQuest: number;
-
 	public onInitialize(saveDataGlobal: any): any {
-		this.bindable = this.addBindable("Toggle", { key: "KeyJ" });
-		this.dictionary = this.addDictionary("StarterQuest", StarterQuestDictionary);
-		translation = Translation.bind(undefined, this.dictionary);
-		this.sourceQuest = this.addMessageSource("Quest");
-
 		this.globalData = saveDataGlobal;
 
 		if (!this.globalData) {
@@ -229,16 +251,6 @@ export default class StarterQuest extends Mod {
 				maxQuest: 0
 			};
 		}
-
-		this.addMenuBarButton(
-			"Starter Quest",
-			{
-				bindable: this.bindable,
-				tooltip: tooltip => tooltip.addText(text => text
-					.setText(new Translation(this.dictionary, StarterQuestDictionary.StarterQuestTitle))),
-				onActivate: () => ui.toggleDialog(this.dialog)
-			}
-		);
 
 		return this.globalData;
 	}
@@ -793,13 +805,6 @@ export default class StarterQuest extends Mod {
 				description: translation(StarterQuestDictionary.DescriptionSurvivalistTraining).getString()
 			}
 		];
-
-		this.messageQuestCompleted = this.addMessage("QuestCompleted", translation(StarterQuestDictionary.QuestCompleted).getBaseTranslation());
-		this.messageQuestProgressItemCollected = this.addMessage("QuestProgressItemCollected", translation(StarterQuestDictionary.QuestProgressItemCollected).getBaseTranslation());
-		this.messageQuestProgressEquipped = this.addMessage("QuestProgressItemEquipped", translation(StarterQuestDictionary.QuestProgressItemEquipped).getBaseTranslation());
-		this.messageQuestProgressQuickslotted = this.addMessage("QuestProgressItemQuickslotted", translation(StarterQuestDictionary.QuestProgressItemQuickslotted).getBaseTranslation());
-		this.messageQuestProgressFinished = this.addMessage("QuestProgressFinished", translation(StarterQuestDictionary.QuestProgressFinished).getBaseTranslation());
-		this.messageQuestProgressCompleted = this.addMessage("QuestProgressCompleted", translation(StarterQuestDictionary.QuestProgressCompleted).getBaseTranslation());
 	}
 
 	public onSave(): any {

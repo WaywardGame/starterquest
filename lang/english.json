@@ -8,7 +8,15 @@
 		"source": {
 			"modStarterQuestQuest": "Starter Quest"
 		},
-		"starterQuest": {
+		"message": {
+			"modStarterQuestQuestCompleted": "You have completed the \"{0}\" quest.",
+			"modStarterQuestQuestProgressItemCollected": "You have {0} {1}/{2} {3}.",
+			"modStarterQuestQuestProgressItemEquipped": "You have equipped {0}.",
+			"modStarterQuestQuestProgressItemQuickslotted": "You have quickslotted an item.",
+			"modStarterQuestQuestProgressFinished": "You have {0} {1}.",
+			"modStarterQuestQuestProgressCompleted": "You have completed the \"{0}\" objective."
+		},
+		"modStarterQuestStarterQuest": {
 			"nameWelcome": "Welcome",
 			"descriptionWelcome": "If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 30-60 minutes and is completely optional.<br /><br />Press \"<em>{Bindable.ModStarterQuestToggle}</em>\" to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click \"<em>Start Quest</em>\" to start your first quest.",
 			"nameGearUp": "Gear Up",
@@ -96,12 +104,6 @@
 			"completionDescriptionGatherWater": "Gather Water",
 			"nameSurvivalistTraining": "Survivalist in Training",
 			"descriptionSurvivalistTraining": "That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.<br /><br />Treasure, you remember something about treasure...",
-			"questCompleted": "You have completed the \"_0_\" quest.",
-			"questProgressItemCollected": "You have _0_ _1_/_2_ _3_.",
-			"questProgressItemEquipped": "You have equipped _0_.",
-			"questProgressItemQuickslotted": "You have quickslotted an item.",
-			"questProgressFinished": "You have _0_ _1_.",
-			"questProgressCompleted": "You have completed the \"_0_\" objective.",
 			"starterQuestTitle": "Starter Quest",
 			"buttonObjectives": "Objectives",
 			"buttonStartQuest": "Start Quest",
