@@ -1,16 +1,21 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "amd",
-        "declaration": true,
-        "noImplicitAny": true,
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "noImplicitReturns": true,
         "noUnusedLocals": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "inlineSourceMap": true,
+        "noUnusedParameters": false,
+        "experimentalDecorators": true,
+        
         "baseUrl": "./mod-reference/definitions",
         "types": [],
-        "experimentalDecorators": true,
-        "outDir": "./out"
+        
+        "target": "es2017",
+        "module": "amd",
+        "outDir": "out",
+        "declaration": true,
+        "inlineSourceMap": true,
+        "removeComments": true,
+        "preserveConstEnums": true
     }
 }

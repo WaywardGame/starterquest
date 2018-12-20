@@ -4,9 +4,9 @@
 	"version": "1.2",
 	"author": "Spacetech & Drathy",
 	"compatibleMinorVersions": [
-		6
+		7
 	],
-	"multiplayerClientside": true,
+	"multiplayerCompatible": true,
 	"file": "out/StarterQuest.js",
 	"unloadable": true,
 	"languages": [

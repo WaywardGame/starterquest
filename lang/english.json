@@ -2,125 +2,136 @@
 {
 	"extends": "English",
 	"dictionaries": {
-		"bindable": {
-			"modStarterQuestToggle": "Toggle Starter Quest"
+		"questRequirement": {
+			"modStarterQuestQuickslot": "Add an item to quickslots",
+			"modStarterQuestChangeHand": "Change enabled hands",
+			"modStarterQuestLightCampfire": "Light a campfire",
+			"modStarterQuestStokeCampfire": "Stoke a campfire",
+			"modStarterQuestFillStill": "Pour water into a still",
+			"modStarterQuestLightWaterStill": "Light a water still",
+			"modStarterQuestGatherFromWaterStill": "Gather desalinated water from a still"
 		},
-		"source": {
-			"modStarterQuestQuest": "Starter Quest"
-		},
-		"message": {
-			"modStarterQuestQuestCompleted": "You have completed the \"{0}\" quest.",
-			"modStarterQuestQuestProgressItemCollected": "You have {0} {1}/{2} {3}.",
-			"modStarterQuestQuestProgressItemEquipped": "You have equipped {0}.",
-			"modStarterQuestQuestProgressItemQuickslotted": "You have quickslotted an item.",
-			"modStarterQuestQuestProgressFinished": "You have {0} {1}.",
-			"modStarterQuestQuestProgressCompleted": "You have completed the \"{0}\" objective."
-		},
-		"modStarterQuestStarterQuest": {
-			"nameWelcome": "Welcome",
-			"descriptionWelcome": "If you're new to Wayward, this <em>Starter Quest</em> can help you survive this harsh world by teaching you some of the mechanics of the game. This walkthrough will take approximately 30-60 minutes and is completely optional.<br /><br />Press \"<em>{Bindable.ModStarterQuestToggle}</em>\" to re-open or close this window. If you don't want help right now, simply close this window. Otherwise, click \"<em>Start Quest</em>\" to start your first quest.",
-			"nameGearUp": "Gear Up",
-			"descriptionGearUp": "Walking around bare-handed can lead to trouble. Equip yourself with a tool or weapon. You can open your equipment window by pressing \"<em>{Bindable.DialogEquipment}</em>\" or by clicking the equipment icon at the top of your screen. Using \"<em>{Bindable.GameItemMenu}</em>\" while hovering over an item in your inventory will bring up that item's menu; allowing you to equip from there if it can be equipped or to perform the item's various actions.<br /><br />Hovering over items in your inventory will give you more information on them. Alternatively, you can drag an item with \"<em>Equip: Held</em>\" in its description from your inventory into either the left or right hand in your equipment window.",
-			"nameQuickslots": "Item Use & Quickslots",
-			"descriptionQuickslots": "Using items with the item menu is not the only way to use item actions. Alternatively, and much more efficiently, you can use quickslots. Do so now by either dragging and dropping an item into a quickslot, or by using \"<em>{Bindable.GameItemMenu}</em>\" on an item and selecting \"<em>Add to Quickslot</em>\" from the action list.<br /><br />You will now be able to use the hotkey (listed underneath the quickslot) to use the default action for the item. You can change which action it does by using \"<em>{Bindable.GameItemMenu}</em>\" on the item in the quicklot and clicking the \"X\" next to an action to \"check\" it for use when using the quickslot hotkey.",
-			"completionDescriptionQuickslots": "Add An Item to Quickslots",
-			"nameResourceGathering": "Resource Gathering",
-			"descriptionResourceGathering": "Now that you have something equipped and quickslotted, you can try gathering some resources.<br /><br />Make sure you have an item that you can gather with quickslotted and the default action is set to \"<em>Gather</em>\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"<em>Auto Gather/Harvest</em>\" in the options to automatically gather resources by walking into them.<br /><br />There are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side.",
-			"nameCrafting": "Crafting",
-			"descriptionCrafting": "To survive, you will need to craft new items from the resources you gather. Press \"<em>{Bindable.DialogCrafting}</em>\" to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.<br /><br />If your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize.",
-			"nameDismantling": "Dismantling",
-			"descriptionDismantling": "Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.<br /><br />Dismantling items can be done through the crafting menu by clicking on the \"<em>Dismantle</em>\" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items using \"<em>{Bindable.GameItemMenu}</em>\" on them in your inventory and selecting \"<em>Dismantle</em>\".",
-			"completionDescriptionDismantling": "Dismantle An Item",
-			"nameCreatureTaming": "Creature Taming",
-			"descriptionCreatureTaming": "Have you encountered a creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:<br /><br />1. Facing a creature, choose the \"<em>Offer</em>\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.<br />2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.<br />3. Facing a creature, open the actions menu with \"<em>{Bindable.GameActions}</em>\" and choose \"<em>Tame</em>\". Taming in this manner is difficult, especially at lower skill levels.",
-			"completionDescriptionCreatureTaming": "Tame A Creature",
-			"nameLeftRightHand": "Left/Right Hand Use",
-			"descriptionLeftRightHand": "By default, you will use both hands to automatically attack or gather/harvest (if you have \"<em>Auto Gather/Harvest</em>\" enabled). You can enable and disable each hand. This is useful when you only want to use a certain weapon for attacking/gathering. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the \"<em>{Bindable.GameHandToggleLeft}</em>\" and \"<em>{Bindable.GameHandToggleRight}</em>\" keybinds.",
-			"completionDescriptionLeftRightHand": "Toggle Hands",
-			"nameHunting": "Hunting",
-			"descriptionHunting": "With crafting and taming knowledge under your belt, it's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a \"<em>Sharpened</em>\" item while facing it by using \"<em>Carve</em>\" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more.",
-			"nameWoodenPoles": "Wooden Poles",
-			"descriptionWoodenPoles": "You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"<em>Wooden Poles</em>\".",
-			"nameHandDrill": "Hand Drill",
-			"descriptionHandDrill": "At this point, you will have unlocked a new crafting recipe called \"<em>Hand Drill</em>\", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!",
-			"nameKindlingTinder": "Kindling & Tinder",
-			"descriptionKindlingTinder": "The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark, and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves, and more.<br /><br />Craft, dismantle, or find kindling and tinder!",
-			"nameCampfireMaterials": "Campfire Materials",
-			"descriptionCampfireMaterials": "You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make either a \"<em>Stone Campfire</em>\" or \"<em>Sandstone Campfire</em>\". You'll need quite a few rocks or sandstone for this endeavor.",
-			"nameCampfireCrafting": "Campfire Crafting",
-			"descriptionCampfireCrafting": "With all the rocks or sandstone from the last quest, you will now be able to craft a campfire.",
-			"nameCampfireBuilding": "Campfire Building",
-			"descriptionCampfireBuilding": "With some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"<em>Doodads</em>\". Using \"<em>{Bindable.GameItemMenu}</em>\" on the campfire in your inventory will give you the option to \"<em>Build</em>\" it. Do so now, facing a valid tile.",
-			"completionDoodadPrefixCampfireBuilding": "Build",
-			"completionDoodadActionPrefixCampfireBuilding": "built",
-			"completionDescriptionMessageCampfireBuilding": "a campfire",
-			"nameFire": "Fire!",
-			"descriptionFire": "With your hand drill, select the \"<em>Start Fire</em>\" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire with low camping skills. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.<br /><br />Be careful not to step in your fire!",
-			"completionDoodadPrefixFire": "Start",
-			"completionDoodadActionPrefixFire": "started",
-			"completionDescriptionMessageFire": "a campfire",
-			"nameStokingFire": "Stoking Fire",
-			"descriptionStokingFire": "Your fire could probably use more fuel as well. To add fuel to a fire, use \"<em>{Bindable.GameItemMenu}</em>\" on an item and choose the \"<em>Stoke Fire</em>\" action. This action is available on many items, including logs, branches, and more.<br /><br />You can check the status of the fire by hovering your mouse over it. If you have tool-tips disabled, you can also check the status by using \"<em>{Bindable.GameInspect}</em>\" while hovering over it.",
-			"completionDescriptionStokingFire": "Stoke Fire",
-			"nameCookingFire": "Cooking with Fire",
-			"descriptionCookingFire": "Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.<br /><br />A skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!",
-			"nameExtraStorage": "Extra Storage",
-			"descriptionExtraStorage": "Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"<em>Wooden Chest<em>\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.<br /><br />If you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them.",
-			"nameDrinkableWater": "Drinkable Water",
-			"descriptionDrinkableWater": "Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First, you'll need to make a \"<em>Waterskin</em>\" to hold this water. Collect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.<br /><br />Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified from the craft menu directly.",
-			"nameCordage": "Cordage",
-			"descriptionCordage": "A very common resource for making many items in Wayward is \"<em>String</em>\". By combining two items that are considered \"<em>Cordage</em>\", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more. See if you can find four of them.",
-			"nameString": "String",
-			"descriptionString": "With string and the needle, you'll be able to sew the waterskin together. Combine the four cordage items together to create the string.",
-			"nameGrindingMaterials": "Grinding Materials",
-			"descriptionGrindingMaterials": "You're going to need some material for that waterskin. The perfect material is tanned leather. You'll need to make something to grind your tannin with. Mortar and pestles can be crafted with smooth rocks, logs, or even sandstone. After you craft the mortar and pestle, you can grind down tree bark into tannin. This special powder can tan the leather for the waterskin.",
-			"nameHuntLeather": "Hunt for Leather",
-			"descriptionHuntLeather": "Venture forth and find a creature with a pelt. Creatures with pelts include giant rats, rabbits, grey wolves, and bears. Be very careful with the latter two - you may have to improve your combat skills or craft armor if these prove too much for you. Never be afraid to run from a losing battle. Carve its corpse to get the animal pelt.",
-			"nameTannedLeather": "Tanned Leather",
-			"descriptionTannedLeather": "With the animal pelt from the creature, you can now tan it with the tannin. Simply dismantle the pelt to remove the fur and gain the cleaned leather hide. After the dismantle, craft \"<em>Tanned Leather</em>\" from the crafting window.",
-			"nameWaterskin": "Waterskin",
-			"descriptionWaterskin": "You finally have everything you need to sew and fabricate the waterskin. Craft it with the tanned leather, strings, and a needle.",
-			"nameWaterStillMaterials": "Water Still Materials",
-			"descriptionWaterStillMaterials": "Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather and collect the following resources to be able to craft a \"<em>Stone Water Still</em>\" or \"<em>Sandstone Water Still</em>\".",
-			"nameWaterStillCrafting": "Water Still Crafting",
-			"descriptionWaterStillCrafting": "After gathering all those resources, you can go ahead and craft the water still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.",
-			"nameSeawater": "Seawater",
-			"descriptionSeawater": "To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the \"<em>Gather Water</em>\" option while facing the ocean with your container.",
-			"nameBuildingStill": "Building the Still",
-			"descriptionBuildingStill": "Just like with the campfire previously, you'll be able to \"<em>Build</em>\" the water still facing a valid tile from the item's menu. Do so now.",
-			"completionDoodadPrefixBuildingStill": "Build",
-			"completionDoodadActionPrefixBuildingStill": "built",
-			"completionDescriptionMessageBuildingStill": "a water still",
-			"nameFillingStill": "Filling the Still",
-			"descriptionFillingStill": "While still facing the water still, choose the \"<em>Pour</em>\" option from your container of seawater's item menu. This will pour the liquid into the water still.",
-			"completionDescriptionFillingStill": "Pour Water Into Still",
-			"nameDesalination": "Desalination",
-			"descriptionDesalination": "You'll need to light the water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.",
-			"completionDoodadPrefixDesalination": "Start",
-			"completionDoodadActionPrefixDesalination": "started",
-			"completionDescriptionMessageDesalination": "a water still",
-			"nameGatherWater": "Gather Water",
-			"descriptionGatherWater": "Choose the \"<em>Gather Water</em>\" option from your now empty container while facing the unlit water still. You will gather the fresh, desalinated water. Ready to drink as desired. You will only need to complete a process such as this for drinking sea or ocean water.",
-			"completionDescriptionGatherWater": "Gather Water",
-			"nameSurvivalistTraining": "Survivalist in Training",
-			"descriptionSurvivalistTraining": "That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.<br /><br />Treasure, you remember something about treasure...",
-			"starterQuestTitle": "Starter Quest",
-			"buttonObjectives": "Objectives",
-			"buttonStartQuest": "Start Quest",
-			"buttonBack": "Back",
-			"buttonSkip": "Skip",
-			"buttonClose": "Close",
-			"buttonCompleteQuest": "Complete Quest",
-			"questTitle": "{0} ({1}/{2})",
-			"questCraft": "Craft {0}",
-			"questCrafted": "crafted",
-			"questCollect": "Collect {0}",
-			"questCollected": "collected",
-			"questItem": "{0}/{1} {2} Or ",
-			"questAnItem": "An Item",
-			"questAnItemLowercase": "an item",
-			"questEquip": "Equip {0} In {1}",
-			"questDoodad": "{0} {1} Or "
+
+		"quest": {
+			"modStarterQuestWelcome": [
+				"Welcome",
+				"If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 30-60 minutes.\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
+			],
+
+			"modStarterQuestGearUp": [
+				"Gear Up", 
+				"Attacking creatures and auto-gathering from the terrain uses your equipment. Let's equip an item now.\n\nOpen your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\nEquip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\nLastly, you can equip items with item actions. Use {Bindings:GameItemMenu} while hovering over the item to bring up that item's {link(Menu.HelpArticle.Actions):action menu}, then press \"//Equip to Left Hand (Held)//\" or \"//Equip to Right Hand (Held)//\".\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
+			],
+
+			"modStarterQuestQuickslots": [
+				"Item Use & Quickslots", 
+				"Using items with the item menu is not the only way to use item actions. Alternatively, and much more efficiently, you can use quickslots. Do so now by either dragging and dropping an item into a quickslot, or by using {Bindings:GameItemMenu} on an item and selecting \"//Add to Quickslot//\" from the action list.\n\nYou will now be able to use the hotkey (listed underneath the quickslot) to use the default action for the item. You can change which action it does by using {Bindings:GameItemMenu} on the item in the quicklot and clicking the \"X\" next to an action to \"check\" it for use when using the quickslot hotkey."
+			],
+
+			"modStarterQuestResourceGathering": [
+				"Resource Gathering",
+				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can gather with quickslotted and the default action is set to \"//Gather//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Gather/Harvest//\" in the options to automatically gather resources by walking into them.\n\nThere are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side."
+			],
+
+			"modStarterQuestCrafting": [
+				"Crafting",
+				"To survive, you will need to craft new items from the resources you gather. Press {Bindings:DialogCrafting} to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.\n\nIf your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize."
+			],
+
+			"modStarterQuestDismantle": [
+				"Dismantling",
+				"Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.\n\nDismantling items can be done through the crafting menu by clicking on the \"//Dismantle//\" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items using {Bindings:GameItemMenu} on them in your inventory and selecting \"//Dismantle//\"."
+			],
+
+			"modStarterQuestChangeHands": [
+				"Left/Right Hand Use",
+				"By default, you will use both hands to automatically attack or gather/harvest (if you have \"//Auto Gather/Harvest//\" enabled). You can enable and disable each hand. This is useful when you only want to use a certain weapon for attacking/gathering. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the {Bindings:GameHandToggleLeft} and {Bindings:GameHandToggleRight} keybinds."
+			],
+
+			"modStarterQuestHunting": [
+				"Hunting",
+				"With crafting and taming knowledge under your belt, it's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Carve//\" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
+			],
+
+			"modStarterQuestWoodenPoles": [
+				"Wooden Poles",
+				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"//Wooden Poles//\"."	
+			],
+
+			"modStarterQuestHandDrill": [
+				"Hand Drill",
+				"At this point, you will have unlocked a new crafting recipe called \"//Hand Drill//\", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!"
+			],
+
+			"modStarterQuestKindlingTinder": [
+				"Kindling & Tinder",
+				"The final items needed to start a fire are kindling and tinder. Many items are considered kindling, such as twigs, tree bark, and wooden dowels (dismantled from wooden poles). Many items are also considered tinder, such as wooden shavings (dismantled from twigs or wooden dowels), animal fur, leaves, and more.\n\nCraft, dismantle, or find kindling and tinder!"
+			],
+
+			"modStarterQuestCampfire": [
+				"Campfire",
+				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make either a \"//Stone Campfire//\" or \"//Sandstone Campfire//\". You'll need quite a few rocks or sandstone for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"//Doodads//\". Using {Bindings:GameItemMenu} on the campfire in your inventory will give you the option to \"//Build//\" it. Do so now, facing a valid tile."
+			],
+
+			"modStarterQuestFire": [
+				"Fire!",
+				"With your hand drill, select the \"//Start Fire//\" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire with low camping skills. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.\n\nBe careful not to step in your fire!"
+			],
+
+			"modStarterQuestStokeFire": [
+				"Stoking Fire",
+				"Your fire could probably use more fuel as well. To add fuel to a fire, use {Bindings:GameItemMenu} on an item and choose the \"//Stoke Fire//\" action. This action is available on many items, including logs, branches, and more.\n\nYou can check the status of the fire by hovering your mouse over it. If you have tool-tips disabled, you can also check the status by using {Bindings:GameInspect} while hovering over it."
+			],
+
+			"modStarterQuestCooking": [
+				"Cooking with Fire",
+				"Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.\n\nA skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!"
+			],
+
+			"modStarterQuestTaming": [
+				"Creature Taming",
+				"Have you encountered a creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"//Offer//\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {Bindings:GameActions} and choose \"//Tame//\". Taming in this manner is difficult, especially at lower skill levels."
+			],
+
+			"modStarterQuestExtraStorage": [
+				"Extra Storage",
+				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"//Wooden Chest//\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
+			],
+
+			"modStarterQuestString": [
+				"Cordage & String",
+				"A very common resource for making many items in Wayward is \"//String//\". By combining two items that are considered \"//Cordage//\", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more."
+			],
+
+			"modStarterQuestLeather": [
+				"Leather",
+				"Venture forth and find a creature with a pelt. Creatures with pelts include giant rats, rabbits, grey wolves, and bears. Be very careful with the latter two - you may have to improve your combat skills or craft armor if these are too much. Never be afraid to run from a losing battle. Once you've killed one of these creatures, carve its corpse to get the animal pelt. Dismantle the pelt to remove the fur and gain the cleaned leather hide.\n\nTo make leather, you need to tan it with a special powder called tannin. You'll need to make something to grind your tannin with. Mortar and pestles can be crafted with smooth rocks, logs, or even sandstone. After you craft the mortar and pestle, you can grind down tree bark into tannin.\n\nWith tannin and a cleaned leather hide, you can craft \"//Tanned Leather//\" from the crafting window."
+			],
+
+			"modStarterQuestWaterskin": [
+				"Waterskin",
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First, you'll need to make a \"//Waterskin//\" to hold this water.\n\nCollect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.\n\nCraft the waterskin with the tanned leather, strings, and needle you've collected."
+			],
+			
+			"modStarterQuestWaterStill": [
+				"Water Still",
+				"Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
+			],
+			
+			"modStarterQuestFillStill": [
+				"Filling the Still",
+				"To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
+			],
+			
+			"modStarterQuestDesalination": [
+				"Desalination",
+				"You'll need to light the water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Gather Water//\" option from your empty container while facing the still. You will gather the fresh, desalinated water, ready to drink as desired.\n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
+			],
+			
+			"modStarterQuestSurvivalistTraining": [
+				"Survivalist in Training",
+				"That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.\n\nTreasure, you remember something about treasure..."
+			]
 		}
 	}
 }

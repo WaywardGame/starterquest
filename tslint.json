@@ -1,0 +1,12 @@
+{
+	"extends": "../../tslint.json",
+	"rules": {
+		"trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+		"curly": false,
+		"padding-line-between-statements": false,
+		"cyclomatic-complexity": [true, 10],
+		"array-type": [true, "array"],
+		"member-ordering": false,
+		"no-unnecessary-class": false
+	}
+}
