@@ -334,7 +334,7 @@ export default class StarterQuest extends Mod {
 	}
 
 	private addQuest(player = localPlayer) {
-		if (player.quests.getQuests().every(quest => quest.data.type !== this.questGearUp)) {
+		if (player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
 			player.quests.add(this.questWelcome);
 		}
 	}

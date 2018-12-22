@@ -15,17 +15,17 @@
 		"quest": {
 			"modStarterQuestWelcome": [
 				"Welcome",
-				"If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 30-60 minutes.\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
+				"{#ba9999:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 30-60 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
 			],
 
 			"modStarterQuestGearUp": [
 				"Gear Up", 
-				"Attacking creatures and auto-gathering from the terrain uses your equipment. Let's equip an item now.\n\nOpen your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\nEquip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\nLastly, you can equip items with item actions. Use {Bindings:GameItemMenu} while hovering over the item to bring up that item's {link(Menu.HelpArticle.Actions):action menu}, then press \"//Equip to Left Hand (Held)//\" or \"//Equip to Right Hand (Held)//\".\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
+				"{#ba9999:Attacking creatures and auto-gathering from the terrain uses your equipment. Let's equip an item now.}\n\n1. Open your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
 			],
 
 			"modStarterQuestQuickslots": [
 				"Item Use & Quickslots", 
-				"Using items with the item menu is not the only way to use item actions. Alternatively, and much more efficiently, you can use quickslots. Do so now by either dragging and dropping an item into a quickslot, or by using {Bindings:GameItemMenu} on an item and selecting \"//Add to Quickslot//\" from the action list.\n\nYou will now be able to use the hotkey (listed underneath the quickslot) to use the default action for the item. You can change which action it does by using {Bindings:GameItemMenu} on the item in the quicklot and clicking the \"X\" next to an action to \"check\" it for use when using the quickslot hotkey."
+				"{#ba9999:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#ba9999:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#ba9999:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quicklot and clicking the \"x\" next to the action of your choice."
 			],
 
 			"modStarterQuestResourceGathering": [
