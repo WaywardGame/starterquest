@@ -50,7 +50,7 @@
 
 			"modStarterQuestHunting": [
 				"Hunting",
-				"With crafting and taming knowledge under your belt, it's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Carve//\" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
+				"It's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Carve//\" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
 			],
 
 			"modStarterQuestWoodenPoles": [
@@ -90,7 +90,7 @@
 
 			"modStarterQuestTaming": [
 				"Creature Taming",
-				"Have you encountered a creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"//Offer//\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {Bindings:GameActions} and choose \"//Tame//\". Taming in this manner is difficult, especially at lower skill levels."
+				"Have you encountered a hostile creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"//Offer//\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {Bindings:GameActions} and choose \"//Tame//\". Taming in this manner is difficult, especially at lower skill levels."
 			],
 
 			"modStarterQuestExtraStorage": [

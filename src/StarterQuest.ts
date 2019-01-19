@@ -302,7 +302,6 @@ export default class StarterQuest extends Mod {
 
 	@Register.quest("fillStill", new Quest()
 		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.ContainerOfSeawater], 1)
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
 		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementFillStill"))
 		.addChildQuests(Registry<StarterQuest, QuestType>().get("questDesalination")))
 	public questFillStill: QuestType;
