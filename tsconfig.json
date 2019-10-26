@@ -7,7 +7,12 @@
         "noUnusedParameters": false,
         "experimentalDecorators": true,
         
-        "baseUrl": "./mod-reference/definitions",
+        "baseUrl": "./",
+        "paths": {
+            "*": ["node_modules/@wayward/types/definitions/*"],
+            "@wayward/goodstream": [  "node_modules/@wayward/goodstream/Stream" ],
+            "@wayward/goodstream/*": [ "node_modules/@wayward/goodstream/*" ]
+        },
         "types": [],
         
         "target": "es2017",

@@ -1,16 +1,17 @@
+import Player from "entity/player/Player";
+import { QuestType } from "entity/player/quest/quest/IQuest";
+import { QuestRequirementType } from "entity/player/quest/requirement/IRequirement";
 import Mod from "mod/Mod";
-import IPlayer from "player/IPlayer";
-import { QuestType } from "player/quest/quest/IQuest";
-import { RequirementType } from "player/quest/requirement/IRequirement";
 export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;
-    requirementQuickslot: RequirementType;
-    requirementChangeHand: RequirementType;
-    requirementLightCampfire: RequirementType;
-    requirementLightWaterStill: RequirementType;
-    requirementGatherFromWaterStill: RequirementType;
-    requirementStokeCampfire: RequirementType;
-    requirementFillStill: RequirementType;
+    requirementQuickslot: QuestRequirementType;
+    requirementChangeHand: QuestRequirementType;
+    requirementLightCampfire: QuestRequirementType;
+    requirementLightWaterStill: QuestRequirementType;
+    requirementGatherFromWaterStill: QuestRequirementType;
+    requirementStokeCampfire: QuestRequirementType;
+    requirementFillStill: QuestRequirementType;
+    requirementAttachContainer: QuestRequirementType;
     questWelcome: QuestType;
     questGearUp: QuestType;
     questQuickslots: QuestType;
@@ -28,14 +29,12 @@ export default class StarterQuest extends Mod {
     questCooking: QuestType;
     questTaming: QuestType;
     questExtraStorage: QuestType;
-    questString: QuestType;
-    questLeather: QuestType;
-    questWaterskin: QuestType;
     questWaterStill: QuestType;
     questFillStill: QuestType;
+    questAttachContainer: QuestType;
     questDesalination: QuestType;
     questSurvivalistTraining: QuestType;
-    onPlayerJoin(player: IPlayer): void;
+    onPlayerJoin(player: Player): void;
     onGameStart(isLoadingSave: boolean, loadCount: number): void;
     private addQuest;
 }

@@ -1,21 +1,23 @@
-import GatherWater from "action/actions/GatherWater";
-import StokeFire from "action/actions/StokeFire";
-import { ActionArguments, ActionType } from "action/IAction";
-import { DoodadType, EquipType, ItemType, ItemTypeGroup } from "Enums";
+import { DoodadType } from "doodad/IDoodad";
+import GatherWater from "entity/action/actions/GatherWater";
+import StokeFire from "entity/action/actions/StokeFire";
+import { ActionArguments, ActionType } from "entity/action/IAction";
+import { EquipType } from "entity/IHuman";
+import Player from "entity/player/Player";
+import { QuestType } from "entity/player/quest/quest/IQuest";
+import { Quest } from "entity/player/quest/quest/Quest";
+import { QuestRequirementType } from "entity/player/quest/requirement/IRequirement";
+import { QuestRequirement } from "entity/player/quest/requirement/Requirement";
+import { GameMode } from "game/options/IGameOptions";
+import { ItemType, ItemTypeGroup } from "item/IItem";
 import itemDescriptions from "item/Items";
 import { HookMethod } from "mod/IHookHost";
 import { Hook } from "mod/IHookManager";
 import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
 import { HighlightType } from "newui/component/IComponent";
-import IPlayer, { PlayerEvent } from "player/IPlayer";
-import { QuestType } from "player/quest/quest/IQuest";
-import { Quest } from "player/quest/quest/Quest";
-import { RequirementType } from "player/quest/requirement/IRequirement";
-import { Requirement } from "player/quest/requirement/Requirement";
-import { IOptions } from "save/data/ISaveDataGlobal";
+import { Tuple } from "utilities/Arrays";
 import Enums from "utilities/enum/Enums";
-import { tuple } from "utilities/iterable/Generators";
 
 const STARTER_QUEST_ID = "Starter Quest";
 
@@ -32,7 +34,7 @@ export default class StarterQuest extends Mod {
 	// Requirements
 	//
 
-	@Register.questRequirement("quickslot", new Requirement({})
+	@Register.questRequirement("quickslot", new QuestRequirement({})
 		.setTrigger(Hook.OnItemQuickslot, (api, item, player, slot) => {
 			if (player !== api.host) return false;
 			return true;
@@ -49,18 +51,17 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			[HighlightType.Selector, "#quick-slots ul"],
 		]))
-	public requirementQuickslot: RequirementType;
+	public requirementQuickslot: QuestRequirementType;
 
-	@Register.questRequirement("changeHand", new Requirement({})
-		.setHostTrigger(PlayerEvent.UpdateOption, (api, key: keyof IOptions, value: boolean | number) =>
-			key === "leftHand" || key === "rightHand")
+	@Register.questRequirement("changeHand", new QuestRequirement({})
+		.setHostTrigger("updateOption", (api, player, key) => key === "leftHand" || key === "rightHand")
 		.setRelations([
 			[HighlightType.Selector, "#equipment .checkbox-option[data-checkbox-id='leftHand']"],
 			[HighlightType.Selector, "#equipment .checkbox-option[data-checkbox-id='rightHand']"],
 		]))
-	public requirementChangeHand: RequirementType;
+	public requirementChangeHand: QuestRequirementType;
 
-	@Register.questRequirement("lightCampfire", new Requirement({})
+	@Register.questRequirement("lightCampfire", new QuestRequirement({})
 		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action) => {
 			if (actionApi.executor !== api.host || action.type !== ActionType.StartFire) {
 				return false;
@@ -77,9 +78,9 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			[HighlightType.Selector, "#inventory .group-FireStarter"],
 		]))
-	public requirementLightCampfire: RequirementType;
+	public requirementLightCampfire: QuestRequirementType;
 
-	@Register.questRequirement("lightWaterStill", new Requirement({})
+	@Register.questRequirement("lightWaterStill", new QuestRequirement({})
 		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action) => {
 			if (actionApi.executor !== api.host || action.type !== ActionType.StartFire) {
 				return false;
@@ -96,11 +97,11 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			[HighlightType.Selector, "#inventory .group-FireStarter"],
 		]))
-	public requirementLightWaterStill: RequirementType;
+	public requirementLightWaterStill: QuestRequirementType;
 
-	@Register.questRequirement("gatherFromWaterStill", new Requirement({})
+	@Register.questRequirement("gatherFromWaterStill", new QuestRequirement({})
 		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.GatherWater) {
+			if (actionApi.executor !== api.host || !(action.type === ActionType.GatherWater || action.type === ActionType.DrinkInFront || action.type === ActionType.DetachContainer)) {
 				return false;
 			}
 
@@ -110,19 +111,22 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const [item] = args as ActionArguments<typeof GatherWater>;
-			if (!itemManager.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
+			if (action.type === ActionType.GatherWater) {
+				const [item] = args as ActionArguments<typeof GatherWater>;
+				if (!itemManager.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
+					return false;
+				}
+			} else if (action.type === ActionType.DrinkInFront && doodad.gatherReady) {
+				return false;
+			} else if (action.type === ActionType.DetachContainer && doodad.stillContainer) {
 				return false;
 			}
 
 			return doodad.type === DoodadType.ClayWaterStill || doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.StoneWaterStill;
-		})
-		.setRelations([
-			[HighlightType.Selector, "#inventory .group-FireStarter"],
-		]))
-	public requirementGatherFromWaterStill: RequirementType;
+		}))
+	public requirementGatherFromWaterStill: QuestRequirementType;
 
-	@Register.questRequirement("stokeCampfire", new Requirement({})
+	@Register.questRequirement("stokeCampfire", new QuestRequirement({})
 		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
 			if (actionApi.executor !== api.host || action.type !== ActionType.StokeFire) {
 				return false;
@@ -144,11 +148,11 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			...Enums.values(ItemType)
 				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.StokeFire))
-				.map(type => tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
+				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
 		]))
-	public requirementStokeCampfire: RequirementType;
+	public requirementStokeCampfire: QuestRequirementType;
 
-	@Register.questRequirement("fillStill", new Requirement({})
+	@Register.questRequirement("fillStill", new QuestRequirement({})
 		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
 			if (actionApi.executor !== api.host || action.type !== ActionType.Pour) {
 				return false;
@@ -169,7 +173,32 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			[HighlightType.Selector, "#inventory .group-ContainerOfSeawater"],
 		]))
-	public requirementFillStill: RequirementType;
+	public requirementFillStill: QuestRequirementType;
+
+	@Register.questRequirement("attachContainer", new QuestRequirement({})
+		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
+			if (actionApi.executor !== api.host || action.type !== ActionType.AttachContainer) {
+				return false;
+			}
+
+			const tile = actionApi.executor.getFacingTile();
+			const doodad = tile.doodad;
+			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.StoneWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
+				return false;
+			}
+
+			if (!doodad.stillContainer) {
+				return false;
+			}
+
+			return true;
+		})
+		.setRelations([
+			...Enums.values(ItemType)
+				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.AttachContainer))
+				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
+		]))
+	public requirementAttachContainer: QuestRequirementType;
 
 	////////////////////////////////////
 	// Quests
@@ -177,139 +206,122 @@ export default class StarterQuest extends Mod {
 
 	@Register.quest("welcome", new Quest()
 		.setNeedsManualCompletion()
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questGearUp")))
+		.addChildQuests(Registry<StarterQuest>().get("questGearUp")))
 	public questWelcome: QuestType;
 
 	@Register.quest("gearUp", new Quest()
-		.addRequirement(RequirementType.Equip, [EquipType.RightHand, EquipType.LeftHand], [ItemTypeGroup.Weapon, ItemTypeGroup.Tool])
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questQuickslots")))
+		.addRequirement(QuestRequirementType.Equip, [EquipType.RightHand, EquipType.LeftHand], [ItemTypeGroup.Weapon, ItemTypeGroup.Tool])
+		.addChildQuests(Registry<StarterQuest>().get("questQuickslots")))
 	public questGearUp: QuestType;
 
 	@Register.quest("quickslots", new Quest()
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementQuickslot"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questResourceGathering")))
+		.addRequirement(Registry<StarterQuest>().get("requirementQuickslot"))
+		.addChildQuests(Registry<StarterQuest>().get("questResourceGathering")))
 	public questQuickslots: QuestType;
 
 	@Register.quest("resourceGathering", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemType.Branch], 2)
-		.addRequirement(RequirementType.CollectItem, [ItemType.LargeRock], 2)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questCrafting")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.Branch], 2)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.LargeRock], 2)
+		.addChildQuests(Registry<StarterQuest>().get("questCrafting")))
 	public questResourceGathering: QuestType;
 
 	@Register.quest("crafting", new Quest()
-		.addRequirement(RequirementType.Craft, [ItemType.SharpRock], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questDismantle")))
+		.addRequirement(QuestRequirementType.Craft, [ItemType.SharpRock], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questDismantle")))
 	public questCrafting: QuestType;
 
 	@Register.quest("dismantle", new Quest()
-		.addRequirement(RequirementType.Dismantle, [ItemType.Branch, ItemType.Log, ItemType.LargeRock], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questChangeHands")))
+		.addRequirement(QuestRequirementType.Dismantle, [ItemType.Branch, ItemType.Log, ItemType.LargeRock], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questChangeHands")))
 	public questDismantle: QuestType;
 
 	@Register.quest("changeHands", new Quest()
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementChangeHand"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questHunting")))
+		.addRequirement(Registry<StarterQuest>().get("requirementChangeHand"))
+		.addChildQuests(Registry<StarterQuest>().get("questHunting")))
 	public questChangeHands: QuestType;
 
 	@Register.quest("hunting", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
-		.addRequirement(RequirementType.KillCreatures, 1)
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.RawMeat], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questWoodenPoles")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
+		.addRequirement(QuestRequirementType.KillCreatures, 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.RawMeat], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questWoodenPoles")))
 	public questHunting: QuestType;
 
 	@Register.quest("woodenPoles", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemType.WoodenPole], 2)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questHandDrill")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.WoodenPole], 2)
+		.addChildQuests(Registry<StarterQuest>().get("questHandDrill")))
 	public questWoodenPoles: QuestType;
 
 	@Register.quest("handDrill", new Quest()
-		.addRequirement(RequirementType.Craft, [ItemType.HandDrill], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questKindlingTinder")))
+		.addRequirement(QuestRequirementType.Craft, [ItemType.HandDrill], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questKindlingTinder")))
 	public questHandDrill: QuestType;
 
 	@Register.quest("kindlingTinder", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Tinder], 1)
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Kindling], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questCampfire")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Tinder], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Kindling], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questCampfire")))
 	public questKindlingTinder: QuestType;
 
 	@Register.quest("campfire", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 5)
-		.addRequirement(RequirementType.Craft, [ItemTypeGroup.Campfire], 1)
-		.addRequirement(RequirementType.Build, [ItemTypeGroup.Campfire])
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questFire")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 5)
+		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.Campfire], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemTypeGroup.Campfire])
+		.addChildQuests(Registry<StarterQuest>().get("questFire")))
 	public questCampfire: QuestType;
 
 	@Register.quest("fire", new Quest()
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementLightCampfire"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questStokeFire")))
+		.addRequirement(Registry<StarterQuest>().get("requirementLightCampfire"))
+		.addChildQuests(Registry<StarterQuest>().get("questStokeFire")))
 	public questFire: QuestType;
 
 	@Register.quest("stokeFire", new Quest()
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementStokeCampfire"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questCooking")))
+		.addRequirement(Registry<StarterQuest>().get("requirementStokeCampfire"))
+		.addChildQuests(Registry<StarterQuest>().get("questCooking")))
 	public questStokeFire: QuestType;
 
 	@Register.quest("cooking", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.CookingEquipment], 1)
-		.addRequirement(RequirementType.Craft, [ItemTypeGroup.CookedMeat], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questTaming")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.CookingEquipment], 1)
+		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.CookedMeat], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
 	public questCooking: QuestType;
 
 	@Register.quest("taming", new Quest()
-		.addRequirement(RequirementType.TameCreatures, 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questExtraStorage")))
+		.addRequirement(QuestRequirementType.TameCreatures, 1)
+		.addChildQuests(Registry<StarterQuest>().get("questExtraStorage")))
 	public questTaming: QuestType;
 
 	@Register.quest("extraStorage", new Quest()
-		.addRequirement(RequirementType.Craft, [ItemType.WoodenChest], 1)
-		.addRequirement(RequirementType.Build, [ItemType.WoodenChest])
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questString")))
+		.addRequirement(QuestRequirementType.Craft, [ItemType.WoodenChest], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.WoodenChest])
+		.addChildQuests(Registry<StarterQuest>().get("questWaterStill")))
 	public questExtraStorage: QuestType;
 
-	@Register.quest("string", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Cordage], 2) // only require 2 in case they craft the string before collecting the other 2
-		.addRequirement(RequirementType.Craft, [ItemType.String], 2)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questLeather")))
-	public questString: QuestType;
-
-	@Register.quest("leather", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemType.AnimalPelt], 1)
-		.addRequirement(RequirementType.Dismantle, [ItemType.AnimalPelt], 1)
-		.addRequirement(RequirementType.Craft, [ItemTypeGroup.MortarAndPestle], 1)
-		.addRequirement(RequirementType.Craft, [ItemType.Tannin], 1)
-		.addRequirement(RequirementType.Craft, [ItemType.TannedLeather], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questWaterskin")))
-	public questLeather: QuestType;
-
-	@Register.quest("waterskin", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Needle], 1)
-		.addRequirement(RequirementType.Craft, [ItemType.Waterskin], 1)
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questWaterStill")))
-	public questWaterskin: QuestType;
-
 	@Register.quest("waterStill", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 2)
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
-		.addRequirement(RequirementType.CollectItem, [ItemType.String], 1)
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.Pole], 1)
-		.addRequirement(RequirementType.CollectItem, [ItemType.Waterskin], 1)
-		.addRequirement(RequirementType.Craft, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill], 1)
-		.addRequirement(RequirementType.Build, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill])
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questFillStill")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 2)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Pole], 1)
+		.addRequirement(QuestRequirementType.Craft, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill])
+		.addChildQuests(Registry<StarterQuest>().get("questFillStill")))
 	public questWaterStill: QuestType;
 
 	@Register.quest("fillStill", new Quest()
-		.addRequirement(RequirementType.CollectItem, [ItemTypeGroup.ContainerOfSeawater], 1)
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementFillStill"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questDesalination")))
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.ContainerOfSeawater], 1)
+		.addRequirement(Registry<StarterQuest>().get("requirementFillStill"))
+		.addChildQuests(Registry<StarterQuest>().get("questAttachContainer")))
 	public questFillStill: QuestType;
 
+	@Register.quest("attachContainer", new Quest()
+		.addRequirement(Registry<StarterQuest>().get("requirementAttachContainer"))
+		.addChildQuests(Registry<StarterQuest>().get("questDesalination")))
+	public questAttachContainer: QuestType;
+
 	@Register.quest("desalination", new Quest()
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementLightWaterStill"))
-		.addRequirement(Registry<StarterQuest, RequirementType>().get("requirementGatherFromWaterStill"))
-		.addChildQuests(Registry<StarterQuest, QuestType>().get("questSurvivalistTraining")))
+		.addRequirement(Registry<StarterQuest>().get("requirementLightWaterStill"))
+		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromWaterStill"))
+		.addChildQuests(Registry<StarterQuest>().get("questSurvivalistTraining")))
 	public questDesalination: QuestType;
 
 	@Register.quest("survivalistTraining", new Quest()
@@ -321,7 +333,7 @@ export default class StarterQuest extends Mod {
 	//
 
 	@HookMethod
-	@Override public onPlayerJoin(player: IPlayer) {
+	@Override public onPlayerJoin(player: Player) {
 		this.addQuest(player);
 	}
 
@@ -332,8 +344,8 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
-	private addQuest(player = localPlayer) {
-		if (player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
+	private addQuest(player: Player = localPlayer) {
+		if (game.getGameMode() !== GameMode.Challenge && player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
 			player.quests.add(this.questWelcome);
 		}
 	}

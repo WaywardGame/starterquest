@@ -1,4 +1,3 @@
-
 {
 	"extends": "English",
 	"dictionaries": {
@@ -8,6 +7,7 @@
 			"modStarterQuestLightCampfire": "Light a campfire",
 			"modStarterQuestStokeCampfire": "Stoke a campfire",
 			"modStarterQuestFillStill": "Pour water into a still",
+			"modStarterQuestAttachContainer": "Attach container to a still",
 			"modStarterQuestLightWaterStill": "Light a water still",
 			"modStarterQuestGatherFromWaterStill": "Gather desalinated water from a still"
 		},
@@ -15,16 +15,16 @@
 		"quest": {
 			"modStarterQuestWelcome": [
 				"Welcome",
-				"{#ba9999:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 30-60 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
+				"{#ba9999:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 20-40 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
 			],
 
 			"modStarterQuestGearUp": [
-				"Gear Up", 
+				"Gear Up",
 				"{#ba9999:Attacking creatures and auto-gathering from the terrain uses your equipment. Let's equip an item now.}\n\n1. Open your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
 			],
 
 			"modStarterQuestQuickslots": [
-				"Item Use & Quickslots", 
+				"Item Use & Quickslots",
 				"{#ba9999:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#ba9999:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#ba9999:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quicklot and clicking the \"x\" next to the action of your choice."
 			],
 
@@ -97,35 +97,25 @@
 				"Extra Storage",
 				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"//Wooden Chest//\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
 			],
-
-			"modStarterQuestString": [
-				"Cordage & String",
-				"A very common resource for making many items in Wayward is \"//String//\". By combining two items that are considered \"//Cordage//\", you can craft string. The cordage group is very diverse and includes things such as stripped bark (dismantled from branches), plant roots, seaweed, and many more."
-			],
-
-			"modStarterQuestLeather": [
-				"Leather",
-				"Venture forth and find a creature with a pelt. Creatures with pelts include giant rats, rabbits, grey wolves, and bears. Be very careful with the latter two - you may have to improve your combat skills or craft armor if these are too much. Never be afraid to run from a losing battle. Once you've killed one of these creatures, carve its corpse to get the animal pelt. Dismantle the pelt to remove the fur and gain the cleaned leather hide.\n\nTo make leather, you need to tan it with a special powder called tannin. You'll need to make something to grind your tannin with. Mortar and pestles can be crafted with smooth rocks, logs, or even sandstone. After you craft the mortar and pestle, you can grind down tree bark into tannin.\n\nWith tannin and a cleaned leather hide, you can craft \"//Tanned Leather//\" from the crafting window."
-			],
-
-			"modStarterQuestWaterskin": [
-				"Waterskin",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. First, you'll need to make a \"//Waterskin//\" to hold this water.\n\nCollect a needle by either finding cactus needles (carving a cactus) or by progressively sharpening down bones via crafting (bone to bone pole, to sharpened bone, to bone needle). You can also dismantle bone fragments into bone needles directly.\n\nCraft the waterskin with the tanned leather, strings, and needle you've collected."
-			],
 			
 			"modStarterQuestWaterStill": [
 				"Water Still",
-				"Making the container was the hard part. You should now have most things you need to create a still for desalinating water. One last hurdle remains. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
 			],
 			
 			"modStarterQuestFillStill": [
 				"Filling the Still",
-				"To test out your new water still, grab some water from the ocean. With another empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
+				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
+			],
+			
+			"modStarterQuestAttachContainer": [
+				"Attaching the Container",
+				"\n\nWhile facing the water still, choose the \"//Attach Container//\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
 			],
 			
 			"modStarterQuestDesalination": [
 				"Desalination",
-				"You'll need to light the water still on fire so the water can begin to boil and steam. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Gather Water//\" option from your empty container while facing the still. You will gather the fresh, desalinated water, ready to drink as desired.\n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
+				"You'll need to light the water still on fire so the water can begin to boil and steam the liquid. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
 			],
 			
 			"modStarterQuestSurvivalistTraining": [
