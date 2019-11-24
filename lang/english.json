@@ -55,7 +55,7 @@
 
 			"modStarterQuestWoodenPoles": [
 				"Wooden Poles",
-				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"//Wooden Poles//\"."	
+				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"//Wooden Poles//\"."
 			],
 
 			"modStarterQuestHandDrill": [
@@ -88,6 +88,26 @@
 				"Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.\n\nA skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!"
 			],
 
+			"modStarterQuestWaterStill": [
+				"Water Still",
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
+			],
+
+			"modStarterQuestFillStill": [
+				"Filling the Still",
+				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
+			],
+
+			"modStarterQuestAttachContainer": [
+				"Attaching the Container",
+				"\n\nWhile facing the water still, choose the \"//Attach Container//\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
+			],
+
+			"modStarterQuestDesalination": [
+				"Desalination",
+				"You'll need to light the water still on fire so the water can begin to boil and steam the liquid. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
+			],
+
 			"modStarterQuestTaming": [
 				"Creature Taming",
 				"Have you encountered a hostile creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"//Offer//\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {Bindings:GameActions} and choose \"//Tame//\". Taming in this manner is difficult, especially at lower skill levels."
@@ -97,27 +117,7 @@
 				"Extra Storage",
 				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"//Wooden Chest//\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
 			],
-			
-			"modStarterQuestWaterStill": [
-				"Water Still",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
-			],
-			
-			"modStarterQuestFillStill": [
-				"Filling the Still",
-				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
-			],
-			
-			"modStarterQuestAttachContainer": [
-				"Attaching the Container",
-				"\n\nWhile facing the water still, choose the \"//Attach Container//\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
-			],
-			
-			"modStarterQuestDesalination": [
-				"Desalination",
-				"You'll need to light the water still on fire so the water can begin to boil and steam the liquid. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
-			],
-			
+
 			"modStarterQuestSurvivalistTraining": [
 				"Survivalist in Training",
 				"That's it! You should now have some basic knowledge on how to survive in Wayward. With enough learning and skill, you'll eventually be able to thrive and prosper.\n\nTreasure, you remember something about treasure..."

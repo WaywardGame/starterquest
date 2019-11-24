@@ -8,9 +8,11 @@ import { QuestType } from "entity/player/quest/quest/IQuest";
 import { Quest } from "entity/player/quest/quest/Quest";
 import { QuestRequirementType } from "entity/player/quest/requirement/IRequirement";
 import { QuestRequirement } from "entity/player/quest/requirement/Requirement";
+import { EventHandler } from "event/EventManager";
 import { GameMode } from "game/options/IGameOptions";
 import { ItemType, ItemTypeGroup } from "item/IItem";
 import itemDescriptions from "item/Items";
+import MapGen280 from "mapgen/version/2.8.0";
 import { HookMethod } from "mod/IHookHost";
 import { Hook } from "mod/IHookManager";
 import Mod from "mod/Mod";
@@ -283,19 +285,8 @@ export default class StarterQuest extends Mod {
 	@Register.quest("cooking", new Quest()
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.CookingEquipment], 1)
 		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.CookedMeat], 1)
-		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
-	public questCooking: QuestType;
-
-	@Register.quest("taming", new Quest()
-		.addRequirement(QuestRequirementType.TameCreatures, 1)
-		.addChildQuests(Registry<StarterQuest>().get("questExtraStorage")))
-	public questTaming: QuestType;
-
-	@Register.quest("extraStorage", new Quest()
-		.addRequirement(QuestRequirementType.Craft, [ItemType.WoodenChest], 1)
-		.addRequirement(QuestRequirementType.Build, [ItemType.WoodenChest])
 		.addChildQuests(Registry<StarterQuest>().get("questWaterStill")))
-	public questExtraStorage: QuestType;
+	public questCooking: QuestType;
 
 	@Register.quest("waterStill", new Quest()
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 2)
@@ -321,8 +312,19 @@ export default class StarterQuest extends Mod {
 	@Register.quest("desalination", new Quest()
 		.addRequirement(Registry<StarterQuest>().get("requirementLightWaterStill"))
 		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromWaterStill"))
-		.addChildQuests(Registry<StarterQuest>().get("questSurvivalistTraining")))
+		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
 	public questDesalination: QuestType;
+
+	@Register.quest("taming", new Quest()
+		.addRequirement(QuestRequirementType.TameCreatures, 1)
+		.addChildQuests(Registry<StarterQuest>().get("questExtraStorage")))
+	public questTaming: QuestType;
+
+	@Register.quest("extraStorage", new Quest()
+		.addRequirement(QuestRequirementType.Craft, [ItemType.WoodenChest], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.WoodenChest])
+		.addChildQuests(Registry<StarterQuest>().get("questSurvivalistTraining")))
+	public questExtraStorage: QuestType;
 
 	@Register.quest("survivalistTraining", new Quest()
 		.setNeedsManualCompletion())
@@ -348,5 +350,10 @@ export default class StarterQuest extends Mod {
 		if (game.getGameMode() !== GameMode.Challenge && player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
 			player.quests.add(this.questWelcome);
 		}
+	}
+
+	@EventHandler(MapGen280, "isEasySpawn")
+	protected setEasySpawn(): boolean | undefined {
+		return true;
 	}
 }

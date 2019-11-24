@@ -27,14 +27,15 @@ export default class StarterQuest extends Mod {
     questFire: QuestType;
     questStokeFire: QuestType;
     questCooking: QuestType;
-    questTaming: QuestType;
-    questExtraStorage: QuestType;
     questWaterStill: QuestType;
     questFillStill: QuestType;
     questAttachContainer: QuestType;
     questDesalination: QuestType;
+    questTaming: QuestType;
+    questExtraStorage: QuestType;
     questSurvivalistTraining: QuestType;
     onPlayerJoin(player: Player): void;
     onGameStart(isLoadingSave: boolean, loadCount: number): void;
     private addQuest;
+    protected setEasySpawn(): boolean | undefined;
 }
