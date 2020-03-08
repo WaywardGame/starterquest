@@ -12,6 +12,7 @@ export default class StarterQuest extends Mod {
     requirementStokeCampfire: QuestRequirementType;
     requirementFillStill: QuestRequirementType;
     requirementAttachContainer: QuestRequirementType;
+    requirementStokeWaterStill: QuestRequirementType;
     questWelcome: QuestType;
     questGearUp: QuestType;
     questQuickslots: QuestType;
@@ -31,6 +32,7 @@ export default class StarterQuest extends Mod {
     questFillStill: QuestType;
     questAttachContainer: QuestType;
     questDesalination: QuestType;
+    questGatherWater: QuestType;
     questTaming: QuestType;
     questExtraStorage: QuestType;
     questSurvivalistTraining: QuestType;

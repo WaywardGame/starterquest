@@ -9,6 +9,7 @@
 			"modStarterQuestFillStill": "Pour water into a still",
 			"modStarterQuestAttachContainer": "Attach container to a still",
 			"modStarterQuestLightWaterStill": "Light a water still",
+			"modStarterQuestStokeWaterStill": "Stoke a water still",
 			"modStarterQuestGatherFromWaterStill": "Gather desalinated water from a still"
 		},
 
@@ -105,7 +106,12 @@
 
 			"modStarterQuestDesalination": [
 				"Desalination",
-				"You'll need to light the water still on fire so the water can begin to boil and steam the liquid. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one. After it's on fire, you'll have to wait until the fire goes out or reduces to embers before you can collect the water.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found fresh water sources. Fresh water can be gathered and purified over a fire, without a still."
+				"You'll need to light a fire under the still so the water can begin to boil and steam the liquid inside. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one.\n\nAfter it's on fire, you'll want to stoke it so it is on fire long enough to desalinate the water. To stoke the still, face it and use {Bindings:GameItemMenu} on an item, then choose the \"//Stoke Fire//\" action. You will likely want to keep stoking the fire until it is at least \"struggling\". That will give it enough time to desalinate the water. You can check this status by hovering over the still after it is lit."
+			],
+
+			"modStarterQuestGatherWater": [
+				"Gathering Water",
+				"After it's on fire, you'll have to wait until the water container is filled before picking it up. As mentioned previously, you will want to make sure the fire is at least to \"struggling\" status. You can do some other tasks while you wait. It will take approximately 300 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
 			],
 
 			"modStarterQuestTaming": [

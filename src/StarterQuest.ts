@@ -118,13 +118,13 @@ export default class StarterQuest extends Mod {
 				if (!itemManager.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
 					return false;
 				}
-			} else if (action.type === ActionType.DrinkInFront && doodad.gatherReady) {
+			} else if (action.type === ActionType.DrinkInFront && doodad.gatherReady !== undefined && doodad.gatherReady <= 0) {
 				return false;
 			} else if (action.type === ActionType.DetachContainer && doodad.stillContainer) {
 				return false;
 			}
 
-			return doodad.type === DoodadType.ClayWaterStill || doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.StoneWaterStill;
+			return doodad.gatherReady === undefined;
 		}))
 	public requirementGatherFromWaterStill: QuestRequirementType;
 
@@ -166,7 +166,7 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			if (doodad.decay === undefined || doodad.decay === 0) {
+			if (doodad.gatherReady === undefined || doodad.gatherReady <= 0) {
 				return false;
 			}
 
@@ -201,6 +201,33 @@ export default class StarterQuest extends Mod {
 				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
 		]))
 	public requirementAttachContainer: QuestRequirementType;
+
+	@Register.questRequirement("stokeWaterStill", new QuestRequirement({})
+		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
+			if (actionApi.executor !== api.host || action.type !== ActionType.StokeFire) {
+				return false;
+			}
+
+			const tile = actionApi.executor.getFacingTile();
+			const doodad = tile.doodad;
+			const doodadDescription = doodad?.description();
+			if (!doodadDescription || !doodadDescription.waterStill) {
+				return false;
+			}
+
+			const [item] = args as ActionArguments<typeof StokeFire>;
+			if (item.isValid()) {
+				return false;
+			}
+
+			return true;
+		})
+		.setRelations([
+			...Enums.values(ItemType)
+				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.StokeFire))
+				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
+		]))
+	public requirementStokeWaterStill: QuestRequirementType;
 
 	////////////////////////////////////
 	// Quests
@@ -311,9 +338,14 @@ export default class StarterQuest extends Mod {
 
 	@Register.quest("desalination", new Quest()
 		.addRequirement(Registry<StarterQuest>().get("requirementLightWaterStill"))
+		.addRequirement(Registry<StarterQuest>().get("requirementStokeWaterStill"))
+		.addChildQuests(Registry<StarterQuest>().get("questGatherWater")))
+	public questDesalination: QuestType;
+
+	@Register.quest("gatherWater", new Quest()
 		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromWaterStill"))
 		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
-	public questDesalination: QuestType;
+	public questGatherWater: QuestType;
 
 	@Register.quest("taming", new Quest()
 		.addRequirement(QuestRequirementType.TameCreatures, 1)
