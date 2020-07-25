@@ -15,7 +15,7 @@
         },
         "types": [],
         
-        "target": "es2017",
+        "target": "es2019",
         "module": "amd",
         "outDir": "out",
         "declaration": true,

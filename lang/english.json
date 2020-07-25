@@ -16,22 +16,22 @@
 		"quest": {
 			"modStarterQuestWelcome": [
 				"Welcome",
-				"{#ba9999:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 20-40 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
+				"{#--color-brown:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 20-40 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
 			],
 
 			"modStarterQuestGearUp": [
 				"Gear Up",
-				"{#ba9999:Attacking creatures and auto-gathering from the terrain uses your equipment. Let's equip an item now.}\n\n1. Open your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
+				"{#--color-brown:Attacking creatures and gathering can use items in your inventory if equipped. Let's equip an item now.}\n\n1. Open your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
 			],
 
 			"modStarterQuestQuickslots": [
 				"Item Use & Quickslots",
-				"{#ba9999:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#ba9999:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#ba9999:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quicklot and clicking the \"x\" next to the action of your choice."
+				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#--color-brown:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quicklot and clicking the \"x\" next to the action of your choice."
 			],
 
 			"modStarterQuestResourceGathering": [
 				"Resource Gathering",
-				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can gather with quickslotted and the default action is set to \"//Gather//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Gather/Harvest//\" in the options to automatically gather resources by walking into them.\n\nThere are different environments in Wayward; some harsher than others. If you are in a desert, you may have to venture north/north-east to find different resources. You may even have to venture across large bodies of water. Find a lush green forest or dead bushes to gather the branches. Find large rocks on the ground (in piles), or by gathering them from a gray-colored mountain side."
+				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can gather with quickslotted and the default action is set to \"//Gather//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Gather/Harvest//\" in the options to automatically gather resources by walking into them.\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
 			],
 
 			"modStarterQuestCrafting": [
@@ -71,7 +71,7 @@
 
 			"modStarterQuestCampfire": [
 				"Campfire",
-				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make either a \"//Stone Campfire//\" or \"//Sandstone Campfire//\". You'll need quite a few rocks or sandstone for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"//Doodads//\". Using {Bindings:GameItemMenu} on the campfire in your inventory will give you the option to \"//Build//\" it. Do so now, facing a valid tile."
+				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a \"//Stone Campfire//\". You'll need quite a few rocks for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"//Doodads//\". Using {Bindings:GameItemMenu} on the campfire in your inventory will give you the option to \"//Build//\" it. Do so now, facing a valid tile."
 			],
 
 			"modStarterQuestFire": [
@@ -91,7 +91,7 @@
 
 			"modStarterQuestWaterStill": [
 				"Water Still",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\" or \"//Sandstone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
 			],
 
 			"modStarterQuestFillStill": [
@@ -111,7 +111,7 @@
 
 			"modStarterQuestGatherWater": [
 				"Gathering Water",
-				"After it's on fire, you'll have to wait until the water container is filled before picking it up. As mentioned previously, you will want to make sure the fire is at least to \"struggling\" status. You can do some other tasks while you wait. It will take approximately 300 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
+				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
 			],
 
 			"modStarterQuestTaming": [

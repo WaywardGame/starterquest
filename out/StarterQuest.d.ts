@@ -39,5 +39,4 @@ export default class StarterQuest extends Mod {
     onPlayerJoin(player: Player): void;
     onGameStart(isLoadingSave: boolean, loadCount: number): void;
     private addQuest;
-    protected setEasySpawn(): boolean | undefined;
 }

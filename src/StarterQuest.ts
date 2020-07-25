@@ -8,11 +8,9 @@ import { QuestType } from "entity/player/quest/quest/IQuest";
 import { Quest } from "entity/player/quest/quest/Quest";
 import { QuestRequirementType } from "entity/player/quest/requirement/IRequirement";
 import { QuestRequirement } from "entity/player/quest/requirement/Requirement";
-import { EventHandler } from "event/EventManager";
 import { GameMode } from "game/options/IGameOptions";
 import { ItemType, ItemTypeGroup } from "item/IItem";
 import itemDescriptions from "item/Items";
-import MapGen280 from "mapgen/version/2.8.0";
 import { HookMethod } from "mod/IHookHost";
 import { Hook } from "mod/IHookManager";
 import Mod from "mod/Mod";
@@ -293,9 +291,9 @@ export default class StarterQuest extends Mod {
 	public questKindlingTinder: QuestType;
 
 	@Register.quest("campfire", new Quest()
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 5)
-		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.Campfire], 1)
-		.addRequirement(QuestRequirementType.Build, [ItemTypeGroup.Campfire])
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock], 5)
+		.addRequirement(QuestRequirementType.Craft, [ItemType.StoneCampfire], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.StoneCampfire])
 		.addChildQuests(Registry<StarterQuest>().get("questFire")))
 	public questCampfire: QuestType;
 
@@ -316,12 +314,12 @@ export default class StarterQuest extends Mod {
 	public questCooking: QuestType;
 
 	@Register.quest("waterStill", new Quest()
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock, ItemType.Sandstone], 2)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock], 2)
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
 		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 1)
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Pole], 1)
-		.addRequirement(QuestRequirementType.Craft, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill], 1)
-		.addRequirement(QuestRequirementType.Build, [ItemType.StoneWaterStill, ItemType.SandstoneWaterStill])
+		.addRequirement(QuestRequirementType.Craft, [ItemType.StoneWaterStill], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.StoneWaterStill])
 		.addChildQuests(Registry<StarterQuest>().get("questFillStill")))
 	public questWaterStill: QuestType;
 
@@ -382,10 +380,5 @@ export default class StarterQuest extends Mod {
 		if (game.getGameMode() !== GameMode.Challenge && player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
 			player.quests.add(this.questWelcome);
 		}
-	}
-
-	@EventHandler(MapGen280, "isEasySpawn")
-	protected setEasySpawn(): boolean | undefined {
-		return true;
 	}
 }
