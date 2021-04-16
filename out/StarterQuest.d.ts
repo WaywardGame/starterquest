@@ -1,6 +1,6 @@
-import Player from "entity/player/Player";
-import { QuestType } from "entity/player/quest/quest/IQuest";
-import { QuestRequirementType } from "entity/player/quest/requirement/IRequirement";
+import Player from "game/entity/player/Player";
+import { QuestType } from "game/entity/player/quest/quest/IQuest";
+import { QuestRequirementType } from "game/entity/player/quest/requirement/IRequirement";
 import Mod from "mod/Mod";
 export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;

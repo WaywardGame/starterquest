@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "doodad/IDoodad", "entity/action/IAction", "entity/IHuman", "entity/player/quest/quest/Quest", "entity/player/quest/requirement/IRequirement", "entity/player/quest/requirement/Requirement", "game/options/IGameOptions", "item/IItem", "item/Items", "mod/IHookHost", "mod/IHookManager", "mod/Mod", "mod/ModRegistry", "newui/component/IComponent", "utilities/Arrays", "utilities/enum/Enums"], function (require, exports, IDoodad_1, IAction_1, IHuman_1, Quest_1, IRequirement_1, Requirement_1, IGameOptions_1, IItem_1, Items_1, IHookHost_1, IHookManager_1, Mod_1, ModRegistry_1, IComponent_1, Arrays_1, Enums_1) {
+define(["require", "exports", "game/doodad/IDoodad", "game/entity/action/IAction", "game/entity/IHuman", "game/entity/player/quest/quest/Quest", "game/entity/player/quest/requirement/IRequirement", "game/entity/player/quest/requirement/Requirement", "game/item/IItem", "game/item/Items", "game/options/IGameOptions", "mod/IHookHost", "mod/IHookManager", "mod/Mod", "mod/ModRegistry", "ui/component/IComponent", "utilities/collection/Arrays", "utilities/enum/Enums"], function (require, exports, IDoodad_1, IAction_1, IHuman_1, Quest_1, IRequirement_1, Requirement_1, IItem_1, Items_1, IGameOptions_1, IHookHost_1, IHookManager_1, Mod_1, ModRegistry_1, IComponent_1, Arrays_1, Enums_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     const STARTER_QUEST_ID = "Starter Quest";
