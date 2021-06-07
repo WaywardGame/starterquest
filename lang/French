@@ -1,0 +1,86 @@
+{
+	"extends": "French",
+	"dictionaries": {
+		"questRequirement": {
+			"modStarterQuestQuickslot": "Ajouter un article aux acces rapide",
+			"modStarterQuestChangeHand": "Changement de mains permis",
+			"modStarterQuestLightCampfire": "Allumer un feu de camp",
+			"modStarterQuestStokeCampfire": "Faire un feu de camp",
+			"modStarterQuestFillStill": "Versez de l'eau dans un alambic",
+			"modStarterQuestAttachContainer": "Fixer le conteneur à un alambic",
+			"modStarterQuestLightWaterStill": "Allumer un alambic à eau",
+			"modStarterQuestStokeWaterStill": "Construire un alambic.",
+			"modStarterQuestGatherFromWaterStill": "Recueillir l'eau dessalée d'un alambic"
+		},
+
+		"quest": {
+			"modStarterQuestWelcome": ["Bienvenue",
+				"{#--color-brown:Si vous êtes nouveau dans Wayward, cette //Starter Quest// peut vous aider à survivre en vous apprenant les bases. Ce parcours facultatif prendra environ 20 à 40 minutes. Appuyez sur {Bindings:DialogQuests} pour activer cette boîte de dialogue. Cliquez sur {\"//Quest //\" pour lancer la ligne de quête."],
+
+			"modStarterQuestGearUp": ["S'équiper",
+				"{#--color-brown:Les créatures attaquantes et la collecte peuvent utiliser les objets de votre inventaire s'ils sont équipés. Équipons un objet maintenant. 1. Ouvrez votre équipement {link(Menu.HelpArticle.Interface):dialogue} avec {Bindings:DialogEquipment} ou cliquez sur l'icône d'équipement en haut de l'écran.\n\n2. Équipez un outil ou une arme en le(la) faisant glisser de votre inventaire vers l'emplacement d'équipement de votre choix.\n\nAlternativement, vous pouvez appuyer sur {Bindings:GameItemEquipToggle} en passant la souris sur un objet pour l'équiper.\n\n{link(Menu.HelpArticle.HeldItems):En savoir plus sur les objets détenus}"],
+
+			"modStarterQuestQuickslots": ["Utilisation des articles et des acces rapide",
+				"{#--color-brown:Tous les éléments possèdent une liste d'actions qui peuvent être exécutées sur eux à tout moment}.\n\n Utilisez {Bindings:GameItemMenu} pour ouvrir le menu d'action d'un élément.\n\n{#--color-brown:L'utilisation des actions de cette manière peut être fastidieuse. Pour lier l'action d'un élément à une seule pression sur une touche, vous pouvez utiliser les quickslots.}\n\n- Faites glisser et déposez un élément dans un quickslot.\n\n- OU utilisez l'action \"//Add to Quickslot//\" sur l'élément. \n\N- OU utilisez l'une des liaisons \"Quickslot Toggle\" sur un objet, comme {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, ou {Bindings:GameQuickSlotToggle3}. \n\n{#--color-brown:Une fois que l'élément se trouve dans le quickslot, il peut être utilisé avec sa reliure respective, qui est listée sous le quickslot.}\n\n Vous pouvez changer l'action qu'il exécute en utilisant {Bindings:GameItemMenu} sur le quickslot et en cliquant sur le \"x\" à côté de l'action de votre choix."],
+
+			"modStarterQuestResourceGathering": ["Rassemblement des ressources",
+				"Maintenant que vous avez un objet équipé et quickslotté, vous pouvez essayer de collecter des ressources. Assurez-vous que vous avez un objet que vous pouvez collecter avec quickslotté et que l'action par défaut est définie sur \"//Collecter//\". La quête précédente explique comment faire cela de manière plus détaillée. Vous pouvez également activer l'option \"//Auto Gather/Harvest//\" dans les options pour collecter automatiquement des ressources en marchant dessus.\n\n- Trouvez des érables pour en collecter les branches. Trouve des montagnes de couleur grise pour récolter les rochers."],
+
+			"modStarterQuestCrafting": ["Artisanat",
+				"Pour survivre, vous devrez fabriquer de nouveaux objets à partir des ressources que vous récoltez. Appuyez sur {Bindings:DialogCrafting} pour ouvrir la fenêtre d'artisanat. Elle vous montrera ce que vous pouvez fabriquer à partir des objets de votre inventaire. Commencez par fabriquer une pierre pointue qui est utilisée dans de nombreuses recettes d'artisanat. Toutes les tentatives de fabrication d'un objet ne sont pas réussies, et les chances de réussite dépendent du niveau de compétence de l'objet par rapport à vos compétences d'artisanat. Si votre menu d'artisanat est trop petit, vous pouvez en ajuster la taille et la position en le faisant glisser autour de vous ou en faisant glisser les coins pour le redimensionner."],
+
+			"modStarterQuestDismantle": ["Démantèlement",
+				"Tous les objets ne sont pas fabriqués, certains sont démontés à partir d'autres objets. Une branche, par exemple, peut être démontée en brindilles, en feuilles, en écorce et en poteau de bois ; une mine de ressources. Le démontage des objets peut être effectué dans le menu d'artisanat en cliquant sur l'onglet \"//Démontage//\". Tu verras une liste des objets qui peuvent être démontés. En passant la souris sur chacun d'eux, tu verras en quoi ils seront démantelés. Vous pouvez également démonter des objets en utilisant {Bindings:GameItemMenu} sur eux dans votre inventaire et en sélectionnant \"//Dismantle//\"."],
+
+			"modStarterQuestChangeHands": ["Utilisation de la main gauche/droite",
+					"Par défaut, vous utiliserez les deux mains pour attaquer ou récolter automatiquement (si vous avez activé l'option \"//Auto Gather/Harvest//\"). Vous pouvez activer et désactiver chaque main. C'est utile lorsque tu veux utiliser uniquement une certaine arme pour attaquer/récolter. Cela peut également éviter de vous blesser à mains nues. Vous pouvez changer de main en utilisant les cases de sélection en bas du menu d'équipement (ou en utilisant les raccourcis clavier {Bindings:GameHandToggleLeft} et {Bindings:GameHandToggleRight}),
+
+			"modStarterQuestHunting": ["La chasse",
+				"Il est temps d'apprendre une autre importante leçon de survie : la chasse ! Trouve une créature avec de la viande et tue-la. Tu peux découper son cadavre après lui avoir porté le coup final, en utilisant un objet \"//Sharpened//\" tout en lui faisant face en utilisant \"//Carve//\" dans le menu de l'objet. Vous pouvez également le mettre en quickslot et utiliser un raccourci clavier pour graver rapidement. Les créatures ayant une certaine forme de viande crue comprennent les rats géants, les araignées, les poulets, les lapins et bien d'autres encore."],
+
+			"modStarterQuestWoodenPoles": ["Poteaux en bois",
+				"Vous devrez allumer un feu pour cuire la viande crue si vous voulez la manger en toute sécurité. Ta première tâche est de rassembler les matériaux utilisés pour créer ton dispositif de feu. Démontez suffisamment de branches ou de bûches pour obtenir au moins deux [//Poteaux en bois///],
+
+			"modStarterQuestHandDrill": ["Perceuse à main",
+				"À ce stade, vous aurez débloqué une nouvelle recette d'artisanat appelée \"//Perceuse à main//\", un appareil primitif et facile à fabriquer qui fait du feu. Vous débloquez de nouvelles recettes d'artisanat en ayant un de chaque élément requis dans votre inventaire. Vas-y, fabrique-la !"],
+
+			"modStarterQuestKindlingTinder": ["Bois d'allumage et amadou",
+				"Les derniers éléments nécessaires pour allumer un feu sont le bois d'allumage et l'amadou. De nombreux éléments sont considérés comme du bois d'allumage, tels que des brindilles, de l'écorce d'arbre et des chevilles en bois (démontées de poteaux en bois). De nombreux éléments sont également considérés comme de l'amadou, tels que les copeaux de bois (démontés à partir de brindilles ou de chevilles en bois), la fourrure d'animaux, les feuilles et bien d'autres choses encore,]
+
+			"modStarterQuestCampfire": ["Feu de camp",
+				"Vous pouvez techniquement allumer un feu à cet instant. Mais pour créer une source de feu appropriée et fermée, tu devras faire un feu de camp en pierre. Tu auras besoin de pas mal de pierres pour cela. Avec certains objets, tu pourras les construire et les fixer temporairement dans le monde. Ces objets qui sont attachés/placés sur des tuiles, sont appelés \"//Doodads///\". En utilisant {Bindings:GameItemMenu} sur le feu de camp dans votre inventaire, vous aurez la possibilité de le \"//Build//\". Fais-le maintenant, face à une tuile valide."],
+
+			"modStarterQuestFire": ["Feu!",
+				"Avec votre perceuse manuelle, sélectionnez l'option \"//Start Fire///\" dans le menu de l'élément tout en faisant face au feu de camp. Ce faisant, vous créerez un feu contenu à l'intérieur de celui-ci. Vous n'avez pas toujours de la chance lorsque vous faites un feu avec de faibles compétences en camping. Si vous échouez trop souvent, il est possible que vous deviez rassembler et fabriquer d'autres copeaux de bois (ou tout autre amadou, comme des feuilles, de la fourrure d'animal ou des brins d'herbe) et du bois d'allumage,]
+
+			"modStarterQuestStokeFire": ["alimenter le feu",
+				"Votre feu pourrait probablement utiliser plus de carburant aussi. Pour ajouter du combustible à un feu, utilise {Bindings:GameItemMenu} sur un objet et choisis l'action \"//Stoke Fire//\". Cette action est disponible sur de nombreux objets, y compris les bûches, les branches, etc. Tu peux vérifier l'état du feu en passant ta souris dessus. Si les infobulles sont désactivées, vous pouvez également vérifier l'état en utilisant {Bindings:GameInspect} lorsque vous le survolez."],
+
+			"modStarterQuestCooking": ["Cuisiner avec le feu",
+				"Maintenant que vous avez un bon feu, vous pouvez faire cuire la viande ! La recette d'artisanat sera débloquée pour la forme cuite de cette viande. Tu peux même la manger après avoir terminé si tu as faim, ou la garder pour plus tard. Une brochette est un groupe d'objets qui contient une grande variété d'objets, y compris des branches, des poteaux en bois, des lances, et plus encore !"],
+
+			"modStarterQuestWaterStill": ["Purificateur d'eau",
+				"Vous êtes un peu assoiffé ? Il est temps de penser au dessalement de l'eau pour transformer l'eau de mer en eau potable et propre. Rassemble les ressources suivantes pour pouvoir fabriquer un alambic en pierre. Après avoir rassemblé toutes ces ressources, tu peux fabriquer l'alambic. Tu utiliseras cet appareil pour verser l'eau de mer, faire bouillir et faire couler à la vapeur l'eau dessalée dans le récipient. Comme pour le feu de camp précédent, tu pourras fabriquer l'alambic face à une tuile valide du menu de l'objet."],
+
+			"modStarterQuestFillStill": ["Remplir le purificateur",
+				"Pour tester votre nouvel alambic, prenez de l'eau dans l'océan. Avec un récipient vide dans ton inventaire, choisis l'option \"//Recueillir de l'eau//\" tout en faisant face à l'océan avec ton récipient. Tout en faisant toujours face à l'alambic, choisis l'option \"//Verser//\" dans le menu des éléments de ton récipient d'eau de mer. Le liquide sera alors versé dans l'alambic."],
+
+			"modStarterQuestAttachContainer": ["Fixer le récipient",
+				"\Tout en faisant face à l'alambic, choisissez l'option \"//Attach Container//\" dans le menu de votre conteneur. Cela fixera le récipient à l'alambic afin que l'eau dessalée puisse s'y accumuler."],
+
+			"modStarterQuestDesalination": ["Dessalement de l'eau",
+				"Vous devrez allumer un feu sous l'alambic pour que l'eau puisse commencer à bouillir et à vaporiser le liquide à l'intérieur. Ce qui signifie que vous devrez trouver ou fabriquer plus d'amadou et de bois d'allumage. J'espère que votre perceuse manuelle est encore utilisable. Si ce n'est pas le cas, tu devras en fabriquer une autre. Une fois qu'il est en feu, tu devras l'alimenter pour qu'il reste en feu assez longtemps pour dessaler l'eau. Pour alimenter l'alambic, fais-lui face et utilise {Bindings:GameItemMenu} sur un objet, puis choisis l'action \"//Stoke Fire///\". Tu voudras probablement continuer à alimenter le feu jusqu'à ce qu'il soit au moins \"en difficulté\". Cela lui donnera suffisamment de temps pour dessaler l'eau. Tu peux vérifier cet état en survolant l'alambic après son allumage."],
+
+			"modStarterQuestGatherWater": ["Recueillir de l'eau",
+				"Une fois qu'il est en feu, vous devrez attendre que le réservoir d'eau soit rempli avant de le ramasser. Vous pouvez effectuer d'autres tâches pendant que vous attendez. Il faudra environ 250 tours avant qu'il soit prêt. L'infobulle lorsque tu survoles l'alambic t'indiquera quand l'eau sera prête à être recueillie. Une fois le processus terminé, tu peux choisir les actions \"/Boire///\" ou \"/Détacher le récipient//\" en appuyant sur {Liaisons:GameActions} tout en faisant face à l'alambic. Sinon, si tu as un autre récipient, tu peux choisir l'option \"//Recueillir de l'eau//\" dans le menu du récipient. \Vous n'aurez besoin d'effectuer un tel processus que pour boire de l'eau de mer ou d'océan. Notez que le dessalement est une technique avancée et peut ne pas être nécessaire si vous avez trouvé des sources d'eau douce. L'eau douce peut être recueillie et purifiée sur un feu, sans alambic."],
+
+			"modStarterQuestTaming": ["Apprivoiser une créature",
+				"Avez-vous déjà rencontré une créature hostile ? Être contre-agressif envers les créatures hostiles de l'île n'est parfois pas la meilleure option, surtout si vous êtes mal préparé ou mal équipé. Il y a plusieurs façons d'apprivoiser une créature. Le moyen le plus efficace d'apprivoiser une créature et de la faire combattre pour vous est de la nourrir et de la rendre heureuse. Pour ce faire, vous pouvez effectuer l'une des actions suivantes : 1. Face à une créature, choisissez l'option \"//Offer//\" dans le menu d'un objet. Certaines créatures aiment des objets différents. Tu devras peut-être expérimenter avec cela. 2. Dépose un objet sur le sol et demande à la créature de marcher dessus. Si elle veut l'objet, elle sera apprivoisée.\n3. Face à une créature, ouvrez le menu d'actions avec {Liaisons:GameActions} et choisissez \"/Tame//\". L'apprivoisement de cette manière est difficile, surtout pour les niveaux de compétence inférieurs."],
+
+			"modStarterQuestExtraStorage": ["Rangement supplémentaire",
+				"Vous vous sentez un peu lourd ? Tu devrais peut-être commencer à penser à un stockage à long terme en dehors de ton inventaire. Le conteneur de stockage le plus facile à fabriquer est un \"//coffre en bois//\". Tu auras besoin de rassembler des bûches et des chevilles en bois. Pour obtenir des chevilles en bois, vous devrez démonter des poteaux en bois, qui sont d'abord démontés à partir de branches. Si vous cherchez à réduire davantage le poids de votre inventaire, vous pouvez envisager de fabriquer des sacs ou des sacs à dos (en utilisant du cuir) pour réduire le poids de l'inventaire de 50 % pour tous les objets qu'ils contiennent."],
+			"modStarterQuestSurvivalistTraining": ["Ssurvivaliste en formation",
+									"Voilà, c'est fait ! Tu devrais maintenant avoir quelques connaissances de base sur la façon de survivre dans Wayward. Avec suffisamment d'apprentissage et d'habileté, tu seras finalement capable de prospérer. Un trésor, tu te souviens de quelque chose à propos d'un trésor..."]
+							}
+						}
+					}
