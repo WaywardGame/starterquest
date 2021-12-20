@@ -26,12 +26,12 @@
 
 			"modStarterQuestQuickslots": [
 				"Item Use & Quickslots",
-				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#--color-brown:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quickslot and clicking the \"x\" next to the action of your choice."
+				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#--color-brown:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quickslot and clicking the \"x\" next to the action of your choice.\n\nAdditionally or alternatively, you can bind specific actions to a quickslot by using {Bindings:GameQuickSlotBindAction} on an empty quickslot to assign an action to a quickslot. You can use {Bindings:GameQuickSlotBindItemAction} to assign an item action. These item actions will automatically use the best item for that action in your inventory."
 			],
 
 			"modStarterQuestResourceGathering": [
 				"Resource Gathering",
-				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can gather with quickslotted and the default action is set to \"//Gather//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Gather/Harvest//\" in the options to automatically gather resources by walking into them.\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
+				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can chop or mine with quickslotted and the default action is set to \"//Chop//\" or \"//Mine//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Chop/Mine/Harvest//\" in the options to automatically gather resources by walking into them.\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
 			],
 
 			"modStarterQuestCrafting": [
@@ -46,12 +46,12 @@
 
 			"modStarterQuestChangeHands": [
 				"Left/Right Hand Use",
-				"By default, you will use both hands to automatically attack or gather/harvest (if you have \"//Auto Gather/Harvest//\" enabled). You can enable and disable each hand. This is useful when you only want to use a certain weapon for attacking/gathering. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the {Bindings:GameHandToggleLeft} and {Bindings:GameHandToggleRight} keybinds."
+				"By default, you will use both hands to automatically attack or chop/mine/harvest (if you have \"//Auto Chop/Mine/Harvest//\" enabled). You can enable and disable each hand. This is useful when you only want to use a certain weapon for attacking/gathering. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the {Bindings:GameHandToggleLeft} and {Bindings:GameHandToggleRight} keybinds."
 			],
 
 			"modStarterQuestHunting": [
 				"Hunting",
-				"It's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can carve its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Carve//\" from the item's menu. You can also quickslot it and use a hotkey to quickly carve. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
+				"It's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can butcher its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Butcher//\" from the item's menu. You can also quickslot it and use a hotkey to quickly butcher it. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
 			],
 
 			"modStarterQuestWoodenPoles": [
@@ -109,9 +109,9 @@
 				"You'll need to light a fire under the still so the water can begin to boil and steam the liquid inside. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one.\n\nAfter it's on fire, you'll want to stoke it so it is on fire long enough to desalinate the water. To stoke the still, face it and use {Bindings:GameItemMenu} on an item, then choose the \"//Stoke Fire//\" action. You will likely want to keep stoking the fire until it is at least \"struggling\". That will give it enough time to desalinate the water. You can check this status by hovering over the still after it is lit."
 			],
 
-			"modStarterQuestGatherWater": [
+			"modStarterQuestGatherLiquid": [
 				"Gathering Water",
-				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Water//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
+				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Liquid//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
 			],
 
 			"modStarterQuestTaming": [

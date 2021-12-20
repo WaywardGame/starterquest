@@ -1,18 +1,20 @@
+import { EventBus } from "event/EventBuses";
+import { EventHandler } from "event/EventManager";
 import { DoodadType } from "game/doodad/IDoodad";
-import GatherWater from "game/entity/action/actions/GatherWater";
+import GatherLiquid from "game/entity/action/actions/GatherLiquid";
 import StokeFire from "game/entity/action/actions/StokeFire";
 import { ActionArguments, ActionType } from "game/entity/action/IAction";
 import { EquipType } from "game/entity/IHuman";
 import Player from "game/entity/player/Player";
+import PlayerManager from "game/entity/player/PlayerManager";
 import { QuestType } from "game/entity/player/quest/quest/IQuest";
 import { Quest } from "game/entity/player/quest/quest/Quest";
 import { QuestRequirementType } from "game/entity/player/quest/requirement/IRequirement";
 import { QuestRequirement } from "game/entity/player/quest/requirement/Requirement";
+import { Game } from "game/Game";
 import { ItemType, ItemTypeGroup } from "game/item/IItem";
 import itemDescriptions from "game/item/Items";
 import { GameMode } from "game/options/IGameOptions";
-import { HookMethod } from "mod/IHookHost";
-import { Hook } from "mod/IHookManager";
 import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
 import { HighlightType } from "ui/component/IComponent";
@@ -35,7 +37,7 @@ export default class StarterQuest extends Mod {
 	//
 
 	@Register.questRequirement("quickslot", new QuestRequirement({})
-		.setTrigger(Hook.OnItemQuickslot, (api, item, player, slot) => {
+		.setEventTrigger(EventBus.Players, "updatedQuickslotInfo", (api, player, slot) => {
 			if (player !== api.host) return false;
 			return true;
 		})
@@ -62,8 +64,8 @@ export default class StarterQuest extends Mod {
 	public requirementChangeHand: QuestRequirementType;
 
 	@Register.questRequirement("lightCampfire", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.StartFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.StartFire) {
 				return false;
 			}
 
@@ -81,8 +83,8 @@ export default class StarterQuest extends Mod {
 	public requirementLightCampfire: QuestRequirementType;
 
 	@Register.questRequirement("lightWaterStill", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.StartFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.StartFire) {
 				return false;
 			}
 
@@ -100,8 +102,8 @@ export default class StarterQuest extends Mod {
 	public requirementLightWaterStill: QuestRequirementType;
 
 	@Register.questRequirement("gatherFromWaterStill", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || !(action.type === ActionType.GatherWater || action.type === ActionType.DrinkInFront || action.type === ActionType.DetachContainer)) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || !(actionType === ActionType.GatherLiquid || actionType === ActionType.DrinkInFront || actionType === ActionType.DetachContainer)) {
 				return false;
 			}
 
@@ -111,14 +113,14 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			if (action.type === ActionType.GatherWater) {
-				const [item] = args as ActionArguments<typeof GatherWater>;
-				if (!itemManager.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
+			if (actionType === ActionType.GatherLiquid) {
+				const [item] = args as ActionArguments<typeof GatherLiquid>;
+				if (!actionApi.executor.island.items.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
 					return false;
 				}
-			} else if (action.type === ActionType.DrinkInFront && doodad.gatherReady !== undefined && doodad.gatherReady <= 0) {
+			} else if (actionType === ActionType.DrinkInFront && doodad.gatherReady !== undefined && doodad.gatherReady <= 0) {
 				return false;
-			} else if (action.type === ActionType.DetachContainer && doodad.stillContainer) {
+			} else if (actionType === ActionType.DetachContainer && doodad.stillContainer) {
 				return false;
 			}
 
@@ -127,8 +129,8 @@ export default class StarterQuest extends Mod {
 	public requirementGatherFromWaterStill: QuestRequirementType;
 
 	@Register.questRequirement("stokeCampfire", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.StokeFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.StokeFire) {
 				return false;
 			}
 
@@ -153,8 +155,8 @@ export default class StarterQuest extends Mod {
 	public requirementStokeCampfire: QuestRequirementType;
 
 	@Register.questRequirement("fillStill", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.Pour) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.Pour) {
 				return false;
 			}
 
@@ -176,8 +178,8 @@ export default class StarterQuest extends Mod {
 	public requirementFillStill: QuestRequirementType;
 
 	@Register.questRequirement("attachContainer", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.AttachContainer) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.AttachContainer) {
 				return false;
 			}
 
@@ -201,8 +203,8 @@ export default class StarterQuest extends Mod {
 	public requirementAttachContainer: QuestRequirementType;
 
 	@Register.questRequirement("stokeWaterStill", new QuestRequirement({})
-		.setTrigger(Hook.PostExecuteAction, (api, actionApi, action, args) => {
-			if (actionApi.executor !== api.host || action.type !== ActionType.StokeFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
+			if (actionApi.executor !== api.host || actionType !== ActionType.StokeFire) {
 				return false;
 			}
 
@@ -337,13 +339,13 @@ export default class StarterQuest extends Mod {
 	@Register.quest("desalination", new Quest()
 		.addRequirement(Registry<StarterQuest>().get("requirementLightWaterStill"))
 		.addRequirement(Registry<StarterQuest>().get("requirementStokeWaterStill"))
-		.addChildQuests(Registry<StarterQuest>().get("questGatherWater")))
+		.addChildQuests(Registry<StarterQuest>().get("questGatherLiquid")))
 	public questDesalination: QuestType;
 
-	@Register.quest("gatherWater", new Quest()
+	@Register.quest("gatherLiquid", new Quest()
 		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromWaterStill"))
 		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
-	public questGatherWater: QuestType;
+	public questGatherLiquid: QuestType;
 
 	@Register.quest("taming", new Quest()
 		.addRequirement(QuestRequirementType.TameCreatures, 1)
@@ -364,13 +366,13 @@ export default class StarterQuest extends Mod {
 	// Hooks
 	//
 
-	@HookMethod
-	@Override public onPlayerJoin(player: Player) {
+	@EventHandler(EventBus.PlayerManager, "join")
+	public onPlayerJoin(manager: PlayerManager, player: Player) {
 		this.addQuest(player);
 	}
 
-	@HookMethod
-	@Override public onGameStart(isLoadingSave: boolean, loadCount: number) {
+	@EventHandler(EventBus.Game, "play")
+	public onGameStart(game: Game, isLoadingSave: boolean, loadCount: number) {
 		if (!multiplayer.isConnected() || !multiplayer.isClient()) {
 			this.addQuest();
 		}

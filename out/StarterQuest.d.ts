@@ -1,6 +1,8 @@
 import Player from "game/entity/player/Player";
+import PlayerManager from "game/entity/player/PlayerManager";
 import { QuestType } from "game/entity/player/quest/quest/IQuest";
 import { QuestRequirementType } from "game/entity/player/quest/requirement/IRequirement";
+import { Game } from "game/Game";
 import Mod from "mod/Mod";
 export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;
@@ -32,11 +34,11 @@ export default class StarterQuest extends Mod {
     questFillStill: QuestType;
     questAttachContainer: QuestType;
     questDesalination: QuestType;
-    questGatherWater: QuestType;
+    questGatherLiquid: QuestType;
     questTaming: QuestType;
     questExtraStorage: QuestType;
     questSurvivalistTraining: QuestType;
-    onPlayerJoin(player: Player): void;
-    onGameStart(isLoadingSave: boolean, loadCount: number): void;
+    onPlayerJoin(manager: PlayerManager, player: Player): void;
+    onGameStart(game: Game, isLoadingSave: boolean, loadCount: number): void;
     private addQuest;
 }
