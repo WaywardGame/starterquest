@@ -363,7 +363,7 @@ export default class StarterQuest extends Mod {
 	public questSurvivalistTraining: QuestType;
 
 	////////////////////////////////////
-	// Hooks
+	// Event Handlers
 	//
 
 	@EventHandler(EventBus.PlayerManager, "join")
