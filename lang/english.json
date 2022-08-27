@@ -2,8 +2,7 @@
 	"extends": "English",
 	"dictionaries": {
 		"questRequirement": {
-			"modStarterQuestQuickslot": "Add an item to quickslots",
-			"modStarterQuestChangeHand": "Change enabled hands",
+			"modStarterQuestActionSlots": "Add an item to an action slot",
 			"modStarterQuestLightCampfire": "Light a campfire",
 			"modStarterQuestStokeCampfire": "Stoke a campfire",
 			"modStarterQuestFillStill": "Pour water into a still",
@@ -16,52 +15,47 @@
 		"quest": {
 			"modStarterQuestWelcome": [
 				"Welcome",
-				"{#--color-brown:If you're new to Wayward, this //Starter Quest// can help you survive by teaching you the basics. This optional walkthrough will take approximately 20-40 minutes.}\n\nPress {Bindings:DialogQuests} to toggle this dialog.\n\nClick \"//Complete Quest//\" to start the quest line."
+				"{#--color-brown:If you're new to Wayward, this {/Starter Quest/} can help you survive by teaching you the basics. This optional walkthrough will take approximately 20-40 minutes.}\n\nPress {BINDINGS:DialogQuests} to toggle this dialog.\n\nClick \"{/Complete Quest/}\" to start the quest line."
 			],
 
 			"modStarterQuestGearUp": [
 				"Gear Up",
-				"{#--color-brown:Attacking creatures and gathering can use items in your inventory if equipped. Let's equip an item now.}\n\n1. Open your equipment {link(Menu.HelpArticle.Interface):dialog} with {Bindings:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can press {Bindings:GameItemEquipToggle} while hovering over an item to toggle it equipped.\n\n{link(Menu.HelpArticle.HeldItems):Learn more about Held Items}"
+				"{#--color-brown:Attacking creatures will use items in your inventory when equipped to your main hand. Let's equip an item now.}\n\n1. Open your equipment {(HELP/INTERFACE):dialog} with {BINDINGS:DialogEquipment} or click the equipment icon at the top of the screen.\n\n2. Equip a tool or weapon by dragging it from your inventory to the equipment slot of your choice.\n\nAlternatively, you can {BINDINGS:GameItemEquipToggle} to toggle it equipped or not.\n\n{(HELP/HELD_ITEMS):Learn more about Held Items}"
 			],
 
-			"modStarterQuestQuickslots": [
-				"Item Use & Quickslots",
-				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\nUse {Bindings:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use Quickslots.}\n\n- Drag and drop an item into a quickslot.\n\n- OR use the \"//Add to Quickslot//\" action on the item.\n\n- OR use one of the \"Quickslot Toggle\" bindings on an item, such as {Bindings:GameQuickSlotToggle1}, {Bindings:GameQuickSlotToggle2}, or {Bindings:GameQuickSlotToggle3}.\n\n{#--color-brown:Once the item is in the quickslot, it can be used with its respective binding, which is listed underneath the quickslot.}\n\nYou can change which action it executes by using {Bindings:GameItemMenu} on the quickslot and clicking the \"x\" next to the action of your choice.\n\nAdditionally or alternatively, you can bind specific actions to a quickslot by using {Bindings:GameQuickSlotBindAction} on an empty quickslot to assign an action to a quickslot. You can use {Bindings:GameQuickSlotBindItemAction} to assign an item action. These item actions will automatically use the best item for that action in your inventory."
+			"modStarterQuestActionSlots": [
+				"Item Use & Action Slots",
+				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\n{BINDINGS:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use the action bar.}\n\n- Drag and drop an item into an action slot.\n\n- OR use one of the \"Toggle Action\" bindings, such as {BINDINGS:GameActionBarToggleSlot0}, {BINDINGS:GameActionBarToggleSlot1}, or {BINDINGS:GameActionBarToggleSlot2} for example to use slot 1/2/3.\n\n{#--color-brown:Once the item is in the action slot, it can be used with its corresponding bind (shown when hovering over an action slot).}\n\n\n\nAdditionally or alternatively, you can bind specific actions to an action slot by using {BINDINGS:MenuContextMenu} on an empty action slot to assign any action. These actions will automatically use the best item for that action in your inventory if applicable."
 			],
 
 			"modStarterQuestResourceGathering": [
 				"Resource Gathering",
-				"Now that you have something equipped and quickslotted, you can try gathering some resources.\n\nMake sure you have an item that you can chop or mine with quickslotted and the default action is set to \"//Chop//\" or \"//Mine//\". The previous quest explained how to do this in more detail. Alternatively, you can also enable \"//Auto Chop/Mine/Harvest//\" in the options to automatically gather resources by walking into them.\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
+				"Now that you have something equipped and assigned to an action slot, you can try gathering some resources.\n\nMake sure if you are using an item in your action slot, that its action is set to \"{/Chop/}\" or \"{/Mine/}\".\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
 			],
 
 			"modStarterQuestCrafting": [
 				"Crafting",
-				"To survive, you will need to craft new items from the resources you gather. Press {Bindings:DialogCrafting} to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.\n\nIf your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize."
+				"To survive, you will need to craft new items from the resources you gather. Press {BINDINGS:DialogCrafting} to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.\n\nIf your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize."
 			],
 
 			"modStarterQuestDismantle": [
 				"Dismantling",
-				"Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.\n\nDismantling items can be done through the crafting menu by clicking on the \"//Dismantle//\" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items using {Bindings:GameItemMenu} on them in your inventory and selecting \"//Dismantle//\"."
-			],
-
-			"modStarterQuestChangeHands": [
-				"Left/Right Hand Use",
-				"By default, you will use both hands to automatically attack or chop/mine/harvest (if you have \"//Auto Chop/Mine/Harvest//\" enabled). You can enable and disable each hand. This is useful when you only want to use a certain weapon for attacking/gathering. This can also prevent injury to your bare hands. You can toggle your hands using the select boxes on the bottom of the equipment menu (or through the use of the {Bindings:GameHandToggleLeft} and {Bindings:GameHandToggleRight} keybinds."
+				"Not all items are crafted, some are dismantled from other items. A branch for example can be dismantled into twigs, leaves, stripped bark, and a wooden pole; a wealth of resources.\n\nDismantling items can be done through the crafting menu by clicking on the \"{/Dismantle/}\" tab. You will see a listing of items that can be dismantled. Hovering over each will show what they will be dismantled into. Alternatively, you can dismantle items using {BINDINGS:GameItemMenu} on them in your inventory and selecting \"{/Dismantle/}\"."
 			],
 
 			"modStarterQuestHunting": [
 				"Hunting",
-				"It's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can butcher its corpse after dealing the final blow, using a \"//Sharpened//\" item while facing it by using \"//Butcher//\" from the item's menu. You can also quickslot it and use a hotkey to quickly butcher it. Creatures with some form of raw meat include giant rats, spiders, chickens, rabbits, and more."
+				"It's time to learn another important survival lesson: Hunting! Find a creature with meat and slay it. You can butcher its corpse after dealing the final blow, using a \"{/Sharpened/}\" item while facing it by using \"{/Butcher/}\" from the item's menu. You can also assign it to an action slot and use a bind to do this quicker. Creatures with some form of raw meat include giant rats, giant spiders, chickens, rabbits, and more."
 			],
 
 			"modStarterQuestWoodenPoles": [
 				"Wooden Poles",
-				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"//Wooden Poles//\"."
+				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"{/Wooden Poles/}\"."
 			],
 
 			"modStarterQuestHandDrill": [
 				"Hand Drill",
-				"At this point, you will have unlocked a new crafting recipe called \"//Hand Drill//\", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!"
+				"At this point, you will have unlocked a new crafting recipe called \"{/Hand Drill/}\", a primitive and easy-to-craft device that makes fire. You unlock new crafting recipes by having one of each required items in your inventory. Go ahead and craft it!"
 			],
 
 			"modStarterQuestKindlingTinder": [
@@ -71,17 +65,17 @@
 
 			"modStarterQuestCampfire": [
 				"Campfire",
-				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a \"//Stone Campfire//\". You'll need quite a few rocks for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"//Doodads//\". Using {Bindings:GameItemMenu} on the campfire in your inventory will give you the option to \"//Build//\" it. Do so now, facing a valid tile."
+				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a \"{/Stone Campfire/}\". You'll need quite a few rocks for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"{/Doodads/}\". Using {BINDINGS:GameItemMenu} on the campfire in your inventory will give you the option to \"{/Build/}\" it. Do so now, facing a valid tile."
 			],
 
 			"modStarterQuestFire": [
 				"Fire!",
-				"With your hand drill, select the \"//Start Fire//\" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire with low camping skills. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.\n\nBe careful not to step in your fire!"
+				"With your hand drill, select the \"{/Start Fire/}\" option from the item's menu while facing the campfire. Doing so will create a fire contained inside of it. You don't always get lucky when making a fire with low camping skills. It's possible that you may need to re-gather and craft some more wooden shavings (or any other tinder item, such as, leaves, animal fur, or grass blades) and kindling if you fail too many times.\n\nBe careful not to step in your fire!"
 			],
 
 			"modStarterQuestStokeFire": [
 				"Stoking Fire",
-				"Your fire could probably use more fuel as well. To add fuel to a fire, use {Bindings:GameItemMenu} on an item and choose the \"//Stoke Fire//\" action. This action is available on many items, including logs, branches, and more.\n\nYou can check the status of the fire by hovering your mouse over it. If you have tool-tips disabled, you can also check the status by using {Bindings:GameInspect} while hovering over it."
+				"Your fire could probably use more fuel as well. To add fuel to a fire, use {BINDINGS:GameItemMenu} on an item and choose the \"{/Stoke Fire/}\" action. This action is available on many items, including logs, branches, and more.\n\nYou can check the status of the fire by hovering your mouse over it. If you have tool-tips disabled, you can also check the status by using {BINDINGS:GameInspect} while hovering over it."
 			],
 
 			"modStarterQuestCooking": [
@@ -91,37 +85,37 @@
 
 			"modStarterQuestWaterStill": [
 				"Water Still",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"//Stone Water Still//\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"//Build//\" the water still facing a valid tile from the item's menu."
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"{/Stone Water Still/}\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"{/Build/}\" the water still facing a valid tile from the item's menu."
 			],
 
 			"modStarterQuestFillStill": [
 				"Filling the Still",
-				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"//Gather Water//\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"//Pour//\" option from your container of seawater's item menu. This will pour the liquid into the water still."
+				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"{/Gather Water/}\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"{/Pour/}\" option from your container of seawater's item menu. This will pour the liquid into the water still."
 			],
 
 			"modStarterQuestAttachContainer": [
 				"Attaching the Container",
-				"\n\nWhile facing the water still, choose the \"//Attach Container//\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
+				"\n\nWhile facing the water still, choose the \"{/Attach Container/}\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
 			],
 
 			"modStarterQuestDesalination": [
 				"Desalination",
-				"You'll need to light a fire under the still so the water can begin to boil and steam the liquid inside. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one.\n\nAfter it's on fire, you'll want to stoke it so it is on fire long enough to desalinate the water. To stoke the still, face it and use {Bindings:GameItemMenu} on an item, then choose the \"//Stoke Fire//\" action. You will likely want to keep stoking the fire until it is at least \"struggling\". That will give it enough time to desalinate the water. You can check this status by hovering over the still after it is lit."
+				"You'll need to light a fire under the still so the water can begin to boil and steam the liquid inside. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one.\n\nAfter it's on fire, you'll want to stoke it so it is on fire long enough to desalinate the water. To stoke the still, face it and use {BINDINGS:GameItemMenu} on an item, then choose the \"{/Stoke Fire/}\" action. You will likely want to keep stoking the fire until it is at least \"struggling\". That will give it enough time to desalinate the water. You can check this status by hovering over the still after it is lit."
 			],
 
 			"modStarterQuestGatherLiquid": [
 				"Gathering Water",
-				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"//Drink//\" or \"//Detach Container//\" actions by pressing {Bindings:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"//Gather Liquid//\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
+				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"{/Drink/}\" or \"{/Detach Container/}\" actions by pressing {BINDINGS:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"{/Gather Liquid/}\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
 			],
 
 			"modStarterQuestTaming": [
 				"Creature Taming",
-				"Have you encountered a hostile creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"//Offer//\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {Bindings:GameActions} and choose \"//Tame//\". Taming in this manner is difficult, especially at lower skill levels."
+				"Have you encountered a hostile creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"{/Offer/}\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {BINDINGS:GameActions} and choose \"{/Tame/}\". Taming in this manner is difficult, especially at lower skill levels."
 			],
 
 			"modStarterQuestExtraStorage": [
 				"Extra Storage",
-				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"//Wooden Chest//\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
+				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
 			],
 
 			"modStarterQuestSurvivalistTraining": [
