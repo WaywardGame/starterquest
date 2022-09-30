@@ -6,8 +6,7 @@ import { Game } from "game/Game";
 import Mod from "mod/Mod";
 export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;
-    requirementQuickslot: QuestRequirementType;
-    requirementChangeHand: QuestRequirementType;
+    requirementActionSlot: QuestRequirementType;
     requirementLightCampfire: QuestRequirementType;
     requirementLightWaterStill: QuestRequirementType;
     requirementGatherFromWaterStill: QuestRequirementType;
@@ -17,11 +16,10 @@ export default class StarterQuest extends Mod {
     requirementStokeWaterStill: QuestRequirementType;
     questWelcome: QuestType;
     questGearUp: QuestType;
-    questQuickslots: QuestType;
+    questActionSlots: QuestType;
     questResourceGathering: QuestType;
     questCrafting: QuestType;
     questDismantle: QuestType;
-    questChangeHands: QuestType;
     questHunting: QuestType;
     questWoodenPoles: QuestType;
     questHandDrill: QuestType;
