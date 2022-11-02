@@ -30,12 +30,12 @@
 
 			"modStarterQuestResourceGathering": [
 				"Resource Gathering",
-				"Now that you have something equipped and assigned to an action slot, you can try gathering some resources.\n\nMake sure if you are using an item in your action slot, that its action is set to \"{/Chop/}\" or \"{/Mine/}\".\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the rocks."
+				"Now that you have something equipped and assigned to an action slot, you can try gathering some resources.\n\nMake sure if you are using an item in your action slot, that its action is set to \"{/Chop/}\" or \"{/Mine/}\".\n\nFind maple trees to gather the branches. Find gray-colored rocks to gather the granite."
 			],
 
 			"modStarterQuestCrafting": [
 				"Crafting",
-				"To survive, you will need to craft new items from the resources you gather. Press {BINDINGS:DialogCrafting} to open the crafting window. It will show you what you can make from the items in your inventory. Start by making a sharp rock which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.\n\nIf your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize."
+				"To survive, you will need to craft new items from the resources you gather. Press {BINDINGS:DialogCrafting} to open the crafting window. It will show you what you can make from the items in your inventory. Start by making sharp granite which is used in many crafting recipes. Not every attempt to craft an item is successful, and the chance of success depends on the skill level of the item against your crafting skills.\n\nIf your crafting menu is too small, you can adjust it in size and position by dragging it around or dragging the corners to resize."
 			],
 
 			"modStarterQuestDismantle": [
@@ -65,7 +65,7 @@
 
 			"modStarterQuestCampfire": [
 				"Campfire",
-				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a \"{/Stone Campfire/}\". You'll need quite a few rocks for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"{/Doodads/}\". Using {BINDINGS:GameItemMenu} on the campfire in your inventory will give you the option to \"{/Build/}\" it. Do so now, facing a valid tile."
+				"You could technically start a fire at this moment. But to make a proper, enclosed fire-source, you'll want to make a \"{/Granite Campfire/}\". You'll need quite a few pieces of granite for this endeavor.\n\nWith some items, you will be able to build them and temporarily affix them to the world. These objects that are attached/placed on tiles, are called \"{/Doodads/}\". Using {BINDINGS:GameItemMenu} on the campfire in your inventory will give you the option to \"{/Build/}\" it. Do so now, facing a valid tile."
 			],
 
 			"modStarterQuestFire": [
@@ -80,12 +80,12 @@
 
 			"modStarterQuestCooking": [
 				"Cooking with Fire",
-				"Now that you have a proper fire going, you can cook the meat! The craft recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.\n\nA skewer is an item grouping that contains a wide variety of items including branches, wooden poles, spears, and more!"
+				"Now that you have a proper fire going, you can cook the meat! The crafting recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.\n\nCooking equipment may required for this endeavor. Cooking equipment is an item grouping that contains a wide variety of items including branches, wooden poles, spears, tongs, and more!"
 			],
 
 			"modStarterQuestWaterStill": [
 				"Water Still",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"{/Stone Water Still/}\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"{/Build/}\" the water still facing a valid tile from the item's menu."
+				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"{/Granite Water Still/}\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"{/Build/}\" the water still facing a valid tile from the item's menu."
 			],
 
 			"modStarterQuestFillStill": [
