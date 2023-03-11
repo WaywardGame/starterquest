@@ -59,8 +59,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
@@ -78,8 +78,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
@@ -97,8 +97,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
@@ -124,8 +124,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.LitClayCampfire || doodad.type === DoodadType.LitGraniteCampfire || doodad.type === DoodadType.LitSandstoneCampfire)) {
 				return false;
 			}
@@ -150,8 +150,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
 				return false;
 			}
@@ -173,8 +173,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
 				return false;
 			}
@@ -198,8 +198,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = actionApi.executor.asEntityMovable?.getFacingTile();
+			const doodad = tile?.doodad;
 			const doodadDescription = doodad?.description();
 			if (!doodadDescription || !doodadDescription.waterStill) {
 				return false;
