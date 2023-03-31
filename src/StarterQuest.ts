@@ -200,7 +200,7 @@ export default class StarterQuest extends Mod {
 
 			const tile = handlerApi.executor.asEntityMovable?.facingTile;
 			const doodad = tile?.doodad;
-			const doodadDescription = doodad?.description();
+			const doodadDescription = doodad?.description;
 			if (!doodadDescription || !doodadDescription.waterStill) {
 				return false;
 			}
