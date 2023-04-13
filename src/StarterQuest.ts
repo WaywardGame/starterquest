@@ -19,7 +19,7 @@ import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
 import { ActionSlot } from "ui/screen/screens/game/static/ActionBar";
 import { HighlightType } from "ui/util/IHighlight";
-import { Tuple } from "utilities/collection/Arrays";
+import { Tuple } from "utilities/collection/Tuple";
 import Enums from "utilities/enum/Enums";
 
 const STARTER_QUEST_ID = "Starter Quest";
