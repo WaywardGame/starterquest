@@ -19,7 +19,7 @@ import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
 import { ActionSlot } from "ui/screen/screens/game/static/ActionBar";
 import { HighlightType } from "ui/util/IHighlight";
-import { Tuple } from "utilities/collection/Arrays";
+import { Tuple } from "utilities/collection/Tuple";
 import Enums from "utilities/enum/Enums";
 
 const STARTER_QUEST_ID = "Starter Quest";
@@ -54,13 +54,13 @@ export default class StarterQuest extends Mod {
 	public requirementActionSlot: QuestRequirementType;
 
 	@Register.questRequirement("lightCampfire", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.StartFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.StartFire) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
@@ -73,13 +73,13 @@ export default class StarterQuest extends Mod {
 	public requirementLightCampfire: QuestRequirementType;
 
 	@Register.questRequirement("lightWaterStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.StartFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.StartFire) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
@@ -92,20 +92,20 @@ export default class StarterQuest extends Mod {
 	public requirementLightWaterStill: QuestRequirementType;
 
 	@Register.questRequirement("gatherFromWaterStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || !(actionType === ActionType.GatherLiquid || actionType === ActionType.DrinkInFront || actionType === ActionType.DetachContainer)) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || !(actionType === ActionType.GatherLiquid || actionType === ActionType.DrinkInFront || actionType === ActionType.DetachContainer)) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad) {
 				return false;
 			}
 
 			if (actionType === ActionType.GatherLiquid) {
 				const [item] = args as ActionArguments<typeof GatherLiquid>;
-				if (!actionApi.executor.island.items.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
+				if (!handlerApi.executor.island.items.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
 					return false;
 				}
 			} else if (actionType === ActionType.DrinkInFront && doodad.gatherReady !== undefined && doodad.gatherReady <= 0) {
@@ -119,13 +119,13 @@ export default class StarterQuest extends Mod {
 	public requirementGatherFromWaterStill: QuestRequirementType;
 
 	@Register.questRequirement("stokeCampfire", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.StokeFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.StokeFire) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.LitClayCampfire || doodad.type === DoodadType.LitGraniteCampfire || doodad.type === DoodadType.LitSandstoneCampfire)) {
 				return false;
 			}
@@ -145,13 +145,13 @@ export default class StarterQuest extends Mod {
 	public requirementStokeCampfire: QuestRequirementType;
 
 	@Register.questRequirement("fillStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.Pour) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.Pour) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
 				return false;
 			}
@@ -168,13 +168,13 @@ export default class StarterQuest extends Mod {
 	public requirementFillStill: QuestRequirementType;
 
 	@Register.questRequirement("attachContainer", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.AttachContainer) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.AttachContainer) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
 			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
 				return false;
 			}
@@ -193,14 +193,14 @@ export default class StarterQuest extends Mod {
 	public requirementAttachContainer: QuestRequirementType;
 
 	@Register.questRequirement("stokeWaterStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, actionApi, actionType, handlerApi, args) => {
-			if (actionApi.executor !== api.host || actionType !== ActionType.StokeFire) {
+		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
+			if (handlerApi.executor !== api.host || actionType !== ActionType.StokeFire) {
 				return false;
 			}
 
-			const tile = actionApi.executor.getFacingTile();
-			const doodad = tile.doodad;
-			const doodadDescription = doodad?.description();
+			const tile = handlerApi.executor.asEntityMovable?.facingTile;
+			const doodad = tile?.doodad;
+			const doodadDescription = doodad?.description;
 			if (!doodadDescription || !doodadDescription.waterStill) {
 				return false;
 			}
