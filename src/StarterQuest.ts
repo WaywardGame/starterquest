@@ -11,6 +11,7 @@
 
 import { EventBus } from "event/EventBuses";
 import { EventHandler } from "event/EventManager";
+import { BiomeType } from "game/biome/IBiome";
 import { DoodadType } from "game/doodad/IDoodad";
 import GatherLiquid from "game/entity/action/actions/GatherLiquid";
 import StokeFire from "game/entity/action/actions/StokeFire";
@@ -25,9 +26,12 @@ import { QuestRequirement } from "game/entity/player/quest/requirement/Requireme
 import { Game } from "game/Game";
 import { ItemType, ItemTypeGroup } from "game/item/IItem";
 import { itemDescriptions } from "game/item/ItemDescriptions";
+import MapGenHelpers from "game/mapgen/MapGenHelpers";
 import { GameMode } from "game/options/IGameOptions";
+import { TileTemplateType } from "game/tile/ITerrain";
 import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
+import { RenderSource } from "renderer/IRenderer";
 import { ActionSlot } from "ui/screen/screens/game/static/ActionBar";
 import { HighlightType } from "ui/util/IHighlight";
 import { Tuple } from "utilities/collection/Tuple";
@@ -371,6 +375,11 @@ export default class StarterQuest extends Mod {
 	public onGameStart(game: Game, isLoadingSave: boolean, loadCount: number) {
 		if (!multiplayer.isConnected() || !multiplayer.isClient()) {
 			this.addQuest();
+		}
+
+		if (!isLoadingSave && localIsland.biomeType === BiomeType.Coastal) {
+			MapGenHelpers.spawnTemplate(localIsland, TileTemplateType.Pond, localPlayer.x + 9, localPlayer.y - 2, localPlayer.z, { which: "smallPond" });
+			localPlayer.updateView(RenderSource.Mod, true);
 		}
 	}
 
