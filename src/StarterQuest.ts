@@ -377,9 +377,16 @@ export default class StarterQuest extends Mod {
 			this.addQuest();
 		}
 
+		// Spawn a starting pond
 		if (!isLoadingSave && localIsland.biomeType === BiomeType.Coastal) {
-			MapGenHelpers.spawnTemplate(localIsland, TileTemplateType.Pond, localPlayer.x + 9, localPlayer.y - 2, localPlayer.z, { which: "smallPond" });
-			localPlayer.updateView(RenderSource.Mod, true);
+			for (let x = 9; x < 50; x++) {
+				const tile = localIsland.getTile(localPlayer.x + x, localPlayer.y - 2, localPlayer.z);
+				if (!tile?.description?.shallowWater && !tile?.description?.water) {
+					MapGenHelpers.spawnTemplate(localIsland, TileTemplateType.Pond, localPlayer.x + x, localPlayer.y - 2, localPlayer.z, { which: "smallPond" });
+					localPlayer.updateView(RenderSource.Mod, true);
+					break;
+				}
+			}
 		}
 	}
 
