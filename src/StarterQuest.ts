@@ -12,7 +12,7 @@
 import { EventBus } from "event/EventBuses";
 import { EventHandler } from "event/EventManager";
 import { BiomeType } from "game/biome/IBiome";
-import { DoodadType } from "game/doodad/IDoodad";
+import { DoodadType, DoodadTypeGroup } from "game/doodad/IDoodad";
 import GatherLiquid from "game/entity/action/actions/GatherLiquid";
 import StokeFire from "game/entity/action/actions/StokeFire";
 import { ActionArguments, ActionType } from "game/entity/action/IAction";
@@ -99,7 +99,7 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			return doodad.type === DoodadType.LitClayWaterStill || doodad.type === DoodadType.LitGraniteWaterStill || doodad.type === DoodadType.LitSandstoneWaterStill;
+			return doodad.isInGroup(DoodadTypeGroup.LitWaterStill);
 		})
 		.setRelations([
 			[HighlightType.Selector, "#inventory .group-FireStarter"],
@@ -167,7 +167,7 @@ export default class StarterQuest extends Mod {
 
 			const tile = handlerApi.executor.asEntityMovable?.facingTile;
 			const doodad = tile?.doodad;
-			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
+			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.WaterStill)) {
 				return false;
 			}
 
@@ -190,7 +190,7 @@ export default class StarterQuest extends Mod {
 
 			const tile = handlerApi.executor.asEntityMovable?.facingTile;
 			const doodad = tile?.doodad;
-			if (!doodad || !(doodad.type === DoodadType.SandstoneWaterStill || doodad.type === DoodadType.GraniteWaterStill || doodad.type === DoodadType.ClayWaterStill)) {
+			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.WaterStill)) {
 				return false;
 			}
 
@@ -320,8 +320,8 @@ export default class StarterQuest extends Mod {
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
 		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 1)
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Pole], 1)
-		.addRequirement(QuestRequirementType.Craft, [ItemType.GraniteWaterStill], 1)
-		.addRequirement(QuestRequirementType.Build, [ItemType.GraniteWaterStill])
+		.addRequirement(QuestRequirementType.Craft, [ItemType.TinWaterStill], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.TinWaterStill])
 		.addChildQuests(Registry<StarterQuest>().get("questFillStill")))
 	public questWaterStill: QuestType;
 
