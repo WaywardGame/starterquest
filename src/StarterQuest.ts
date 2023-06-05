@@ -87,28 +87,9 @@ export default class StarterQuest extends Mod {
 		]))
 	public requirementLightCampfire: QuestRequirementType;
 
-	@Register.questRequirement("lightWaterStill", new QuestRequirement({})
+	@Register.questRequirement("gatherFromDripstone", new QuestRequirement({})
 		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
-			if (handlerApi.executor !== api.host || actionType !== ActionType.StartFire) {
-				return false;
-			}
-
-			const tile = handlerApi.executor.asEntityMovable?.facingTile;
-			const doodad = tile?.doodad;
-			if (!doodad) {
-				return false;
-			}
-
-			return doodad.isInGroup(DoodadTypeGroup.LitWaterStill);
-		})
-		.setRelations([
-			[HighlightType.Selector, "#inventory .group-FireStarter"],
-		]))
-	public requirementLightWaterStill: QuestRequirementType;
-
-	@Register.questRequirement("gatherFromWaterStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
-			if (handlerApi.executor !== api.host || !(actionType === ActionType.GatherLiquid || actionType === ActionType.DrinkInFront || actionType === ActionType.DetachContainer)) {
+			if (handlerApi.executor !== api.host || !(actionType === ActionType.GatherLiquid || actionType === ActionType.DrinkInFront)) {
 				return false;
 			}
 
@@ -125,13 +106,11 @@ export default class StarterQuest extends Mod {
 				}
 			} else if (actionType === ActionType.DrinkInFront && doodad.gatherReady !== undefined && doodad.gatherReady <= 0) {
 				return false;
-			} else if (actionType === ActionType.DetachContainer && doodad.stillContainer) {
-				return false;
 			}
 
 			return doodad.gatherReady === undefined;
 		}))
-	public requirementGatherFromWaterStill: QuestRequirementType;
+	public requirementGatherFromDripstone: QuestRequirementType;
 
 	@Register.questRequirement("stokeCampfire", new QuestRequirement({})
 		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
@@ -159,7 +138,7 @@ export default class StarterQuest extends Mod {
 		]))
 	public requirementStokeCampfire: QuestRequirementType;
 
-	@Register.questRequirement("fillStill", new QuestRequirement({})
+	@Register.questRequirement("fillDripstone", new QuestRequirement({})
 		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
 			if (handlerApi.executor !== api.host || actionType !== ActionType.Pour) {
 				return false;
@@ -167,7 +146,7 @@ export default class StarterQuest extends Mod {
 
 			const tile = handlerApi.executor.asEntityMovable?.facingTile;
 			const doodad = tile?.doodad;
-			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.WaterStill)) {
+			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.Dripstone)) {
 				return false;
 			}
 
@@ -180,59 +159,7 @@ export default class StarterQuest extends Mod {
 		.setRelations([
 			[HighlightType.Selector, "#inventory .group-ContainerOfSeawater"],
 		]))
-	public requirementFillStill: QuestRequirementType;
-
-	@Register.questRequirement("attachContainer", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
-			if (handlerApi.executor !== api.host || actionType !== ActionType.AttachContainer) {
-				return false;
-			}
-
-			const tile = handlerApi.executor.asEntityMovable?.facingTile;
-			const doodad = tile?.doodad;
-			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.WaterStill)) {
-				return false;
-			}
-
-			if (!doodad.stillContainer) {
-				return false;
-			}
-
-			return true;
-		})
-		.setRelations([
-			...Enums.values(ItemType)
-				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.AttachContainer))
-				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
-		]))
-	public requirementAttachContainer: QuestRequirementType;
-
-	@Register.questRequirement("stokeWaterStill", new QuestRequirement({})
-		.setEventTrigger(EventBus.Actions, "postExecuteAction", (api, _actionApi, actionType, handlerApi, args) => {
-			if (handlerApi.executor !== api.host || actionType !== ActionType.StokeFire) {
-				return false;
-			}
-
-			const tile = handlerApi.executor.asEntityMovable?.facingTile;
-			const doodad = tile?.doodad;
-			const doodadDescription = doodad?.description;
-			if (!doodadDescription || !doodadDescription.waterStill) {
-				return false;
-			}
-
-			const [item] = args as ActionArguments<typeof StokeFire>;
-			if (item.isValid()) {
-				return false;
-			}
-
-			return true;
-		})
-		.setRelations([
-			...Enums.values(ItemType)
-				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.StokeFire))
-				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
-		]))
-	public requirementStokeWaterStill: QuestRequirementType;
+	public requirementFillDripstone: QuestRequirementType;
 
 	////////////////////////////////////
 	// Quests
@@ -312,40 +239,14 @@ export default class StarterQuest extends Mod {
 	@Register.quest("cooking", new Quest()
 		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.CookingEquipment], 1)
 		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.CookedMeat], 1)
-		.addChildQuests(Registry<StarterQuest>().get("questWaterStill")))
+		.addChildQuests(Registry<StarterQuest>().get("purifyingFreshWater")))
 	public questCooking: QuestType;
 
-	@Register.quest("waterStill", new Quest()
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Rock], 2)
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
-		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 1)
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Pole], 1)
-		.addRequirement(QuestRequirementType.Craft, [ItemType.TinWaterStill], 1)
-		.addRequirement(QuestRequirementType.Build, [ItemType.TinWaterStill])
-		.addChildQuests(Registry<StarterQuest>().get("questFillStill")))
-	public questWaterStill: QuestType;
-
-	@Register.quest("fillStill", new Quest()
-		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.ContainerOfSeawater], 1)
-		.addRequirement(Registry<StarterQuest>().get("requirementFillStill"))
-		.addChildQuests(Registry<StarterQuest>().get("questAttachContainer")))
-	public questFillStill: QuestType;
-
-	@Register.quest("attachContainer", new Quest()
-		.addRequirement(Registry<StarterQuest>().get("requirementAttachContainer"))
-		.addChildQuests(Registry<StarterQuest>().get("questDesalination")))
-	public questAttachContainer: QuestType;
-
-	@Register.quest("desalination", new Quest()
-		.addRequirement(Registry<StarterQuest>().get("requirementLightWaterStill"))
-		.addRequirement(Registry<StarterQuest>().get("requirementStokeWaterStill"))
-		.addChildQuests(Registry<StarterQuest>().get("questGatherLiquid")))
-	public questDesalination: QuestType;
-
-	@Register.quest("gatherLiquid", new Quest()
-		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromWaterStill"))
+	@Register.quest("purifyingFreshWater", new Quest()
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.ContainerOfUnpurifiedFreshWater], 1)
+		.addRequirement(QuestRequirementType.Craft, [ItemTypeGroup.ContainerOfPurifiedFreshWater], 1)
 		.addChildQuests(Registry<StarterQuest>().get("questTaming")))
-	public questGatherLiquid: QuestType;
+	public purifyingFreshWater: QuestType;
 
 	@Register.quest("taming", new Quest()
 		.addRequirement(QuestRequirementType.TameCreatures, 1)
@@ -355,8 +256,29 @@ export default class StarterQuest extends Mod {
 	@Register.quest("extraStorage", new Quest()
 		.addRequirement(QuestRequirementType.Craft, [ItemType.WoodenChest], 1)
 		.addRequirement(QuestRequirementType.Build, [ItemType.WoodenChest])
-		.addChildQuests(Registry<StarterQuest>().get("questSurvivalistTraining")))
+		.addChildQuests(Registry<StarterQuest>().get("questDripstone")))
 	public questExtraStorage: QuestType;
+
+	@Register.quest("dripstone", new Quest()
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.Granite], 3)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Sharpened], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 2)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.Pole], 4)
+		.addRequirement(QuestRequirementType.Craft, [ItemType.GraniteDripstone], 1)
+		.addRequirement(QuestRequirementType.Build, [ItemType.GraniteDripstone])
+		.addChildQuests(Registry<StarterQuest>().get("questFillDripstone")))
+	public questDripstone: QuestType;
+
+	@Register.quest("fillDripstone", new Quest()
+		.addRequirement(QuestRequirementType.CollectItem, [ItemTypeGroup.ContainerOfSeawater], 1)
+		.addRequirement(Registry<StarterQuest>().get("requirementFillDripstone"))
+		.addChildQuests(Registry<StarterQuest>().get("questGatherLiquid")))
+	public questFillDripstone: QuestType;
+
+	@Register.quest("gatherLiquid", new Quest()
+		.addRequirement(Registry<StarterQuest>().get("requirementGatherFromDripstone"))
+		.addChildQuests(Registry<StarterQuest>().get("questSurvivalistTraining")))
+	public questGatherLiquid: QuestType;
 
 	@Register.quest("survivalistTraining", new Quest()
 		.setNeedsManualCompletion())
@@ -378,7 +300,7 @@ export default class StarterQuest extends Mod {
 		}
 
 		// Spawn a starting pond
-		if (!isLoadingSave && localIsland.biomeType === BiomeType.Coastal) {
+		if (!isLoadingSave && !multiplayer.isClient() && localIsland.biomeType === BiomeType.Coastal) {
 			for (let x = 9; x < 50; x++) {
 				const tile = localIsland.getTile(localPlayer.x + x, localPlayer.y - 2, localPlayer.z);
 				if (!tile?.description?.shallowWater && !tile?.description?.water) {
