@@ -5,11 +5,8 @@
 			"modStarterQuestActionSlots": "Add an item to an action slot",
 			"modStarterQuestLightCampfire": "Light a campfire",
 			"modStarterQuestStokeCampfire": "Stoke a campfire",
-			"modStarterQuestFillStill": "Pour water into a still",
-			"modStarterQuestAttachContainer": "Attach container to a still",
-			"modStarterQuestLightWaterStill": "Light a water still",
-			"modStarterQuestStokeWaterStill": "Stoke a water still",
-			"modStarterQuestGatherFromWaterStill": "Gather desalinated water from a still"
+			"modStarterQuestFillDripstone": "Pour water into a dripstone",
+			"modStarterQuestGatherFromDripstone": "Gather desalinated water from a dripstone"
 		},
 
 		"quest": {
@@ -25,7 +22,7 @@
 
 			"modStarterQuestActionSlots": [
 				"Item Use & Action Slots",
-				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\n{BINDINGS:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use the action bar.}\n\n- Drag and drop an item into an action slot.\n\n- OR use one of the \"Assign Action\" bindings. While hovering over an item, use {BINDINGS:GameActionBarAssignSlot0}, {BINDINGS:GameActionBarAssignSlot1}, or {BINDINGS:GameActionBarAssignSlot2} for example to use slot 1/2/3.\n\n{#--color-brown:Once the item is in the action slot, it can be used with its corresponding bind (shown when hovering over an action slot).}\n\n\n\nAdditionally or alternatively, you can bind specific actions to an action slot by using {BINDINGS:MenuContextMenu} on an empty action slot to assign any action. These actions will automatically use the best item for that action in your inventory if applicable."
+				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\n{BINDINGS:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use the action bar.}\n\n- Drag and drop an item into an action slot.\n\n- OR use one of the \"Assign Action\" bindings. While hovering over an item, use {BINDINGS:GameActionBarAssignSlot0}, {BINDINGS:GameActionBarAssignSlot1}, or {BINDINGS:GameActionBarAssignSlot2} for example to use slot 1/2/3.\n\n{#--color-brown:Once the item is in the action slot, it can be used with its corresponding bind (shown when hovering over an action slot).}\n\nAlternatively, you can bind specific actions to an action slot by using {BINDINGS:MenuContextMenu} on an empty action slot to assign any action. These actions will automatically use the best item for that action in your inventory if applicable."
 			],
 
 			"modStarterQuestResourceGathering": [
@@ -83,39 +80,34 @@
 				"Now that you have a proper fire going, you can cook the meat! The crafting recipe will be unlocked for the cooked form of this meat. You can even eat it after you are done if you are hungry, or save it for later.\n\nCooking equipment may required for this endeavor. Cooking equipment is an item grouping that contains a wide variety of items including branches, wooden poles, spears, tongs, and more!"
 			],
 
-			"modStarterQuestWaterStill": [
-				"Water Still",
-				"Are you a bit parched? Time to think about water desalination for turning seawater into drinkable, clean water. Gather the following resources to be able to craft a \"{/Granite Water Still/}\".\n\nAfter gathering all those resources, you can craft the still. You'll use this device to pour the seawater into, boil and steam-drip the desalinated water into the container.\n\nJust like with the campfire previously, you'll be able to \"{/Build/}\" the water still facing a valid tile from the item's menu."
-			],
-
-			"modStarterQuestFillStill": [
-				"Filling the Still",
-				"To test out your new water still, grab some water from the ocean. With an empty container in your inventory, choose the \"{/Gather Water/}\" option while facing the ocean with your container.\n\nWhile still facing the water still, choose the \"{/Pour/}\" option from your container of seawater's item menu. This will pour the liquid into the water still."
-			],
-
-			"modStarterQuestAttachContainer": [
-				"Attaching the Container",
-				"\n\nWhile facing the water still, choose the \"{/Attach Container/}\" option from your container's item menu. This will attach the container to the still so the desalinated water can collect into it."
-			],
-
-			"modStarterQuestDesalination": [
-				"Desalination",
-				"You'll need to light a fire under the still so the water can begin to boil and steam the liquid inside. Which means you'll need to find or craft more tinder and kindling. Hopefully you still have durability on your hand drill as well. If not, you'll need to craft another one.\n\nAfter it's on fire, you'll want to stoke it so it is on fire long enough to desalinate the water. To stoke the still, face it and use {BINDINGS:GameItemMenu} on an item, then choose the \"{/Stoke Fire/}\" action. You will likely want to keep stoking the fire until it is at least \"struggling\". That will give it enough time to desalinate the water. You can check this status by hovering over the still after it is lit."
-			],
-
-			"modStarterQuestGatherLiquid": [
-				"Gathering Water",
-				"After it's on fire, you'll have to wait until the water container is filled before picking it up. You can do some other tasks while you wait. It will take approximately 250 turns before it is ready. The tooltip when hovering the water still will let you know when the water is ready to gather.\n\nWhen the process has completed, you can choose the \"{/Drink/}\" or \"{/Detach Container/}\" actions by pressing {BINDINGS:GameActions} while facing the still. Alternatively, if you have another container, you can choose the \"{/Gather Liquid/}\" option from the container's menu. \n\nYou will only need to complete a process such as this for drinking sea or ocean water. Note that desalination is an advanced technique and may not be needed if you have found freshwater sources. Freshwater can be gathered and purified over a fire, without a still."
+			"modStarterQuestPurifyingFreshWater": [
+				"Hydration",
+				"Now that you're fed, what about your hydration levels? Most of the world is water, but unfortunately, it's not in a drinkable form. It's far easier to seek out fresh water instead of trying to desalinate the seawater around you. If you still have a container of water in your inventory, you can drink it now. We're going to purify some more now.\n\nIf you found any fresh water tiles while exploring so far, go to them and fill up your container of water. If not, head back to your starting area - there should be a bit of fresh water available nearby.\n\nUse {BINDINGS:GameItemMenu} on your empty water container and choose the \"{/Gather Water/}\" action. when facing fresh water.\n\nNext, go back to your fire and stoke or light it back on fire if you have to, then craft the purified fresh water while next to the fire. This is how you purify the fresh water you find around the island."
 			],
 
 			"modStarterQuestTaming": [
 				"Creature Taming",
-				"Have you encountered a hostile creature yet? Being counter-aggressive to the hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There's multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"{/Offer/}\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {BINDINGS:GameActions} and choose \"{/Tame/}\". Taming in this manner is difficult, especially at lower skill levels."
+				"Have you encountered a hostile creature yet? Being counter-aggressive to hostile island creatures is sometimes not the best option, especially if you are ill-prepared or ill-equipped. There are multiple ways to tame a creature. The most effective way to tame a creature and have it fight for you is to keep them fed and happy. To accomplish this, you can do one of the following actions:\n\n1. Facing a creature, choose the \"{/Offer/}\" from an item's menu. Certain creatures will like different items. You may have to experiment with this.\n2. Drop an item on the ground and have the creature walk over it. If they want the item, they will become tamed.\n3. Facing a creature, open the actions menu with {BINDINGS:GameActions} and choose \"{/Tame/}\". Taming in this manner is difficult, especially at lower skill levels."
 			],
 
 			"modStarterQuestExtraStorage": [
 				"Extra Storage",
 				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
+			],
+
+			"modStarterQuestDripstone": [
+				"Dripstones",
+				"Fresh water may be limited. You might have to desalinate seawater eventually and this quest will teach you how. Gather the following resources to be able to craft a \"{/Granite Dripstone/}\".\n\nAfter gathering all those resources, you can craft the dripstone. You'll use this device to pour the seawater into to filter into drinkable water.\n\nJust like with the campfire previously, you'll be able to \"{/Build/}\" the dripstone facing a valid tile from the item's menu."
+			],
+
+			"modStarterQuestFillDripstone": [
+				"Filling the Dripstone",
+				"To test out your new dripstone, grab some water from the sea. With an empty container in your inventory, choose the \"{/Gather Water/}\" option while facing seawater with your container.\n\nNext, while facing the dripstone, choose the \"{/Pour/}\" option from your container of seawater's item menu. This will pour the liquid into the top of the dripstone."
+			],
+
+			"modStarterQuestGatherLiquid": [
+				"Gathering Water",
+				"The process of filtering seawater through the dripstone will take some time. You can do some other tasks or explore the island while you wait. It will take approximately 500 turns before it is ready. You can tell it's done when the water is in the bottom vessel.\n\nWhen the process has completed, you can choose the \"{/Drink in Front/}\" actions by pressing {BINDINGS:GameActions} while facing the dripstone. Alternatively, if you have an empty container, you can choose the \"{/Gather Liquid/}\" option from the container's item menu.\n\nDesalination is only needed if you run out of fresh water sources which can be quite abundant via mountain rivers or ponds around the island."
 			],
 
 			"modStarterQuestSurvivalistTraining": [

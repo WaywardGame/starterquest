@@ -1,3 +1,13 @@
+/*!
+ * Copyright 2011-2023 Unlok
+ * https://www.unlok.ca
+ *
+ * Credits & Thanks:
+ * https://www.unlok.ca/credits-thanks/
+ *
+ * Wayward is a copyrighted and licensed work. Modification and/or distribution of any source files is prohibited. If you wish to modify the game in any way, please refer to the modding guide:
+ * https://github.com/WaywardGame/types/wiki
+ */
 import Player from "game/entity/player/Player";
 import PlayerManager from "game/entity/player/PlayerManager";
 import { QuestType } from "game/entity/player/quest/quest/IQuest";
@@ -8,12 +18,9 @@ export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;
     requirementActionSlot: QuestRequirementType;
     requirementLightCampfire: QuestRequirementType;
-    requirementLightWaterStill: QuestRequirementType;
-    requirementGatherFromWaterStill: QuestRequirementType;
+    requirementGatherFromDripstone: QuestRequirementType;
     requirementStokeCampfire: QuestRequirementType;
-    requirementFillStill: QuestRequirementType;
-    requirementAttachContainer: QuestRequirementType;
-    requirementStokeWaterStill: QuestRequirementType;
+    requirementFillDripstone: QuestRequirementType;
     questWelcome: QuestType;
     questGearUp: QuestType;
     questActionSlots: QuestType;
@@ -28,13 +35,12 @@ export default class StarterQuest extends Mod {
     questFire: QuestType;
     questStokeFire: QuestType;
     questCooking: QuestType;
-    questWaterStill: QuestType;
-    questFillStill: QuestType;
-    questAttachContainer: QuestType;
-    questDesalination: QuestType;
-    questGatherLiquid: QuestType;
+    purifyingFreshWater: QuestType;
     questTaming: QuestType;
     questExtraStorage: QuestType;
+    questDripstone: QuestType;
+    questFillDripstone: QuestType;
+    questGatherLiquid: QuestType;
     questSurvivalistTraining: QuestType;
     onPlayerJoin(manager: PlayerManager, player: Player): void;
     onGameStart(game: Game, isLoadingSave: boolean, loadCount: number): void;
