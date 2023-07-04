@@ -47,7 +47,7 @@
 
 			"modStarterQuestWoodenPoles": [
 				"Wooden Poles",
-				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"{/Wooden Poles/}\"."
+				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantling logs, then dismantling the wooden planks it makes will get you enough \"{/Wooden Poles/}\" to do this."
 			],
 
 			"modStarterQuestHandDrill": [
@@ -92,7 +92,7 @@
 
 			"modStarterQuestExtraStorage": [
 				"Extra Storage",
-				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
+				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to get both wooden planks and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches or wooden planks. To get wooden planks, you will need to dismantle logs.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight for all items that are kept inside them."
 			],
 
 			"modStarterQuestDripstone": [
