@@ -29,15 +29,35 @@ import { itemDescriptions } from "game/item/ItemDescriptions";
 import MapGenHelpers from "game/mapgen/MapGenHelpers";
 import { GameMode } from "game/options/IGameOptions";
 import { TileTemplateType } from "game/tile/ITerrain";
+import Dictionary from "language/Dictionary";
+import Translation from "language/Translation";
 import Mod from "mod/Mod";
 import Register, { Registry } from "mod/ModRegistry";
 import { RenderSource } from "renderer/IRenderer";
 import { ActionSlot } from "ui/screen/screens/game/static/ActionBar";
+import { IActionBarSlotData } from "ui/screen/screens/game/static/actions/IActionBar";
 import { HighlightType } from "ui/util/IHighlight";
 import { Tuple } from "utilities/collection/Tuple";
 import Enums from "utilities/enum/Enums";
 
 const STARTER_QUEST_ID = "Starter Quest";
+
+enum ActionSlotType {
+	Action,
+	Item,
+}
+
+function isActionSlotType(type: ActionSlotType | undefined, slot: IActionBarSlotData) {
+	if (type === ActionSlotType.Item) {
+		return !!slot.using?.item;
+	}
+
+	if (type === ActionSlotType.Action) {
+		return !slot.using?.item && !slot.using?.itemType;
+	}
+
+	return true;
+}
 
 export default class StarterQuest extends Mod {
 
@@ -52,20 +72,26 @@ export default class StarterQuest extends Mod {
 	// Requirements
 	//
 
-	@Register.questRequirement("actionSlots", new QuestRequirement({})
+	@Register.questRequirement("actionSlots", new QuestRequirement<[ActionSlotType?]>({})
 		.setEventTrigger(ActionSlot, "update", (api, slot) => {
-			return true;
+			if (gameScreen?.actionBar?.hasFilledSlot(slot => isActionSlotType(api.requirement.options[0], slot))) {
+				return true;
+			}
+
+			return false;
 		})
 		.setInitializeTrigger(api => {
-			if (gameScreen?.actionBar?.hasFilledSlot()) {
+			if (gameScreen?.actionBar?.hasFilledSlot(slot => isActionSlotType(api.requirement.options[0], slot))) {
 				return true;
 			}
 
 			return false;
 		})
 		.setRelations([
-			[HighlightType.Selector, ".game-action-slot"],
-		]))
+			[HighlightType.Selector, ".game-action-slot:not(.game-action-slot-filled)"],
+		])
+		.setTranslation(api => Translation.get(Dictionary.QuestRequirement, api.requirement.type)
+			.addArgs(api.requirement.options[0])))
 	public requirementActionSlot: QuestRequirementType;
 
 	@Register.questRequirement("lightCampfire", new QuestRequirement({})
@@ -176,9 +202,14 @@ export default class StarterQuest extends Mod {
 	public questGearUp: QuestType;
 
 	@Register.quest("actionSlots", new Quest()
-		.addRequirement(Registry<StarterQuest>().get("requirementActionSlot"))
-		.addChildQuests(Registry<StarterQuest>().get("questResourceGathering")))
+		.addRequirement(Registry<StarterQuest>().get("requirementActionSlot"), ActionSlotType.Action)
+		.addChildQuests(Registry<StarterQuest>().get("questItemActionSlots")))
 	public questActionSlots: QuestType;
+
+	@Register.quest("itemActionSlots", new Quest()
+		.addRequirement(Registry<StarterQuest>().get("requirementActionSlot"), ActionSlotType.Item)
+		.addChildQuests(Registry<StarterQuest>().get("questResourceGathering")))
+	public questItemActionSlots: QuestType;
 
 	@Register.quest("resourceGathering", new Quest()
 		.addRequirement(QuestRequirementType.CollectItem, [ItemType.Branch], 2)
