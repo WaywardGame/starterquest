@@ -24,6 +24,7 @@ export default class StarterQuest extends Mod {
     questWelcome: QuestType;
     questGearUp: QuestType;
     questActionSlots: QuestType;
+    questItemActionSlots: QuestType;
     questResourceGathering: QuestType;
     questCrafting: QuestType;
     questDismantle: QuestType;

@@ -2,7 +2,7 @@
 	"extends": "English",
 	"dictionaries": {
 		"questRequirement": {
-			"modStarterQuestActionSlots": "Add an item to an action slot",
+			"modStarterQuestActionSlots": "Assign {0=1?an item:{0=0?an action:anything}} to an action slot",
 			"modStarterQuestLightCampfire": "Light a campfire",
 			"modStarterQuestStokeCampfire": "Stoke a campfire",
 			"modStarterQuestFillDripstone": "Pour water into a dripstone",
@@ -21,13 +21,18 @@
 			],
 
 			"modStarterQuestActionSlots": [
+				"Action Menu & Action Slots",
+				"{#--color-brown:While facing most objects in the world, actions can be done via the action menu (performed with {BINDINGS:GameActions}) or the item action menu (performed with {BINDINGS:GameActionsItems}). Performing actions in this way can be tedious.}\n\nInstead, you can add actions to your action bar so they can be performed with a single hotkey.\n\nTo add an action to an action slot simply hover over an action slot and use {BINDINGS:GameActionBarConfigure}. Choose \"Chop\" from the action menu that comes up and click \"Done\".\n\nNow you can use the hotkey that is shown under the action slot. For example, the first slot uses {BINDINGS:GameActionBarUseSlot0}.\n\n{#--color-brown:Using actions in this way will always pick the \"best\" item for the action from your inventory. Other common actions include \"Mine\", \"Butcher\", and \"Start Fire\" which can be set to different slots for ease of use.}"
+			],
+
+			"modStarterQuestItemActionSlots": [
 				"Item Use & Action Slots",
-				"{#--color-brown:All items have a list of actions that can be performed on them at any time.}\n\n{BINDINGS:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. To bind an item's action to a single keypress, you can use the action bar.}\n\n- Drag and drop an item into an action slot.\n\n- OR use one of the \"Assign Action\" bindings. While hovering over an item, use {BINDINGS:GameActionBarAssignSlot0}, {BINDINGS:GameActionBarAssignSlot1}, or {BINDINGS:GameActionBarAssignSlot2} for example to use slot 1/2/3.\n\n{#--color-brown:Once the item is in the action slot, it can be used with its corresponding bind (shown when hovering over an action slot).}\n\nAlternatively, you can bind specific actions to an action slot by using {BINDINGS:MenuContextMenu} on an empty action slot to assign any action. These actions will automatically use the best item for that action in your inventory if applicable."
+				"{#--color-brown:All items have a list of actions that can be performed with them at any time.}\n\n{BINDINGS:GameItemMenu} to open an item's action menu.\n\n{#--color-brown:Using actions in this way can be cumbersome. You can also use the action bar for items!}\n\n- Drag and drop an item into an action slot.\n\n- OR use one of the \"Assign Action\" bindings. While hovering over an item, use {BINDINGS:GameActionBarAssignSlot0}, {BINDINGS:GameActionBarAssignSlot1}, or {BINDINGS:GameActionBarAssignSlot2} for example to use slot 1/2/3.\n\n{#--color-brown:By default, this is a sequence bind, meaning you have to press one key, then the other instead of all at the same time.}"
 			],
 
 			"modStarterQuestResourceGathering": [
 				"Resource Gathering",
-				"Now that you have something equipped and assigned to an action slot, you can try gathering some resources.\n\nMake sure if you are using an item in your action slot, that its action is set to \"{/Chop/}\" or \"{/Mine/}\".\n\nFind maple trees to gather the branches. Find gray-colored rocks to gather the granite."
+				"Now that you have action slots sorted out, you can try gathering some resources.\n\nMake sure if you are using an item in your action slot, that its action is set to \"{/Chop/}\" or \"{/Mine/}\".\n\nFind maple trees to gather the branches. Find gray-colored mountains to gather the granite."
 			],
 
 			"modStarterQuestCrafting": [
@@ -47,7 +52,7 @@
 
 			"modStarterQuestWoodenPoles": [
 				"Wooden Poles",
-				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantle enough branches or logs to get a least two \"{/Wooden Poles/}\"."
+				"You will need to start a fire to cook the raw meat if you want to eat it safely. Your first order of business is to gather the materials used to create your fire-making device. Dismantling logs, then dismantling the wooden planks it makes will get you enough \"{/Wooden Poles/}\" to do this."
 			],
 
 			"modStarterQuestHandDrill": [
@@ -92,7 +97,7 @@
 
 			"modStarterQuestExtraStorage": [
 				"Extra Storage",
-				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to gather both logs and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight by 50% for all items that are kept inside them."
+				"Feeling a bit heavy? You may want to start thinking about long-term storage that is outside of your inventory. The easiest storage container to craft is a \"{/Wooden Chest/}\". You will need to get both wooden planks and wooden dowels. To get wooden dowels, you will need to dismantle wooden poles, which are first dismantled from branches or wooden planks. To get wooden planks, you will need to dismantle logs.\n\nIf you are looking for further weight reduction in your inventory, you may consider crafting bags or backpacks (using leather) to reduce inventory weight for all items that are kept inside them."
 			],
 
 			"modStarterQuestDripstone": [
