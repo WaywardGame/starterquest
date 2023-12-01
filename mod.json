@@ -4,7 +4,7 @@
 	"version": "1.2",
 	"author": "Spacetech & Drathy",
 	"github": "https://github.com/WaywardGame/starterquest",
-	"waywardVersion": "2.13.0-beta",
+	"waywardVersion": "2.14.0-beta",
 	"multiplayer": "compatible",
 	"file": "out/StarterQuest.js",
 	"allowUnlockingMilestones": true,

@@ -112,7 +112,7 @@
 
 			"modStarterQuestGatherLiquid": [
 				"Gathering Water",
-				"The process of filtering seawater through the dripstone will take some time. You can do some other tasks or explore the island while you wait. It will take approximately 500 turns before it is ready. You can tell it's done when the water is in the bottom vessel.\n\nWhen the process has completed, you can choose the \"{/Drink in Front/}\" actions by pressing {BINDINGS:GameActions} while facing the dripstone. Alternatively, if you have an empty container, you can choose the \"{/Gather Liquid/}\" option from the container's item menu.\n\nDesalination is only needed if you run out of fresh water sources which can be quite abundant via mountain rivers or ponds around the island."
+				"The process of filtering seawater through the dripstone will take some time. You can do some other tasks or explore the island while you wait. It will take approximately 1500 turns before it is ready. You can tell it's done when the water is in the bottom vessel.\n\nWhen the process has completed, you can choose the \"{/Drink in Front/}\" actions by pressing {BINDINGS:GameActions} while facing the dripstone. Alternatively, if you have an empty container, you can choose the \"{/Gather Liquid/}\" option from the container's item menu.\n\nDesalination is only needed if you run out of fresh water sources which can be quite abundant via mountain rivers or ponds around the island."
 			],
 
 			"modStarterQuestSurvivalistTraining": [

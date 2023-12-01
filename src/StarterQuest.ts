@@ -9,36 +9,36 @@
  * https://github.com/WaywardGame/types/wiki
  */
 
-import { EventBus } from "event/EventBuses";
-import { EventHandler } from "event/EventManager";
-import { BiomeType } from "game/biome/IBiome";
-import { DoodadType, DoodadTypeGroup } from "game/doodad/IDoodad";
-import GatherLiquid from "game/entity/action/actions/GatherLiquid";
-import StokeFire from "game/entity/action/actions/StokeFire";
-import { ActionArguments, ActionType } from "game/entity/action/IAction";
-import { EquipType } from "game/entity/IHuman";
-import Player from "game/entity/player/Player";
-import PlayerManager from "game/entity/player/PlayerManager";
-import { QuestType } from "game/entity/player/quest/quest/IQuest";
-import { Quest } from "game/entity/player/quest/quest/Quest";
-import { QuestRequirementType } from "game/entity/player/quest/requirement/IRequirement";
-import { QuestRequirement } from "game/entity/player/quest/requirement/Requirement";
-import { Game } from "game/Game";
-import { ItemType, ItemTypeGroup } from "game/item/IItem";
-import { itemDescriptions } from "game/item/ItemDescriptions";
-import MapGenHelpers from "game/mapgen/MapGenHelpers";
-import { GameMode } from "game/options/IGameOptions";
-import { TileTemplateType } from "game/tile/ITerrain";
-import Dictionary from "language/Dictionary";
-import Translation from "language/Translation";
-import Mod from "mod/Mod";
-import Register, { Registry } from "mod/ModRegistry";
-import { RenderSource } from "renderer/IRenderer";
-import { ActionSlot } from "ui/screen/screens/game/static/ActionBar";
-import { IActionBarSlotData } from "ui/screen/screens/game/static/actions/IActionBar";
-import { HighlightType } from "ui/util/IHighlight";
-import { Tuple } from "utilities/collection/Tuple";
-import Enums from "utilities/enum/Enums";
+import { EventBus } from "@wayward/game/event/EventBuses";
+import { EventHandler } from "@wayward/game/event/EventManager";
+import { Game } from "@wayward/game/game/Game";
+import { BiomeType } from "@wayward/game/game/biome/IBiome";
+import { DoodadType, DoodadTypeGroup } from "@wayward/game/game/doodad/IDoodad";
+import { EquipType } from "@wayward/game/game/entity/IHuman";
+import { ActionArgumentsOf, ActionType } from "@wayward/game/game/entity/action/IAction";
+import GatherLiquid from "@wayward/game/game/entity/action/actions/GatherLiquid";
+import StokeFire from "@wayward/game/game/entity/action/actions/StokeFire";
+import Player from "@wayward/game/game/entity/player/Player";
+import PlayerManager from "@wayward/game/game/entity/player/PlayerManager";
+import { QuestType } from "@wayward/game/game/entity/player/quest/quest/IQuest";
+import { Quest } from "@wayward/game/game/entity/player/quest/quest/Quest";
+import { QuestRequirementType } from "@wayward/game/game/entity/player/quest/requirement/IRequirement";
+import { QuestRequirement } from "@wayward/game/game/entity/player/quest/requirement/Requirement";
+import { ItemType, ItemTypeGroup } from "@wayward/game/game/item/IItem";
+import { itemDescriptions } from "@wayward/game/game/item/ItemDescriptions";
+import MapGenHelpers from "@wayward/game/game/mapgen/MapGenHelpers";
+import { GameMode } from "@wayward/game/game/options/IGameOptions";
+import { TileTemplateType } from "@wayward/game/game/tile/ITerrain";
+import Dictionary from "@wayward/game/language/Dictionary";
+import Translation from "@wayward/game/language/Translation";
+import Mod from "@wayward/game/mod/Mod";
+import Register, { Registry } from "@wayward/game/mod/ModRegistry";
+import { RenderSource } from "@wayward/game/renderer/IRenderer";
+import { ActionSlot } from "@wayward/game/ui/screen/screens/game/static/actions/ActionSlot";
+import { IActionBarSlotData } from "@wayward/game/ui/screen/screens/game/static/actions/IActionBar";
+import { HighlightType } from "@wayward/game/ui/util/IHighlight";
+import Enums from "@wayward/game/utilities/enum/Enums";
+import { Tuple } from "@wayward/utilities/collection/Tuple";
 
 const STARTER_QUEST_ID = "Starter Quest";
 
@@ -47,7 +47,7 @@ enum ActionSlotType {
 	Item,
 }
 
-function isActionSlotType(type: ActionSlotType | undefined, slot: IActionBarSlotData) {
+function isActionSlotType(type: ActionSlotType | undefined, slot: IActionBarSlotData): boolean {
 	if (type === ActionSlotType.Item) {
 		return !!slot.using?.item;
 	}
@@ -126,7 +126,7 @@ export default class StarterQuest extends Mod {
 			}
 
 			if (actionType === ActionType.GatherLiquid) {
-				const [item] = args as ActionArguments<typeof GatherLiquid>;
+				const [item] = args as ActionArgumentsOf<typeof GatherLiquid>;
 				if (!handlerApi.executor.island.items.isInGroup(item.type, ItemTypeGroup.ContainerOfDesalinatedWater)) {
 					return false;
 				}
@@ -150,8 +150,8 @@ export default class StarterQuest extends Mod {
 				return false;
 			}
 
-			const [item] = args as ActionArguments<typeof StokeFire>;
-			if (item.isValid()) {
+			const [item] = args as ActionArgumentsOf<typeof StokeFire>;
+			if (item.isValid) {
 				return false;
 			}
 
@@ -320,18 +320,18 @@ export default class StarterQuest extends Mod {
 	//
 
 	@EventHandler(EventBus.PlayerManager, "join")
-	public onPlayerJoin(manager: PlayerManager, player: Player) {
+	public onPlayerJoin(manager: PlayerManager, player: Player): void {
 		this.addQuest(player);
 	}
 
 	@EventHandler(EventBus.Game, "play")
-	public onGameStart(game: Game, isLoadingSave: boolean, loadCount: number) {
-		if (!multiplayer.isConnected() || !multiplayer.isClient()) {
+	public onGameStart(game: Game, isLoadingSave: boolean, loadCount: number): void {
+		if (!multiplayer.isConnected || !multiplayer.isClient) {
 			this.addQuest();
 		}
 
 		// Spawn a starting pond
-		if (!isLoadingSave && (!multiplayer.isConnected() || multiplayer.isServer()) && localIsland.biomeType === BiomeType.Coastal) {
+		if (!isLoadingSave && (!multiplayer.isConnected || multiplayer.isServer) && localIsland.biomeType === BiomeType.Coastal) {
 			for (let x = 9; x < 50; x++) {
 				const tile = localIsland.getTile(localPlayer.x + x, localPlayer.y - 2, localPlayer.z);
 				if (!tile?.description?.shallowWater && !tile?.description?.water) {
@@ -343,7 +343,7 @@ export default class StarterQuest extends Mod {
 		}
 	}
 
-	private addQuest(player: Player = localPlayer) {
+	private addQuest(player: Player = localPlayer): void {
 		if (game.getGameMode() !== GameMode.Challenge && player.quests.getQuests().every(quest => quest.data.type !== this.questWelcome)) {
 			player.quests.add(this.questWelcome);
 		}

@@ -8,12 +8,12 @@
  * Wayward is a copyrighted and licensed work. Modification and/or distribution of any source files is prohibited. If you wish to modify the game in any way, please refer to the modding guide:
  * https://github.com/WaywardGame/types/wiki
  */
-import Player from "game/entity/player/Player";
-import PlayerManager from "game/entity/player/PlayerManager";
-import { QuestType } from "game/entity/player/quest/quest/IQuest";
-import { QuestRequirementType } from "game/entity/player/quest/requirement/IRequirement";
-import { Game } from "game/Game";
-import Mod from "mod/Mod";
+import { Game } from "@wayward/game/game/Game";
+import Player from "@wayward/game/game/entity/player/Player";
+import PlayerManager from "@wayward/game/game/entity/player/PlayerManager";
+import { QuestType } from "@wayward/game/game/entity/player/quest/quest/IQuest";
+import { QuestRequirementType } from "@wayward/game/game/entity/player/quest/requirement/IRequirement";
+import Mod from "@wayward/game/mod/Mod";
 export default class StarterQuest extends Mod {
     static readonly INSTANCE: StarterQuest;
     requirementActionSlot: QuestRequirementType;
