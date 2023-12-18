@@ -21,7 +21,7 @@ import StokeFire from "@wayward/game/game/entity/action/actions/StokeFire";
 import Player from "@wayward/game/game/entity/player/Player";
 import PlayerManager from "@wayward/game/game/entity/player/PlayerManager";
 import { QuestType } from "@wayward/game/game/entity/player/quest/quest/IQuest";
-import { Quest } from "@wayward/game/game/entity/player/quest/quest/Quest";
+import { Quest as QuestBase } from "@wayward/game/game/entity/player/quest/quest/Quest";
 import { QuestRequirementType } from "@wayward/game/game/entity/player/quest/requirement/IRequirement";
 import { QuestRequirement } from "@wayward/game/game/entity/player/quest/requirement/Requirement";
 import { ItemType, ItemTypeGroup } from "@wayward/game/game/item/IItem";
@@ -57,6 +57,13 @@ function isActionSlotType(type: ActionSlotType | undefined, slot: IActionBarSlot
 	}
 
 	return true;
+}
+
+class Quest extends QuestBase {
+	public constructor(type?: QuestType) {
+		super(type);
+		this.setSkippable();
+	}
 }
 
 export default class StarterQuest extends Mod {
