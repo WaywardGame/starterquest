@@ -1,16 +1,17 @@
 {
-    "extends": "@wayward/types/tsconfig.mod.base.json",
-    "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./out",
-        "rootDir": "./src"
-    },
-    "include": [
-        "src/**/*"
-    ],
-    "references": [
-        {
-            "path": "../../../src/game/tsconfig.json"
-        }
-    ]
+	"extends": "@wayward/types/tsconfig.mod.base.json",
+	"compilerOptions": {
+		"module": "UMD",
+		"baseUrl": "./",
+		"outDir": "./out",
+		"rootDir": "./src"
+	},
+	"include": [
+		"src/**/*"
+	],
+	"references": [
+		{
+			"path": "../../../src/game/tsconfig.json"
+		}
+	]
 }
