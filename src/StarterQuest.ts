@@ -1,15 +1,16 @@
 import { EventBus } from "@wayward/game/event/EventBuses";
 import { EventHandler } from "@wayward/game/event/EventManager";
-import { Game } from "@wayward/game/game/Game";
+import type { Game } from "@wayward/game/game/Game";
 import { BiomeType } from "@wayward/game/game/biome/IBiome";
 import { DoodadType, DoodadTypeGroup } from "@wayward/game/game/doodad/IDoodad";
 import { EquipType } from "@wayward/game/game/entity/IHuman";
-import { ActionArgumentsOf, ActionType } from "@wayward/game/game/entity/action/IAction";
-import GatherLiquid from "@wayward/game/game/entity/action/actions/GatherLiquid";
-import StokeFire from "@wayward/game/game/entity/action/actions/StokeFire";
-import Player from "@wayward/game/game/entity/player/Player";
-import PlayerManager from "@wayward/game/game/entity/player/PlayerManager";
-import { QuestType } from "@wayward/game/game/entity/player/quest/quest/IQuest";
+import type { ActionArgumentsOf } from "@wayward/game/game/entity/action/IAction";
+import { ActionType } from "@wayward/game/game/entity/action/IAction";
+import type GatherLiquid from "@wayward/game/game/entity/action/actions/GatherLiquid";
+import type StokeFire from "@wayward/game/game/entity/action/actions/StokeFire";
+import type Player from "@wayward/game/game/entity/player/Player";
+import type PlayerManager from "@wayward/game/game/entity/player/PlayerManager";
+import type { QuestType } from "@wayward/game/game/entity/player/quest/quest/IQuest";
 import { Quest as QuestBase } from "@wayward/game/game/entity/player/quest/quest/Quest";
 import { QuestRequirementType } from "@wayward/game/game/entity/player/quest/requirement/IRequirement";
 import { QuestRequirement } from "@wayward/game/game/entity/player/quest/requirement/Requirement";
@@ -24,7 +25,7 @@ import Mod from "@wayward/game/mod/Mod";
 import Register, { Registry } from "@wayward/game/mod/ModRegistry";
 import { RenderSource } from "@wayward/game/renderer/IRenderer";
 import { ActionSlot } from "@wayward/game/ui/screen/screens/game/static/actions/ActionSlot";
-import { IActionBarSlotData } from "@wayward/game/ui/screen/screens/game/static/actions/IActionBar";
+import type { IActionBarSlotData } from "@wayward/game/ui/screen/screens/game/static/actions/IActionBar";
 import { HighlightType } from "@wayward/game/ui/util/IHighlight";
 import Enums from "@wayward/game/utilities/enum/Enums";
 import { Tuple } from "@wayward/utilities/collection/Tuple";
@@ -155,7 +156,7 @@ export default class StarterQuest extends Mod {
 		})
 		.setRelations([
 			...Enums.values(ItemType)
-				.filter(type => (itemDescriptions[type] && itemDescriptions[type].use || []).includes(ActionType.StokeFire))
+				.filter(type => (itemDescriptions[type]?.use || []).includes(ActionType.StokeFire))
 				.map(type => Tuple(HighlightType.Selector, `#inventory [data-item-type="${type}"]`)),
 		]))
 	public requirementStokeCampfire: QuestRequirementType;
@@ -168,7 +169,7 @@ export default class StarterQuest extends Mod {
 
 			const tile = handlerApi.executor.asEntityMovable?.facingTile;
 			const doodad = tile?.doodad;
-			if (!doodad || !doodad.isInGroup(DoodadTypeGroup.Dripstone)) {
+			if (!doodad?.isInGroup(DoodadTypeGroup.Dripstone)) {
 				return false;
 			}
 
