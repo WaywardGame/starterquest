@@ -1,6 +1,7 @@
 {
     "extends": "@wayward/types/tsconfig.mod.base.json",
     "compilerOptions": {
+        "module": "UMD",
         "baseUrl": "./",
         "outDir": "./out",
         "rootDir": "./src"

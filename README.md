@@ -1,9 +1,13 @@
 # Starter Quest
+
 A guided quest for newer players to understand and discover the most important game mechanics in Wayward.
 
 Available by default in the game (as an internal mod).
 
+Note: When including a translated version of the Starter Quest in your language mod, make sure to merge it with the pre-existing "quest" and "questRequirement" object keys that are part of the base game.
+
 ## Cloning/Setup:
+
 ```
 git clone https://github.com/WaywardGame/starterquest.git
 cd starterquest
