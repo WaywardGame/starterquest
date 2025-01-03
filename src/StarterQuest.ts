@@ -24,8 +24,9 @@ import Translation from "@wayward/game/language/Translation";
 import Mod from "@wayward/game/mod/Mod";
 import Register, { Registry } from "@wayward/game/mod/ModRegistry";
 import { RenderSource } from "@wayward/game/renderer/IRenderer";
+import ACTION_BAR_DEFAULT_SLOTS from "@wayward/game/ui/screen/screens/game/static/actions/ActionBarDefaultSlots";
 import { ActionSlot } from "@wayward/game/ui/screen/screens/game/static/actions/ActionSlot";
-import type { IActionBarSlotData } from "@wayward/game/ui/screen/screens/game/static/actions/IActionBar";
+import { IActionBarSlotData } from "@wayward/game/ui/screen/screens/game/static/actions/IActionBar";
 import { HighlightType } from "@wayward/game/ui/util/IHighlight";
 import Enums from "@wayward/game/utilities/enum/Enums";
 import { Tuple } from "@wayward/utilities/collection/Tuple";
@@ -47,6 +48,13 @@ function isActionSlotType(type: ActionSlotType | undefined, slot: IActionBarSlot
 	}
 
 	return true;
+}
+
+function hasChangedActionSlot(requiredType: ActionSlotType | undefined): boolean {
+	return !!gameScreen?.actionBar?.slots.some((slot, i) => true
+		&& !IActionBarSlotData.equals(slot, ACTION_BAR_DEFAULT_SLOTS[i] ?? {})
+		&& (requiredType === undefined || isActionSlotType(requiredType, slot))
+		&& true);
 }
 
 class Quest extends QuestBase {
@@ -71,14 +79,16 @@ export default class StarterQuest extends Mod {
 
 	@Register.questRequirement("actionSlots", new QuestRequirement<[ActionSlotType?]>({})
 		.setEventTrigger(ActionSlot, "update", (api, slot) => {
-			if (gameScreen?.actionBar?.hasFilledSlot(slot => isActionSlotType(api.requirement.options[0], slot))) {
+			const [requiredType] = api.requirement.options;
+			if (hasChangedActionSlot(requiredType)) {
 				return true;
 			}
 
 			return false;
 		})
 		.setInitializeTrigger(api => {
-			if (gameScreen?.actionBar?.hasFilledSlot(slot => isActionSlotType(api.requirement.options[0], slot))) {
+			const [requiredType] = api.requirement.options;
+			if (hasChangedActionSlot(requiredType)) {
 				return true;
 			}
 
