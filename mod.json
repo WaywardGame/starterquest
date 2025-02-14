@@ -11,5 +11,6 @@
 	"unloadable": true,
 	"languages": [
 		"lang/english"
+		"lang/french"
 	]
 }
