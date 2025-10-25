@@ -288,8 +288,16 @@ export default class StarterQuest extends Mod {
 
 	@Register.quest("taming", new Quest()
 		.addRequirement(QuestRequirementType.TameCreatures, 1)
-		.addChildQuests(Registry<StarterQuest>().get("questExtraStorage")))
+		.addChildQuests(Registry<StarterQuest>().get("repairingItemsDurability")))
 	public questTaming: QuestType;
+
+	@Register.quest("repairingItemsDurability", new Quest()
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.WoodenPole], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.Granite], 1)
+		.addRequirement(QuestRequirementType.CollectItem, [ItemType.String], 1)
+		.addRequirement(QuestRequirementType.Craft, [ItemType.GraniteHammer], 1)
+		.addChildQuests(Registry<StarterQuest>().get("questExtraStorage")))
+	public repairingItemsDurability: QuestType;
 
 	@Register.quest("extraStorage", new Quest()
 		.addRequirement(QuestRequirementType.Craft, [ItemType.WoodenChest], 1)
